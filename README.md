@@ -1,5 +1,4 @@
-<p align="center">
-    <img src="images/logo_horizontal.png" alt="Logo" width="544" height="80">
+<p align="center"><img src="images/logo_horizontal.png" alt="Logo" width="544" height="80"></p>
 </a>
 
   <h3 align="center">Motor de Autenticación Universal - iOS</h3>
@@ -17,14 +16,14 @@
       </ul>
     </li>
     <li>
-      <a href="introducción">Introducción</a>
+      <a href="#introducción">Introducción</a>
       <ul>
-        <li><a href="prerrequisitos">Prerrequisitos</a></li>
-        <li><a href="instalación">Instalación</a></li>
+        <li><a href="#prerrequisitos">Prerrequisitos</a></li>
+        <li><a href="#instalación">Instalación</a></li>
       </ul>
     </li>
-    <li><a href="uso">Uso</a></li>
-    <li><a href="autor">Autor</a></li>
+    <li><a href="#uso">Uso</a></li>
+    <li><a href="#autor">Autor</a></li>
   </ol>
 </details>
 
@@ -77,15 +76,15 @@ Necesitamos Cocoapods en nuestra computadora, se instala utilizando el siguiente
 ### Instalación
 
 1. En la terminal, navega a tu proyecto de Xcode e ingresa:
-   ```sh
+   ```ruby
    pod init
    ```
 2. Abre el archivo Podfile que se creó e ingresa lo siguiente en la lista de frameworks:
-   ```sh
+   ```ruby
    pod 'MAULibrary'
    ```
 3. Regresa a la terminal e ingresa:
-   ```sh
+   ```ruby
    pod install
    ```
 
@@ -94,6 +93,25 @@ Necesitamos Cocoapods en nuestra computadora, se instala utilizando el siguiente
 <!-- USAGE EXAMPLES -->
 
 ## Uso
+
+### Motor de Autenticación
+
+### Consumo de servicios
+Para el consumo de servicios del MAU se utilizará la clase <b>APIConsumption</b>, esta se tiene que instanciar y llamar la función del servicio que se desea consumir (todas traen documentación explícita de lo que se pide y lo que se obtiene). A continuación se muestra un ejemplo de algunas funciones disponibles:
+
+<p align="center"><img src="images/functions_api.png" alt="Logo" width="2131" height="469"></p>
+
+Una vez que se seleccionó el servicio a consumir, se ingresan los parámetros y se utiliza el closure para obtener la información una vez que el servicio haya terminado de consultarse (Toda la información que se obtiene viene documentada en el código).
+
+    ```swift
+   APIConsumption().getUserProfile(of: "CURP", completion: (ProfileResponse?, Int) -> ())
+   ```
+
+   ```swift
+   APIConsumption().getUserProfile(of: "CURP") { profileResponse, code in 
+   
+   }
+   ```
 
 ## Autor
 Ángel Eduardo Domínguez Delgado
