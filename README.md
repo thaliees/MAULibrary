@@ -99,7 +99,7 @@ Necesitamos Cocoapods en nuestra computadora, se instala utilizando el siguiente
 ### Consumo de servicios
 Para el consumo de servicios del MAU se utilizará la clase <b>APIConsumption</b>, esta se tiene que instanciar y llamar la función del servicio que se desea consumir (todas traen documentación explícita de lo que se pide y lo que se obtiene). A continuación se muestra un ejemplo de algunas funciones disponibles:
 
-<p align="center"><img src="images/functions_api.png" alt="Logo" width="2131" height="469"></p>
+<p align="center"><img src="images/functions_api.png" alt="Logo" width="1060" height="230"></p>
 
 Una vez que se seleccionó el servicio a consumir, se ingresan los parámetros y se utiliza el closure para obtener la información una vez que el servicio haya terminado de consultarse (Toda la información que se obtiene viene documentada en el código).
 
