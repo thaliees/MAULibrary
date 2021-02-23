@@ -103,16 +103,16 @@ Para el consumo de servicios del MAU se utilizará la clase <b>APIConsumption</b
 
 Una vez que se seleccionó el servicio a consumir, se ingresan los parámetros y se utiliza el closure para obtener la información una vez que el servicio haya terminado de consultarse (Toda la información que se obtiene viene documentada en el código).
 
-    ```swift
+   ```swift
     APIConsumption().getUserProfile(of: "CURP", completion: (ProfileResponse?, Int) -> ())
-    ```
+   ```
 
-    ```swift
+   ```swift
     APIConsumption().getUserProfile(of: "CURP") { profileResponse, code in 
    
     }
-    ```
+   ```
 
 ## Autor
-Ángel Eduardo Domínguez Delgado
+Ángel Eduardo Domínguez Delgado<br>
 adomingd@everis.com
