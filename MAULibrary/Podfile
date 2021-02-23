@@ -1,0 +1,29 @@
+platform :ios, '13.1'
+source 'https://github.com/grupo-profuturo/ios-framework-pod-spec'
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'MAULibrary' do
+
+  use_frameworks!
+  # Pods for MAULibrary
+  pod 'SVPinView'
+  pod 'Alamofire', '~> 4.8.1'
+  pod 'AlamofireObjectMapper', '~> 5.2.0'
+  pod 'lottie-ios'
+  pod 'ReachabilitySwift'
+
+  #Pods Facephi Profuturo
+  pod 'FWFaceAuth', '~> 2.1.12'
+  pod 'Microblink', '~> 1.5.0'
+  pod 'FPhiSelphIDWidgetiOS', '~> 2.1.12'
+  pod 'ZipZap', '~> 2.1.12'
+
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = "YES"
+        end
+    end
+end
+
+end
