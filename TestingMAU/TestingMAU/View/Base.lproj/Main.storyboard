@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NQY-Lg-90q">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Motor de Autenticación Universal-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="ViewController" customModule="TestingMAU" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfk-hD-FRt">
+                                <rect key="frame" x="57" y="757" width="300" height="60"/>
+                                <color key="backgroundColor" name="NavyBlue"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="k8P-ko-uHY"/>
+                                    <constraint firstAttribute="width" constant="300" id="rhS-3b-uBi"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Abrir MAU">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="openMAUTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wsg-zi-1Ia"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OwE-ej-1TE">
+                                <rect key="frame" x="40" y="627" width="334" height="70"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autenticación pendiente" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBu-Fk-gl9">
+                                        <rect key="frame" x="56" y="22" width="222" height="26"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <constraints>
+                                    <constraint firstItem="fBu-Fk-gl9" firstAttribute="centerX" secondItem="OwE-ej-1TE" secondAttribute="centerX" id="WN9-8J-VeL"/>
+                                    <constraint firstItem="fBu-Fk-gl9" firstAttribute="centerY" secondItem="OwE-ej-1TE" secondAttribute="centerY" id="qzC-YZ-zsR"/>
+                                    <constraint firstAttribute="height" constant="70" id="tCY-E2-fpZ"/>
+                                </constraints>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoHorizontalProfuturo" translatesAutoresizingMaskIntoConstraints="NO" id="uub-dO-cSL">
+                                <rect key="frame" x="40" y="88" width="334" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="lr8-78-Tsl"/>
+                                </constraints>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="CURP (Default: DODA961018HVZMLN06)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5wa-Yp-lVI">
+                                <rect key="frame" x="20" y="218" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ID Proceso (Default: 226)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ouS-7O-whD">
+                                <rect key="frame" x="20" y="277" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ID Subproceso (Default: 405)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rrk-U3-TRo">
+                                <rect key="frame" x="20" y="336" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ID Origen (Default: 34)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MbQ-sp-kd0">
+                                <rect key="frame" x="20" y="395" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="uub-dO-cSL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="5l2-48-T5y"/>
+                            <constraint firstItem="uub-dO-cSL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="73w-TL-B6j"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="uub-dO-cSL" secondAttribute="trailing" constant="40" id="FDK-5H-Lxi"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5wa-Yp-lVI" secondAttribute="trailing" constant="20" id="FOv-0J-eUV"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Rrk-U3-TRo" secondAttribute="trailing" constant="20" id="GPZ-A6-f0G"/>
+                            <constraint firstItem="OwE-ej-1TE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="KfT-iC-fpK"/>
+                            <constraint firstItem="5wa-Yp-lVI" firstAttribute="top" secondItem="uub-dO-cSL" secondAttribute="bottom" constant="30" id="MpI-jW-Mlg"/>
+                            <constraint firstItem="Rrk-U3-TRo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="QYN-d7-Pmi"/>
+                            <constraint firstItem="sfk-hD-FRt" firstAttribute="top" secondItem="OwE-ej-1TE" secondAttribute="bottom" constant="60" id="YQ4-mB-TzT"/>
+                            <constraint firstItem="MbQ-sp-kd0" firstAttribute="top" secondItem="Rrk-U3-TRo" secondAttribute="bottom" constant="25" id="bcX-wV-BgZ"/>
+                            <constraint firstItem="ouS-7O-whD" firstAttribute="top" secondItem="5wa-Yp-lVI" secondAttribute="bottom" constant="25" id="ejX-J0-Vsd"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="sfk-hD-FRt" secondAttribute="bottom" constant="45" id="fHL-h3-KCf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OwE-ej-1TE" secondAttribute="trailing" constant="40" id="gEW-PB-KUs"/>
+                            <constraint firstItem="MbQ-sp-kd0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="hFq-Om-Lcq"/>
+                            <constraint firstItem="5wa-Yp-lVI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="nJ2-uP-zgD"/>
+                            <constraint firstItem="ouS-7O-whD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="o6e-5Q-ODA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MbQ-sp-kd0" secondAttribute="trailing" constant="20" id="qel-cq-VPr"/>
+                            <constraint firstItem="sfk-hD-FRt" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uAd-vh-vQI"/>
+                            <constraint firstItem="Rrk-U3-TRo" firstAttribute="top" secondItem="ouS-7O-whD" secondAttribute="bottom" constant="25" id="vUv-1C-XU5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ouS-7O-whD" secondAttribute="trailing" constant="20" id="vc5-Z5-rG6"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Motor de Autenticación Universal" id="t2g-P7-RE8"/>
+                    <connections>
+                        <outlet property="authorizationStatus" destination="fBu-Fk-gl9" id="Omd-SE-0vB"/>
+                        <outlet property="colorBox" destination="OwE-ej-1TE" id="sLX-dg-DUo"/>
+                        <outlet property="curpField" destination="5wa-Yp-lVI" id="I8J-Hf-x27"/>
+                        <outlet property="originIDField" destination="MbQ-sp-kd0" id="JVf-B7-l9O"/>
+                        <outlet property="processIDField" destination="ouS-7O-whD" id="V6I-gg-JRU"/>
+                        <outlet property="subprocessIDField" destination="Rrk-U3-TRo" id="nHv-2L-cfA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4389.855072463768" y="93.75"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="UlQ-5o-KkK">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NQY-Lg-90q" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PTR-56-hZi">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="e24-mo-OWB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zUQ-PP-Y2k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3479.7101449275365" y="93.75"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logoHorizontalProfuturo" width="136" height="20"/>
+        <namedColor name="NavyBlue">
+            <color red="0.0" green="0.28627450980392155" blue="0.55294117647058827" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

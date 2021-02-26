@@ -1,0 +1,10 @@
+platform :ios, '13.2'
+source 'https://github.com/grupo-profuturo/ios-framework-pod-spec'
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'TestingMAU' do
+
+  use_frameworks!
+  pod 'MAULibrary'
+
+end

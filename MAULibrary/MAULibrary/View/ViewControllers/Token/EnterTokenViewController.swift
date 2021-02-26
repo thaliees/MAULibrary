@@ -25,6 +25,12 @@ class EnterTokenViewController: UIViewController {
     var isEmail = false
     /// Saves the OTP code
     var otpCode = ""
+    /// Delegate for principal app
+    var mauDelegate: AuthenticationMAUDelegate?
+    //Observers
+    var closeMAUPassedObserver: NSObjectProtocol!
+    var closeMAUDeniedObserver: NSObjectProtocol!
+    var tryAgainObserver: NSObjectProtocol!
     
     //MARK: - Init
     override func viewDidLoad() {
@@ -34,7 +40,6 @@ class EnterTokenViewController: UIViewController {
         
         createUIInitialModifications()
         createOTPField()
-        defineObservers()
         
         animationView = LoaderAnimation()
         
@@ -44,7 +49,22 @@ class EnterTokenViewController: UIViewController {
         } else {
             presenter.sendSMSToken()
         }
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //Add observers
+        defineObservers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        //Remove observers
+        NotificationCenter.default.removeObserver(closeMAUPassedObserver!)
+        NotificationCenter.default.removeObserver(closeMAUDeniedObserver!)
+        NotificationCenter.default.removeObserver(tryAgainObserver!)
     }
     
     //MARK: - Logic
@@ -52,19 +72,35 @@ class EnterTokenViewController: UIViewController {
      Defines the observers for this ViewControllers, specifically for connection errors
      */
     func defineObservers() {
-        NotificationCenter.default.addObserver(forName: Notification.Name(NotificationObserverServices.closeEnterToken.rawValue), object: nil, queue: nil) { _ in
+        closeMAUPassedObserver = NotificationCenter.default.addObserver(forName: Notification.Name(NotificationObserverServices.closeMAUPassedEnterToken.rawValue), object: nil, queue: nil) { _ in
             self.animationView.hideLoaderView()
-            self.navigationController?.popViewController(animated: true)
+            let parentVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 5]
+            self.navigationController?.popToViewController(parentVC!, animated: false)
+            
+            NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.authenticationPassed.rawValue), object: nil)
         }
         
-        NotificationCenter.default.addObserver(forName: Notification.Name(NotificationObserverServices.tryAgainAuthentication.rawValue), object: nil, queue: nil) {
+        closeMAUDeniedObserver = NotificationCenter.default.addObserver(forName: Notification.Name(NotificationObserverServices.closeMAUDeniedEnterToken.rawValue), object: nil, queue: nil) { _ in
+            self.animationView.hideLoaderView()
+            let parentVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 5]
+            self.navigationController?.popToViewController(parentVC!, animated: false)
+            NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.authenticationDenied.rawValue), object: nil)
+        }
+        
+        tryAgainObserver = NotificationCenter.default.addObserver(forName: Notification.Name(NotificationObserverServices.tryAgainAuthentication.rawValue), object: nil, queue: nil) {
             _ in
             self.animationView.hideLoaderView()
             
             if (!UserDefaults.standard.canUseFacialAuthentication) {
-                self.navigationController?.popViewController(animated: true)
+                self.navigationController?.popViewController(animated: false)
             } else {
-                self.navigationController?.popToRootViewController(animated: true)
+                if UserDefaults.standard.canUseFacialAuthentication {
+                    let selectAuthenticationVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 4]
+                    self.navigationController?.popToViewController(selectAuthenticationVC!, animated: false)
+                } else if UserDefaults.standard.canUseTokenAuthentication {
+                    let selectTokenWayVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 5]
+                    self.navigationController?.popToViewController(selectTokenWayVC!, animated: false)
+                }
             }
         }
     }
@@ -146,7 +182,7 @@ class EnterTokenViewController: UIViewController {
         }
         
         otpField.didChangeCallback = { otp in
-            print(otp)
+            //print(otp)
         }
     }
 }
@@ -166,7 +202,7 @@ extension EnterTokenViewController: EnterTokenDelegate {
     
     func showConnectionErrorMessage() {
         let connectionErrorVC = ConnectionErrorViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
-        connectionErrorVC.observerToCall = .closeEnterToken
+        connectionErrorVC.observerToCall = .closeMAUDeniedEnterToken
         connectionErrorVC.modalPresentationStyle = .overFullScreen
         animationView.stopAnimation()
         present(connectionErrorVC, animated: true)
@@ -181,9 +217,30 @@ extension EnterTokenViewController: EnterTokenDelegate {
     
     func showAuthenticationError() {
         let authenticationErrorVC = AuthenticationErrorViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
-        authenticationErrorVC.observerToCall = .tryAgainAuthentication
         authenticationErrorVC.modalPresentationStyle = .overFullScreen
         animationView.stopAnimation()
         present(authenticationErrorVC, animated: true)
+    }
+    
+    func showLimitExceeded() {
+        if isEmail {
+            UserDefaults.standard.canUseEmailTokenAuthentication = false
+        } else {
+            UserDefaults.standard.canUseSMSTokenAuthentication = false
+        }
+        
+        let canUseAnotherAuthenticationOption = UserDefaults.standard.canUseSMSTokenAuthentication || UserDefaults.standard.canUseEmailTokenAuthentication || UserDefaults.standard.canUseFacialAuthentication
+        
+        if canUseAnotherAuthenticationOption {
+            let limitExceededVC = LimitExceededTryAnotherViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
+            limitExceededVC.modalPresentationStyle = .overFullScreen
+            animationView.stopAnimation()
+            present(limitExceededVC, animated: true)
+        } else {
+            let limitExceededVC = LimitExceededViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
+            limitExceededVC.modalPresentationStyle = .overFullScreen
+            animationView.stopAnimation()
+            present(limitExceededVC, animated: true)
+        }
     }
 }

@@ -9,10 +9,6 @@ import UIKit
 
 class AuthenticationErrorViewController: UIViewController {
     
-    //Logic Properties
-    /// Observer to call when the authentication fails
-    var observerToCall: NotificationObserverServices!
-    
     //MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +17,11 @@ class AuthenticationErrorViewController: UIViewController {
     //MARK: - Actions
     @IBAction func tryAgainTapped(_ sender: UIButton) {
         dismiss(animated: true)
-        NotificationCenter.default.post(name: Notification.Name(observerToCall.rawValue), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.tryAgainAuthentication.rawValue), object: nil)
     }
     
     @IBAction func closeTapped(_ sender: UIButton) {
         dismiss(animated: true)
+        NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.closeMAUDeniedEnterToken.rawValue), object: nil)
     }
 }

@@ -1,0 +1,222 @@
+<FPhiGraph name="Facephi original widget from 5.5.1" version="1.0">
+    <States>
+        <State name="UCNothing">
+            <Transition message="SetMode//0,0,0,0" to="UCWaitingFaceStart"/>
+            <Transition message="SetMode//0,0,0,1" to="UCTutorialRegister1"/>
+            <Transition message="SetMode//0,0,1,0" to="UCWaitingFaceStart"/>
+            <Transition message="SetMode//0,0,1,1" to="UCTutorialRegister1"/>
+            <Transition message="SetMode//0,1,0,0" to="UCWaitingFaceStart"/>
+            <Transition message="SetMode//0,1,0,1" to="UCTutorialRegister1"/>
+            <Transition message="SetMode//0,1,1,0" to="UCWaitingFaceStart"/>
+            <Transition message="SetMode//0,1,1,1" to="UCTutorialRegister1"/>
+            <Transition message="SetMode//0,2,0,0" to="UCWaitingFaceStart"/>
+            <Transition message="SetMode//0,2,0,1" to="UCTutorialRegister1"/>
+            <Transition message="SetMode//0,2,1,0" to="UCWaitingFaceStart"/>
+            <Transition message="SetMode//0,2,1,1" to="UCTutorialRegister1"/>
+
+            <Transition message="SetMode//1,0,0,0" to="UCWaitingFacePrev"/>
+            <Transition message="SetMode//1,0,0,1" to="UCWaitingFacePrev"/>
+            <Transition message="SetMode//1,0,1,0" to="UCQR"/>
+            <Transition message="SetMode//1,0,1,1" to="UCQR"/>
+            <Transition message="SetMode//1,1,0,0" to="UCWaitingFacePrev"/>
+            <Transition message="SetMode//1,1,0,1" to="UCTutorialBlink1"/>
+            <Transition message="SetMode//1,1,1,0" to="UCQR"/>
+            <Transition message="SetMode//1,1,1,1" to="UCQR"/>
+            <Transition message="SetMode//1,2,0,0" to="UCWaitingFacePrev"/>
+            <Transition message="SetMode//1,2,0,1" to="UCTutorialMove1"/>
+            <Transition message="SetMode//1,2,1,0" to="UCQR"/>
+            <Transition message="SetMode//1,2,1,1" to="UCQR"/>
+
+            <Transition message="SetMode" to="UCError"/>
+        </State>
+        <State name="UCWaitingFacePrev">
+            <Transition message="Timer" to="UCExtracting"/>
+        </State>
+        <State name="UCExtracting">
+            <Transition message="RegistrationFinished" to="UCShowResults"/>
+            <Transition message="AuthenticationFinished" to="UCFinishPrev"/>
+            <Transition message="SetLivenessBlink" to="UCLivenessDetectionStep1"/>
+            <Transition message="SetLivenessMove" to="UCLivenessMoveStabilizing"/>
+            <Transition message="SetStabilizationMode" to="UCLivenessMoveStabilizing"/>
+
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Error" to="UCFinishPrev"/>
+            <Transition message="Timeout" to="UCTimeout"/>
+        </State>
+        <State name="UCWaitingFaceStart">
+            <Transition message="Click//button_start" to="UCExtracting"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Click//button_info" to="UCTutorialSelector"/>
+        </State>
+        <State name="UCShowResults">
+            <Transition message="Click//button_finish" to="UCWizardCompleted"/>
+            <Transition message="Click//button_repeat" to="UCWaitingFaceStart"/>
+            <Transition message="Timeout" to="UCTimeout"/>
+        </State>
+        <State name="UCWizardCompleted">
+            <Transition message="VideoFinished" to="UCFinishPrev"/>
+            <Transition message="Timeout" to="UCFinishPrev"/>
+        </State>
+        <State name="UCLivenessDetectionStep1">
+            <Transition message="Timer" to="UCLivenessDetectionStep2"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCLivenessDetectionStep2">
+            <Transition message="LivenessTimerFull" to="UCLivenessDetectionStep3"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCLivenessDetectionStep3">
+            <Transition message="AuthenticationFinished" to="UCFinishPrev"/>
+            <Transition message="EyeDetectionNeeded" to="UCWaitingEyeDetection"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCFinishPrev">
+            <Transition message="Timer" to="UCFinish"/>
+        </State>
+        <State name="UCWaitingEyeDetection">
+            <Transition message="Timeout" to="UCTimeout"/>
+            <Transition message="ResetLivenessBlink" to="UCLivenessDetectionStep1"/>
+            <Transition message="Timer" to="UCLivenessDetectionStep2"/>
+            <Transition message="ExtractorDetectError" to="UCFinishPrev"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCQR">
+            <Transition message="Timeout" to="UCTimeout"/>
+            <Transition message="QRDetectedTransitionFinished" to="UCQRChangeCamera"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCQRChangeCamera">
+            <Transition message="QRCameraChanged" to="UCQRCameraChanged"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCQRCameraChanged">
+            <Transition message="QRAdquisitionFinished" to="UCWaitingFacePrev"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+        </State>
+        
+        <State name="UCLivenessMoveStabilizing">
+            <Transition message="FaceStabilized//EM0,LM0" to="UCWaitingFacePrev"/>
+            <Transition message="FaceStabilized//EM0,LM1" to="UCWaitingFacePrev"/>
+            <Transition message="FaceStabilized//EM0,LM2" to="UCWaitingFacePrev"/>
+            <Transition message="FaceStabilized//EM1,LM0" to="UCWaitingFacePrev"/>
+            <Transition message="FaceStabilized//EM1,LM1" to="UCWaitingFacePrev"/>
+            <Transition message="FaceStabilized//EM1,LM2" to="UCLivenessMoveStabilized"/>
+            <Transition message="Timeout" to="UCTimeout"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Error" to="UCFinishPrev"/>
+        </State>
+        <State name="UCLivenessMoveStabilized">
+            <Transition message="SetStatusFinished" to="UCLivenessMoveDetecting"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Error" to="UCFinishPrev"/>
+        </State>
+        <State name="UCLivenessMoveDetecting">
+            <Transition message="LivenessTimerFull" to="UCLivenessMoveProcessing"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Error" to="UCFinishPrev"/>
+        </State>
+        <State name="UCLivenessMoveProcessing">
+            <Transition message="LivenessMoveUnhandledError" to="UCLivenessMoveEnd"/>
+            <Transition message="LivenessMoveSuccessfulAttempt" to="UCLivenessMoveEnd"/>
+
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Error" to="UCFinishPrev"/>
+            <Transition message="UserCancel" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCLivenessMoveEnd">
+            <Transition message="LivenessMoveRetry//0,1" to="UCLivenessMoveStabilizing"/>
+            <Transition message="LivenessMoveRetry//0,2" to="UCFinishPrev"/>
+            <Transition message="LivenessMoveRetry//0,3" to="UCFinishPrev"/>
+            <Transition message="LivenessMoveRetry//1,0" to="UCFinishPrev"/>
+            <Transition message="LivenessMoveRetry//1,1" to="UCFinishPrev"/>
+            <Transition message="LivenessMoveRetry//1,2" to="UCFinishPrev"/>
+            <Transition message="LivenessMoveRetry//1,3" to="UCFinishPrev"/>
+            <Transition message="LivenessMoveRetry//2,0" to="UCFinishPrev"/>
+            <Transition message="LivenessMoveRetry//2,1" to="UCFinishPrev"/>
+            <Transition message="LivenessMoveRetry//2,2" to="UCFinishPrev"/>
+            <Transition message="LivenessMoveRetry" to="UCLivenessMoveStabilizing"/>
+            <Transition message="LivenessMoveFinished" to="UCFinishPrev"/>
+
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Error" to="UCFinishPrev"/>
+            <Transition message="UserCancel" to="UCCancelByUserPrev"/>
+        </State>
+        
+        <State name="UCCancelByUserPrev">
+            <Transition message="Timer" to="UCCancelByUser"/>
+        </State>
+        <State name="UCCancelByUser"/>
+        <State name="UCTimeout"/>
+        <State name="UCFinish"/>
+
+        <State name="UCTutorialSelector">
+            <Transition message="Finish" to="UCFinishPrev"/>
+            <Transition message="TutorialRegister" to="UCTutorialRegister1"/>
+            <Transition message="TutorialNone" to="UCWaitingFaceStart"/>
+            <Transition message="TutorialBlink" to="UCTutorialBlink1"/>
+            <Transition message="TutorialMove" to="UCTutorialMove1"/>
+        </State>
+        <State name="UCTutorialRegister1">
+            <Transition message="Click//button_next" to="UCTutorialRegister2"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Click//button_skip" to="UCWaitingFaceStart"/>
+            <Transition message="Swipe//Left" to="UCTutorialRegister2"/>
+            <Transition message="Timeout" to="UCTimeout"/>
+        </State>
+        <State name="UCTutorialRegister2">
+            <Transition message="Click//button_done" to="UCWaitingFaceStart"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Click//button_back" to="UCTutorialRegister1"/>
+            <Transition message="Swipe//Right" to="UCTutorialRegister1"/>
+            <Transition message="Timeout" to="UCTimeout"/>
+        </State>
+
+        <State name="UCTutorialBlink1">
+            <Transition message="Click//button_next" to="UCTutorialBlink2"/>
+            <Transition message="Click//button_skip" to="UCWaitingFaceStart"/>
+            <Transition message="Swipe//Left" to="UCTutorialBlink2"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Timeout" to="UCTimeout"/>
+        </State>
+        <State name="UCTutorialBlink2">
+            <Transition message="Click//button_next" to="UCTutorialBlink3"/>
+            <Transition message="Click//button_back" to="UCTutorialBlink1"/>
+            <Transition message="Swipe//Left" to="UCTutorialBlink3"/>
+            <Transition message="Swipe//Right" to="UCTutorialBlink1"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Timeout" to="UCTimeout"/>
+        </State>
+        <State name="UCTutorialBlink3">
+            <Transition message="Click//button_done" to="UCWaitingFaceStart"/>
+            <Transition message="Click//button_back" to="UCTutorialBlink2"/>
+            <Transition message="Swipe//Right" to="UCTutorialBlink2"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Timeout" to="UCTimeout"/>
+        </State>
+
+        <State name="UCTutorialMove1">
+            <Transition message="Click//button_next" to="UCTutorialMove2"/>
+            <Transition message="Click//button_skip" to="UCWaitingFaceStart"/>
+            <Transition message="Swipe//Left" to="UCTutorialMove2"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Timeout" to="UCTimeout"/>
+        </State>
+        <State name="UCTutorialMove2">
+            <Transition message="Click//button_next" to="UCTutorialMove3"/>
+            <Transition message="Click//button_back" to="UCTutorialMove1"/>
+            <Transition message="Swipe//Left" to="UCTutorialMove3"/>
+            <Transition message="Swipe//Right" to="UCTutorialMove1"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Timeout" to="UCTimeout"/>
+        </State>
+        <State name="UCTutorialMove3">
+            <Transition message="Click//button_done" to="UCWaitingFaceStart"/>
+            <Transition message="Click//button_back" to="UCTutorialMove2"/>
+            <Transition message="Swipe//Right" to="UCTutorialMove2"/>
+            <Transition message="Click//button_exit" to="UCCancelByUserPrev"/>
+            <Transition message="Timeout" to="UCTimeout"/>
+        </State>
+    </States>
+</FPhiGraph>
+
+

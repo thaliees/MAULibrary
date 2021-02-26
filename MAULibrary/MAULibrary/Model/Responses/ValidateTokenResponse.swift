@@ -14,10 +14,13 @@ import ObjectMapper
 class ValidateTokenResponse: Mappable {
     /// Tells if the token is valid or not
     var valid: Bool?
+    /// Tells if the user exceed daily trys
+    var limitExceeded: String?
     
     required init?(map: Map) { }
     
     func mapping(map: Map) {
         valid <- map["valido"]
+        limitExceeded <- map["detalle"]
     }
 }

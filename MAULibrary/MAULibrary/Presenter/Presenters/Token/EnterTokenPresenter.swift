@@ -28,51 +28,46 @@ class EnterTokenPresenter {
         //Show loader
         enterTokenDelegate?.showLoader()
         
-        //Check internet connection
-        let reachability = try! Reachability()
-        
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Set parameters
         let userInformation = UserDefaults.standard.userInformation
         let parameters: [String: Any] = [
             "curp": userInformation.curp,
-            "proceso": ["id": userInformation.processID],
-            "subproceso": ["id": userInformation.subProcessID],
-            "factor": "154",
-            "origen": ["id": userInformation.originID],
+            "proceso": ["id": "\(userInformation.processID)"],
+            "subproceso": ["id": "\(userInformation.subProcessID)"],
+            "factor": ["id": "154"],
+            "origen": ["id": "\(userInformation.originID)"],
             "mensaje": ["celular": userInformation.phoneNumber, "mensaje": "", "claveAplicacion": "APPCLIENTE"]
         ]
         
+        //Check internet connection
+        let reachability = try! Reachability()
+        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            Router.self.token = UserDefaults.standard.token
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                Router.self.token = UserDefaults.standard.token
-                
-                Alamofire.request(Router.sendSMSToken(parameters: parameters)).responseObject { (response: DataResponse<SMSEmailTokenResponse>) in
-                    switch response.result {
-                    case .success(_):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                self.enterTokenDelegate?.hideLoader()
-                            default:
+            Alamofire.request(Router.sendSMSToken(parameters: parameters)).responseObject { (response: DataResponse<SMSEmailTokenResponse>) in
+                switch response.result {
+                case .success(let sendSMSTokenResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            self.enterTokenDelegate?.hideLoader()
+                        case 404:
+                            if sendSMSTokenResponse.errorMessage == ServerErrors.sendTokenDailyTrysExceeded {
+                                self.enterTokenDelegate?.showLimitExceeded()
+                            } else {
                                 self.enterTokenDelegate?.showConnectionErrorMessage()
                             }
+                        default:
+                            self.enterTokenDelegate?.showConnectionErrorMessage()
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        self.enterTokenDelegate?.showConnectionErrorMessage()
                     }
+                case .failure(_):
+                    self.enterTokenDelegate?.showConnectionErrorMessage()
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             self.enterTokenDelegate?.showConnectionErrorMessage()
         }
     }
@@ -84,54 +79,49 @@ class EnterTokenPresenter {
         //Show loader
         enterTokenDelegate?.showLoader()
         
-        //Check internet connection
-        let reachability = try! Reachability()
-        
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Set parameters
         let userInformation = UserDefaults.standard.userInformation
         let parameters: [String: Any] = [
             "curp": userInformation.curp,
-            "proceso": ["id": userInformation.processID],
-            "subproceso": ["id": userInformation.subProcessID],
-            "factor": "155",
-            "origen": ["id": userInformation.originID],
+            "proceso": ["id": "\(userInformation.processID)"],
+            "subproceso": ["id": "\(userInformation.subProcessID)"],
+            "factor": ["id": "155"],
+            "origen": ["id": "\(userInformation.originID)"],
             "correo": [
                 "encabezado": ["asunto": "Envío Token", "remitente": "no-responder@profuturo.com.mx", "destinatario": userInformation.email, "copia": "", "copiaOculta": ""],
                 "mensaje": ["contenido": "", "tipoContenido": "text/html"]
             ]
         ]
         
+        //Check internet connection
+        let reachability = try! Reachability()
+        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            Router.self.token = UserDefaults.standard.token
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                Router.self.token = UserDefaults.standard.token
-                
-                Alamofire.request(Router.sendEmailToken(parameters: parameters)).responseObject { (response: DataResponse<SMSEmailTokenResponse>) in
-                    switch response.result {
-                    case .success(_):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                self.enterTokenDelegate?.hideLoader()
-                            default:
+            Alamofire.request(Router.sendEmailToken(parameters: parameters)).responseObject { (response: DataResponse<SMSEmailTokenResponse>) in
+                switch response.result {
+                case .success(let sendEmailTokenResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            self.enterTokenDelegate?.hideLoader()
+                        case 404:
+                            if sendEmailTokenResponse.errorMessage == ServerErrors.sendTokenDailyTrysExceeded {
+                                self.enterTokenDelegate?.showLimitExceeded()
+                            } else {
                                 self.enterTokenDelegate?.showConnectionErrorMessage()
                             }
+                        default:
+                            self.enterTokenDelegate?.showConnectionErrorMessage()
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        self.enterTokenDelegate?.showConnectionErrorMessage()
                     }
+                case .failure(_):
+                    self.enterTokenDelegate?.showConnectionErrorMessage()
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             self.enterTokenDelegate?.showConnectionErrorMessage()
         }
     }
@@ -143,53 +133,47 @@ class EnterTokenPresenter {
         //Show loader
         enterTokenDelegate?.showLoader()
         
-        //Check internet connection
-        let reachability = try! Reachability()
-        
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Set parameters
         let userInformation = UserDefaults.standard.userInformation
         let parameters: [String: Any] = [
             "curp": userInformation.curp,
-            "proceso": ["id": userInformation.processID],
-            "subproceso": ["id": userInformation.subProcessID],
-            "factor": "154",
-            "origen": ["id": userInformation.originID],
+            "proceso": ["id": "\(userInformation.processID)"],
+            "subproceso": ["id": "\(userInformation.subProcessID)"],
+            "factor": ["id": "154"],
+            "origen": ["id": "\(userInformation.originID)"],
             "mensaje": ["celular": userInformation.phoneNumber, "mensaje": "", "claveAplicacion": "APPCLIENTE"]
         ]
         
+        //Check internet connection
+        let reachability = try! Reachability()
+        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            Router.self.token = UserDefaults.standard.token
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                Router.self.token = UserDefaults.standard.token
-                
-                Alamofire.request(Router.resendSMSToken(parameters: parameters)).responseObject { (response: DataResponse<SMSEmailTokenResponse>) in
-                    switch response.result {
-                    case .success(_):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                self.enterTokenDelegate?.hideLoader()
-                            case 404:
+            Alamofire.request(Router.resendSMSToken(parameters: parameters)).responseObject { (response: DataResponse<SMSEmailTokenResponse>) in
+                switch response.result {
+                case .success(let resendSMSTokenResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            self.enterTokenDelegate?.hideLoader()
+                        case 404:
+                            if resendSMSTokenResponse.errorMessage == ServerErrors.timeExceededCreateNewToken {
                                 self.sendSMSToken()
-                            default:
+                                
+                            } else {
                                 self.enterTokenDelegate?.showConnectionErrorMessage()
                             }
+                        default:
+                            self.enterTokenDelegate?.showConnectionErrorMessage()
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        self.enterTokenDelegate?.showConnectionErrorMessage()
                     }
+                case .failure(_):
+                    self.enterTokenDelegate?.showConnectionErrorMessage()
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             self.enterTokenDelegate?.showConnectionErrorMessage()
         }
     }
@@ -201,56 +185,49 @@ class EnterTokenPresenter {
         //Show loader
         enterTokenDelegate?.showLoader()
         
-        //Check internet connection
-        let reachability = try! Reachability()
-        
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Set parameters
         let userInformation = UserDefaults.standard.userInformation
         let parameters: [String: Any] = [
             "curp": userInformation.curp,
-            "proceso": ["id": userInformation.processID],
-            "subproceso": ["id": userInformation.subProcessID],
-            "factor": "155",
-            "origen": ["id": userInformation.originID],
+            "proceso": ["id": "\(userInformation.processID)"],
+            "subproceso": ["id": "\(userInformation.subProcessID)"],
+            "factor": ["id": "155"],
+            "origen": ["id": "\(userInformation.originID)"],
             "correo": [
                 "encabezado": ["asunto": "Envío Token", "remitente": "no-responder@profuturo.com.mx", "destinatario": userInformation.email, "copia": "", "copiaOculta": ""],
                 "mensaje": ["contenido": "", "tipoContenido": "text/html"]
             ]
         ]
         
+        //Check internet connection
+        let reachability = try! Reachability()
+        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            Router.self.token = UserDefaults.standard.token
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                Router.self.token = UserDefaults.standard.token
-                
-                Alamofire.request(Router.resendEmailToken(parameters: parameters)).responseObject { (response: DataResponse<SMSEmailTokenResponse>) in
-                    switch response.result {
-                    case .success(_):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                self.enterTokenDelegate?.hideLoader()
-                            case 404:
+            Alamofire.request(Router.resendEmailToken(parameters: parameters)).responseObject { (response: DataResponse<SMSEmailTokenResponse>) in
+                switch response.result {
+                case .success(let resendEmailTokenResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            self.enterTokenDelegate?.hideLoader()
+                        case 404:
+                            if resendEmailTokenResponse.errorMessage == ServerErrors.timeExceededCreateNewToken {
                                 self.sendEmailToken()
-                            default:
+                            } else {
                                 self.enterTokenDelegate?.showConnectionErrorMessage()
                             }
+                        default:
+                            self.enterTokenDelegate?.showConnectionErrorMessage()
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        self.enterTokenDelegate?.showConnectionErrorMessage()
                     }
+                case .failure(_):
+                    self.enterTokenDelegate?.showConnectionErrorMessage()
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             self.enterTokenDelegate?.showConnectionErrorMessage()
         }
     }
@@ -264,55 +241,52 @@ class EnterTokenPresenter {
         //Show loader
         enterTokenDelegate?.showLoader()
         
-        //Check internet connection
-        let reachability = try! Reachability()
-        
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Set parameters
         let userInformation = UserDefaults.standard.userInformation
         let parameters: [String: Any] = [
             "curp": userInformation.curp,
             "token": otpCode,
-            "proceso": ["id": userInformation.processID],
-            "subproceso": ["id": userInformation.subProcessID],
-            "origen": ["id": userInformation.originID],
-            "factor": isEmail ? "155" : "154"
+            "proceso": ["id": "\(userInformation.processID)"],
+            "subproceso": ["id": "\(userInformation.subProcessID)"],
+            "origen": ["id": "\(userInformation.originID)"],
+            "factor": ["id": isEmail ? "155" : "154"]
         ]
         
+        //Check internet connection
+        let reachability = try! Reachability()
+        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            Router.self.token = UserDefaults.standard.token
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                Router.self.token = UserDefaults.standard.token
-                
-                Alamofire.request(Router.validateToken(parameters: parameters)).responseObject { (response: DataResponse<ValidateTokenResponse>) in
-                    switch response.result {
-                    case .success(let validationResponse):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                if validationResponse.valid ?? false {
-                                    self.enterTokenDelegate?.showAuthenticationSuccesful()
-                                } else {
-                                    self.enterTokenDelegate?.showAuthenticationError()
-                                }
-                            default:
+            Alamofire.request(Router.validateToken(parameters: parameters)).responseObject { (response: DataResponse<ValidateTokenResponse>) in
+                switch response.result {
+                case .success(let validationResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            if validationResponse.valid ?? false {
+                                self.enterTokenDelegate?.showAuthenticationSuccesful()
+                            } else {
+                                self.enterTokenDelegate?.showAuthenticationError()
+                            }
+                        case 404:
+                            if validationResponse.limitExceeded == ServerErrors.validateTokenDailyTrysExceeded {
+                                self.enterTokenDelegate?.showLimitExceeded()
+                            } else if validationResponse.limitExceeded == ServerErrors.validateExpiredToken {
+                                self.enterTokenDelegate?.showAuthenticationError()
+                            } else {
                                 self.enterTokenDelegate?.showConnectionErrorMessage()
                             }
+                        default:
+                            self.enterTokenDelegate?.showConnectionErrorMessage()
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        self.enterTokenDelegate?.showConnectionErrorMessage()
                     }
+                case .failure(_):
+                    self.enterTokenDelegate?.showConnectionErrorMessage()
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             self.enterTokenDelegate?.showConnectionErrorMessage()
         }
     }

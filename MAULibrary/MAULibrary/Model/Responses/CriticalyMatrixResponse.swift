@@ -11,7 +11,7 @@ import ObjectMapper
 /**
  Object mapper response for Criticality matrix. The factors ID's are 159 (facial), 154 (cellphone) and 155 (email).
  */
-class CriticalityMatrixResponse: Mappable {
+public class CriticalityMatrixResponse: Mappable {
     /// Factor of the matrix (155 for email, 159 for facial and 154 for phone number)
     var factor: ValueID?
     /// Origin of the factor
@@ -27,9 +27,9 @@ class CriticalityMatrixResponse: Mappable {
     /// Subprocess
     var subprocess: ValueID?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         factor <- map["factor"]
         origin <- map["origen"]
         status <- map["estatus"]
@@ -41,30 +41,30 @@ class CriticalityMatrixResponse: Mappable {
 }
 
 /// Validity of the factor
-class Validity: Mappable {
+public class Validity: Mappable {
     /// Autentication of validity
     var autentication: Int?
     /// Enrollment of validity
     var enrollment: Int?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         autentication <- map["autenticacion"]
         enrollment <- map["enrolamiento"]
     }
 }
 
 /// Trys for the factor
-class Try: Mappable {
+public class Try: Mappable {
     /// Limit of trys
     var limit: Int?
     /// Limit of daily trys
     var dailyTrys: Int?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         limit <- map["limite"]
         dailyTrys <- map["intentosDiarios"]
     }

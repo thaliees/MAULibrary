@@ -9,7 +9,7 @@ import Foundation
 import ObjectMapper
 
 /// Object mapper response for the privacy policy status service
-class PrivacyPolicyStatusResponse: Mappable {
+public class PrivacyPolicyStatusResponse: Mappable {
     /// ID of the status
     var id: String?
     /// Client's CURP
@@ -17,9 +17,9 @@ class PrivacyPolicyStatusResponse: Mappable {
     /// Client's privacy policies
     var privacyPolicies: [PrivacyPolicy]?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         id <- map["id"]
         curp <- map["curp"]
         privacyPolicies <- map["avisosPrivacidad"]
@@ -27,15 +27,15 @@ class PrivacyPolicyStatusResponse: Mappable {
 }
 
 /// Privacy Policy business line and acceptance by the user
-class PrivacyPolicy: Mappable {
+public class PrivacyPolicy: Mappable {
     /// Business data
     var businessLine: ValueID?
     /// Acceptance date of the privacy policy
     var acceptanceDate: String?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         businessLine <- map["lineaNegocio"]
         acceptanceDate <- map["fechaAceptacion"]
     }

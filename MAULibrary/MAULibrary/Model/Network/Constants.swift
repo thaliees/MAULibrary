@@ -16,8 +16,13 @@ struct Keys {
 }
 
 struct Servers {
-    static let developmentURL = "https://api.dev.profuturo.mx/"
-    static let productionURL = ""
+    #if DEBUG
+    static let url = "https://api.dev.profuturo.mx/"
+    #elseif QA
+    static let url = "https://api.qa.profuturo.mx/"
+    #else
+    static let url = "https://api.profuturo.mx/"
+    #endif
 }
 
 struct Paths {
@@ -31,9 +36,20 @@ struct Paths {
     static let validateToken = "mau/1/gt/token/validar"
 }
 
+struct ServerErrors {
+    static let sendTokenDailyTrysExceeded = "Se ha excedido el número de intentos diarios permitidos"
+    static let timeExceededCreateNewToken = "Token no vigente"
+    static let validateTokenDailyTrysExceeded = "Limite de intentos superados"
+    static let validateExpiredToken = "Token no vigente"
+    
+}
+
 enum NotificationObserverServices: String {
-    case closeMAU = "CloseMAU"
-    case closeEnterToken = "CloseEnterToken"
+    case authenticationPassed = "AuthenticationPassed"
+    case authenticationDenied = "AuthenticationDenied"
+    case closeMAUPassedEnterToken = "CloseMAUPassedEnterToken"
+    case closeMAUDeniedEnterToken = "CloseMAUDeniedEnterToken"
+    case closeMAUSelectAuthentication = "CloseMAUSelectAuthentication"
     case tryAgainAuthentication = "TryAgainAuthentication"
 }
 

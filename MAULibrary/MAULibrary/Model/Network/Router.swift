@@ -14,7 +14,7 @@ enum Router: URLRequestConvertible {
     static var internalToken: String?
     
     case generateToken
-    case getCriticalityMatrix(processID: String, subprocessID: String, originID: String)
+    case getCriticalityMatrix(processID: Int, subprocessID: Int, originID: Int)
     case getProfile(curp: String)
     case sendSMSToken(parameters: [String: Any])
     case resendSMSToken(parameters: [String: Any])
@@ -53,11 +53,7 @@ enum Router: URLRequestConvertible {
     }
     
     func asURLRequest() throws -> URLRequest {
-        #if DEBUG
-        let url = URL(string: Servers.developmentURL)!
-        #else
-        let url = URL(string: Servers.productionURL)!
-        #endif
+        let url = URL(string: Servers.url)!
         
         var urlRequest = URLRequest(url: url.appendingPathComponent(path))
         urlRequest.httpMethod = method.rawValue

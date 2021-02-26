@@ -23,44 +23,33 @@ class UserRequests {
         //Check internet connection
         let reachability = try! Reachability()
         
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            //Set internal developer token
+            ConsumptionRouter.self.internalToken = Keys.tokenKey
+            ConsumptionRouter.self.token = nil
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                //Set internal developer token
-                ConsumptionRouter.self.internalToken = Keys.tokenKey
-                ConsumptionRouter.self.token = nil
-                
-                Alamofire.request(ConsumptionRouter.requestAccessToken).responseObject { (response: DataResponse<TokenResponse>) in
-                    switch response.result {
-                    case .success(let tokenResponse):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                if let token = tokenResponse.token {
-                                    UserDefaults.standard.mauToken = token
-                                    completion(token, 1)
-                                } else {
-                                    completion("", -1)
-                                }
-                            default:
+            Alamofire.request(ConsumptionRouter.requestAccessToken).responseObject { (response: DataResponse<TokenResponse>) in
+                switch response.result {
+                case .success(let tokenResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            if let token = tokenResponse.token {
+                                UserDefaults.standard.mauToken = token
+                                completion(token, 1)
+                            } else {
                                 completion("", -1)
                             }
+                        default:
+                            completion("", -1)
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        completion("", -1)
                     }
+                case .failure(_):
+                    completion("", -1)
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             completion("", 0)
         }
     }
@@ -76,37 +65,26 @@ class UserRequests {
         //Check internet connection
         let reachability = try! Reachability()
         
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            ConsumptionRouter.self.token = UserDefaults.standard.mauToken
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                ConsumptionRouter.self.token = UserDefaults.standard.mauToken
-                
-                Alamofire.request(ConsumptionRouter.getProfileInformation(curp: curp)).responseObject { (response: DataResponse<ProfileResponse>) in
-                    switch response.result {
-                    case .success(let profileResponse):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                completion(profileResponse, 1)
-                            default:
-                                completion(nil, -1)
-                            }
+            Alamofire.request(ConsumptionRouter.getProfileInformation(curp: curp)).responseObject { (response: DataResponse<ProfileResponse>) in
+                switch response.result {
+                case .success(let profileResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            completion(profileResponse, 1)
+                        default:
+                            completion(nil, -1)
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        completion(nil, -1)
                     }
+                case .failure(_):
+                    completion(nil, -1)
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             completion(nil, 0)
         }
     }
@@ -120,45 +98,34 @@ class UserRequests {
      - Parameter response: Response object
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func getCriticalityMatrix(processID: String, subprocessID: String, originID: String, completion: @escaping (_ response: [CriticalityMatrixResponse]?, _ responseCode: Int) -> Void) {
+    func getCriticalityMatrix(processID: Int, subprocessID: Int, originID: Int, completion: @escaping (_ response: [CriticalityMatrixResponse]?, _ responseCode: Int) -> Void) {
         //Check internet connection
         let reachability = try! Reachability()
         
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            ConsumptionRouter.self.token = UserDefaults.standard.mauToken
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                ConsumptionRouter.self.token = UserDefaults.standard.mauToken
-                
-                Alamofire.request(
-                    ConsumptionRouter.getCriticalityMatrix(processID: processID,
-                                                           subprocessID: subprocessID,
-                                                           originID: originID))
-                    .responseArray { (response: DataResponse<[CriticalityMatrixResponse]>) in
-                        switch response.result {
-                        case .success(let criticalityResponse):
-                            if let httpStatusCode = response.response?.statusCode {
-                                switch httpStatusCode {
-                                case 200:
-                                    completion(criticalityResponse, 1)
-                                default:
-                                    completion([], -1)
-                                }
+            Alamofire.request(
+                ConsumptionRouter.getCriticalityMatrix(processID: processID,
+                                                       subprocessID: subprocessID,
+                                                       originID: originID))
+                .responseArray { (response: DataResponse<[CriticalityMatrixResponse]>) in
+                    switch response.result {
+                    case .success(let criticalityResponse):
+                        if let httpStatusCode = response.response?.statusCode {
+                            switch httpStatusCode {
+                            case 200:
+                                completion(criticalityResponse, 1)
+                            default:
+                                completion([], -1)
                             }
-                        case .failure(let error):
-                            #if DEBUG
-                            print(error)
-                            #endif
-                            completion([], -1)
                         }
+                    case .failure(_):
+                        completion([], -1)
                     }
-            }
-        }
-        reachability.whenUnreachable = { _ in
+                }
+        } else {
             completion([], 0)
         }
     }
@@ -179,56 +146,45 @@ class UserRequests {
      - Parameter response: Response object
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func createUserProfile(curp: String, fullName: String, bucID: String, reasonID: String, originID: String, roleID: String, prospectName: String, prospectLastName: String, prospectMothersLastName: String, completion: @escaping (_ response: ProfileCreationResponse?, _ responseCode: Int) -> Void) {
+    func createUserProfile(curp: String, fullName: String, bucID: Int, reasonID: Int, originID: Int, roleID: Int, prospectName: String, prospectLastName: String, prospectMothersLastName: String, completion: @escaping (_ response: ProfileCreationResponse?, _ responseCode: Int) -> Void) {
         //Check internet connection
         let reachability = try! Reachability()
         
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            ConsumptionRouter.self.token = UserDefaults.standard.mauToken
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                ConsumptionRouter.self.token = UserDefaults.standard.mauToken
-                
-                let parameters: [String: Any] = [
-                    "datosPersona": [
-                        "usuario": fullName,
-                        "idBuc": bucID,
-                        "motivo": ["id": reasonID],
-                        "origen": ["id": originID],
-                        "rol": ["id": roleID]
-                    ],
-                    "datosProspecto": [
-                        "nombre": prospectName,
-                        "apellidoPaterno": prospectLastName,
-                        "apellidoMaterno": prospectMothersLastName
-                    ]
+            let parameters: [String: Any] = [
+                "datosPersona": [
+                    "usuario": fullName,
+                    "idBuc": "\(bucID)",
+                    "motivo": ["id": "\(reasonID)"],
+                    "origen": ["id": "\(originID)"],
+                    "rol": ["id": "\(roleID)"]
+                ],
+                "datosProspecto": [
+                    "nombre": prospectName,
+                    "apellidoPaterno": prospectLastName,
+                    "apellidoMaterno": prospectMothersLastName
                 ]
-                
-                Alamofire.request(ConsumptionRouter.createUserProfile(curp: curp, parameters: parameters)).responseObject { (response: DataResponse<ProfileCreationResponse>) in
-                    switch response.result {
-                    case .success(let profileCreationResponse):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                completion(profileCreationResponse, 1)
-                            default:
-                                completion(nil, -1)
-                            }
+            ]
+            
+            Alamofire.request(ConsumptionRouter.createUserProfile(curp: curp, parameters: parameters)).responseObject { (response: DataResponse<ProfileCreationResponse>) in
+                switch response.result {
+                case .success(let profileCreationResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            completion(profileCreationResponse, 1)
+                        default:
+                            completion(nil, -1)
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        completion(nil, -1)
                     }
+                case .failure(_):
+                    completion(nil, -1)
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             completion(nil, 0)
         }
     }
@@ -240,41 +196,30 @@ class UserRequests {
      - Parameter privacyPolicyResponse: Response object. Only contains a non-empty array when the responseCode is 1.
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func getPrivacyPolicy(businessLine: String, completion: @escaping (_ privacyPolicyResponse: PrivacyPolicyResponse?, _ responseCode: Int) -> ()) {
+    func getPrivacyPolicy(businessLine: Int, completion: @escaping (_ privacyPolicyResponse: PrivacyPolicyResponse?, _ responseCode: Int) -> ()) {
         //Check internet connection
         let reachability = try! Reachability()
         
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            ConsumptionRouter.self.token = UserDefaults.standard.mauToken
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                ConsumptionRouter.self.token = UserDefaults.standard.mauToken
-                
-                Alamofire.request(ConsumptionRouter.getPrivacyPolicy(businessLine: businessLine)).responseObject { (response: DataResponse<PrivacyPolicyResponse>) in
-                    switch response.result {
-                    case .success(let privacyPolicyResponse):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                completion(privacyPolicyResponse, 1)
-                            default:
-                                completion(nil, -1)
-                            }
+            Alamofire.request(ConsumptionRouter.getPrivacyPolicy(businessLine: businessLine)).responseObject { (response: DataResponse<PrivacyPolicyResponse>) in
+                switch response.result {
+                case .success(let privacyPolicyResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            completion(privacyPolicyResponse, 1)
+                        default:
+                            completion(nil, -1)
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        completion(nil, -1)
                     }
+                case .failure(_):
+                    completion(nil, -1)
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             completion(nil, 0)
         }
     }
@@ -290,37 +235,26 @@ class UserRequests {
         //Check internet connection
         let reachability = try! Reachability()
         
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            ConsumptionRouter.self.token = UserDefaults.standard.mauToken
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                ConsumptionRouter.self.token = UserDefaults.standard.mauToken
-                
-                Alamofire.request(ConsumptionRouter.getPrivacyPolicyStatus(curp: curp)).responseObject { (response: DataResponse<PrivacyPolicyStatusResponse>) in
-                    switch response.result {
-                    case .success(let privacyPolicyStatusResponse):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                completion(privacyPolicyStatusResponse, 1)
-                            default:
-                                completion(nil, -1)
-                            }
+            Alamofire.request(ConsumptionRouter.getPrivacyPolicyStatus(curp: curp)).responseObject { (response: DataResponse<PrivacyPolicyStatusResponse>) in
+                switch response.result {
+                case .success(let privacyPolicyStatusResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            completion(privacyPolicyStatusResponse, 1)
+                        default:
+                            completion(nil, -1)
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        completion(nil, -1)
                     }
+                case .failure(_):
+                    completion(nil, -1)
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             completion(nil, 0)
         }
     }
@@ -336,47 +270,36 @@ class UserRequests {
      - Parameter privacyPolicyStatusResponse: Response object. Only contains a non-empty array when the responseCode is 1.
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func savePrivacyPolicyResponse(curp: String, businessLine: String, userName: String, latitude: String, longitude: String, completion: @escaping (_ savePrivacyPolicyResponse: SavePrivacyPolicyResponse?, _ responseCode: Int) -> ()) {
+    func savePrivacyPolicyResponse(curp: String, businessLine: Int, userName: String, latitude: String, longitude: String, completion: @escaping (_ savePrivacyPolicyResponse: SavePrivacyPolicyResponse?, _ responseCode: Int) -> ()) {
         //Check internet connection
         let reachability = try! Reachability()
         
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            ConsumptionRouter.self.token = UserDefaults.standard.mauToken
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                ConsumptionRouter.self.token = UserDefaults.standard.mauToken
-                
-                let parameters: [String: Any] = [
-                    "lineaNegocio": ["id": businessLine],
-                    "usuario": userName,
-                    "coordenadas": ["latitud": latitude, "longitud": longitude]
-                ]
-                
-                Alamofire.request(ConsumptionRouter.savePrivacyPolicyResponse(curp: curp, parameters: parameters)).responseObject { (response: DataResponse<SavePrivacyPolicyResponse>) in
-                    switch response.result {
-                    case .success(let savePrivacyPolicyResponse):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                completion(savePrivacyPolicyResponse, 1)
-                            default:
-                                completion(nil, -1)
-                            }
+            let parameters: [String: Any] = [
+                "lineaNegocio": ["id": "\(businessLine)"],
+                "usuario": userName,
+                "coordenadas": ["latitud": latitude, "longitud": longitude]
+            ]
+            
+            Alamofire.request(ConsumptionRouter.savePrivacyPolicyResponse(curp: curp, parameters: parameters)).responseObject { (response: DataResponse<SavePrivacyPolicyResponse>) in
+                switch response.result {
+                case .success(let savePrivacyPolicyResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            completion(savePrivacyPolicyResponse, 1)
+                        default:
+                            completion(nil, -1)
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        completion(nil, -1)
                     }
+                case .failure(_):
+                    completion(nil, -1)
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             completion(nil, 0)
         }
     }
@@ -392,43 +315,32 @@ class UserRequests {
         //Check internet connection
         let reachability = try! Reachability()
         
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            ConsumptionRouter.self.token = UserDefaults.standard.mauToken
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                ConsumptionRouter.self.token = UserDefaults.standard.mauToken
-                
-                let parameters: [String: Any] = [
-                    "rqt": [
-                        "curp": curp
-                    ]
+            let parameters: [String: Any] = [
+                "rqt": [
+                    "curp": curp
                 ]
-                
-                Alamofire.request(ConsumptionRouter.getARCO(parameters: parameters)).responseObject { (response: DataResponse<ARCOResponse>) in
-                    switch response.result {
-                    case .success(let arcoResponse):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                completion(arcoResponse, 1)
-                            default:
-                                completion(nil, -1)
-                            }
+            ]
+            
+            Alamofire.request(ConsumptionRouter.getARCO(parameters: parameters)).responseObject { (response: DataResponse<ARCOResponse>) in
+                switch response.result {
+                case .success(let arcoResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            completion(arcoResponse, 1)
+                        default:
+                            completion(nil, -1)
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        completion(nil, -1)
                     }
+                case .failure(_):
+                    completion(nil, -1)
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             completion(nil, 0)
         }
     }
@@ -446,45 +358,34 @@ class UserRequests {
         //Check internet connection
         let reachability = try! Reachability()
         
-        #if DEBUG
-        print(reachability.connection)
-        #endif
-        
         //Consumption
-        reachability.whenReachable = { _ in
+        if reachability.connection != .unavailable {
+            ConsumptionRouter.self.token = UserDefaults.standard.mauToken
             
-            if reachability.connection == .cellular || reachability.connection == .wifi {
-                ConsumptionRouter.self.token = UserDefaults.standard.mauToken
-                
-                let parameters: [String: Any] = [
-                    "rqt": [
-                        "nombre": name,
-                        "apPaterno": lastName,
-                        "apMaterno": mothersLastName
-                    ]
+            let parameters: [String: Any] = [
+                "rqt": [
+                    "nombre": name,
+                    "apPaterno": lastName,
+                    "apMaterno": mothersLastName
                 ]
-                
-                Alamofire.request(ConsumptionRouter.getREUS(parameters: parameters)).responseObject { (response: DataResponse<REUSResponse>) in
-                    switch response.result {
-                    case .success(let reusResponse):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                completion(reusResponse, 1)
-                            default:
-                                completion(nil, -1)
-                            }
+            ]
+            
+            Alamofire.request(ConsumptionRouter.getREUS(parameters: parameters)).responseObject { (response: DataResponse<REUSResponse>) in
+                switch response.result {
+                case .success(let reusResponse):
+                    if let httpStatusCode = response.response?.statusCode {
+                        switch httpStatusCode {
+                        case 200:
+                            completion(reusResponse, 1)
+                        default:
+                            completion(nil, -1)
                         }
-                    case .failure(let error):
-                        #if DEBUG
-                        print(error)
-                        #endif
-                        completion(nil, -1)
                     }
+                case .failure(_):
+                    completion(nil, -1)
                 }
             }
-        }
-        reachability.whenUnreachable = { _ in
+        } else {
             completion(nil, 0)
         }
     }

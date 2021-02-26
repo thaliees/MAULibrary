@@ -10,4 +10,5 @@ import Foundation
 protocol EnterTokenDelegate: BaseDelegate {
     func showAuthenticationSuccesful()
     func showAuthenticationError()
+    func showLimitExceeded()
 }

@@ -9,15 +9,15 @@ import Foundation
 import ObjectMapper
 
 /// Object mapper response for the privacy policy service
-class PrivacyPolicyResponse: Mappable {
+public class PrivacyPolicyResponse: Mappable {
     /// Business line of the required privacy policy
     var businessLine: ValueID?
     /// Required privacy policy
     var privacyPolicy: String?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         businessLine <- map["lineaNegocio"]
         privacyPolicy <- map["avisoPrivacidad"]
     }

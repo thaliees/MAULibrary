@@ -7,7 +7,7 @@
 
 import Foundation
 
-class APIConsumption {
+public class APIConsumption {
     
     /**
      Retrives the user's profile information (CURP, facial biometrics, fingerprint biometrics, phone number, email and BAU data)
@@ -17,7 +17,7 @@ class APIConsumption {
      - Parameter profileResponse: Response object from the server. Only contains a value when responseCode is 1.
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func getUserProfile(of curp: String, completion: @escaping (_ profileResponse: ProfileResponse?, _ responseCode: Int) -> ()) {
+    public static func getUserProfile(of curp: String, completion: @escaping (_ profileResponse: ProfileResponse?, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -44,7 +44,7 @@ class APIConsumption {
      - Parameter criticalityMatrixResponse: Response object. Only contains a non-empty array when the responseCode is 1.
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func getCriticalityMatrix(processID: String, subprocessID: String, originID: String, completion: @escaping (_ criticalityMatrixResponse: [CriticalityMatrixResponse]?, _ responseCode: Int) -> ()) {
+    public static func getCriticalityMatrix(processID: Int, subprocessID: Int, originID: Int, completion: @escaping (_ criticalityMatrixResponse: [CriticalityMatrixResponse]?, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -77,7 +77,7 @@ class APIConsumption {
      - Parameter profileCreationResponse: Response object. Only contains a non-empty array when the responseCode is 1.
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func createUserProfile(curp: String, fullName: String, bucID: String, reasonID: String, originID: String, roleID: String, prospectName: String, prospectLastName: String, prospectMothersLastName: String, completion: @escaping (_ profileCreationResponse: ProfileCreationResponse?, _ responseCode: Int) -> ()) {
+    public static func createUserProfile(curp: String, fullName: String, bucID: Int, reasonID: Int, originID: Int, roleID: Int, prospectName: String, prospectLastName: String, prospectMothersLastName: String, completion: @escaping (_ profileCreationResponse: ProfileCreationResponse?, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -101,7 +101,7 @@ class APIConsumption {
      - Parameter privacyPolicyResponse: Response object. Only contains a non-empty array when the responseCode is 1.
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func getPrivacyPolicy(businessLine: String, completion: @escaping (_ privacyPolicyResponse: PrivacyPolicyResponse?, _ responseCode: Int) -> ()) {
+    public static func getPrivacyPolicy(businessLine: Int, completion: @escaping (_ privacyPolicyResponse: PrivacyPolicyResponse?, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -125,7 +125,7 @@ class APIConsumption {
      - Parameter privacyPolicyStatusResponse: Response object. Only contains a non-empty array when the responseCode is 1.
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func getPrivacyPolicyStatus(curp: String, completion: @escaping (_ privacyPolicyStatusResponse: PrivacyPolicyStatusResponse?, _ responseCode: Int) -> ()) {
+    public static func getPrivacyPolicyStatus(curp: String, completion: @escaping (_ privacyPolicyStatusResponse: PrivacyPolicyStatusResponse?, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -153,7 +153,7 @@ class APIConsumption {
      - Parameter privacyPolicyStatusResponse: Response object. Only contains a non-empty array when the responseCode is 1.
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func savePrivacyPolicyResponse(curp: String, businessLine: String, userName: String, latitude: String, longitude: String, completion: @escaping (_ savePrivacyPolicyResponse: SavePrivacyPolicyResponse?, _ responseCode: Int) -> ()) {
+    public static func savePrivacyPolicyResponse(curp: String, businessLine: Int, userName: String, latitude: String, longitude: String, completion: @escaping (_ savePrivacyPolicyResponse: SavePrivacyPolicyResponse?, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -177,7 +177,7 @@ class APIConsumption {
      - Parameter hasARCO: Return true if has ARCO rights and false if not
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func hastARCORights(curp: String, completion: @escaping (_ hasARCO: Bool, _ responseCode: Int) -> ()) {
+    public static func hastARCORights(curp: String, completion: @escaping (_ hasARCO: Bool, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -207,7 +207,7 @@ class APIConsumption {
      - Parameter hasREUS: Return true if has REUS rights and false if not
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response
      */
-    func hasREUSRights(name: String, lastName: String, mothersLastName: String, completion: @escaping (_ hasREUS: Bool, _ responseCode: Int) -> ()) {
+    public static func hasREUSRights(name: String, lastName: String, mothersLastName: String, completion: @escaping (_ hasREUS: Bool, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -233,13 +233,12 @@ class APIConsumption {
      - Parameter curp: Client's CURP
      - Parameter processID: ID of the process
      - Parameter subprocessID: ID of the subprocess
-     - Parameter factorID: ID of the factor
      - Parameter originID: ID of the origin
      - Parameter phoneNumber: Client's phone number
      - Parameter tokenSended: Tells if the token was sended to the client
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection, 1 if is a successful response and 3 if the user exceeded daily trys.
      */
-    func sendSMSToken(curp: String, processID: String, subprocessID: String, factorID: String, originID: String, phoneNumber: String, completion: @escaping (_ tokenSended: Bool, _ responseCode: Int) -> ()) {
+    public static func sendSMSToken(curp: String, processID: Int, subprocessID: Int, originID: Int, phoneNumber: String, completion: @escaping (_ tokenSended: Bool, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -247,7 +246,7 @@ class APIConsumption {
             case 0:
                 completion(false, code)
             case 1:
-                TokenRequests().sendSMSToken(curp: curp, processID: processID, subprocessID: subprocessID, factorID: factorID, originID: originID, phoneNumber: phoneNumber) { tokenSended, code in
+                TokenRequests().sendSMSToken(curp: curp, processID: processID, subprocessID: subprocessID, originID: originID, phoneNumber: phoneNumber) { tokenSended, code in
                     completion(tokenSended, code)
                 }
             default:
@@ -261,13 +260,12 @@ class APIConsumption {
      - Parameter curp: Client's CURP
      - Parameter processID: ID of the process
      - Parameter subprocessID: ID of the subprocess
-     - Parameter factorID: ID of the factor
      - Parameter originID: ID of the origin
      - Parameter phoneNumber: Client's phone number
      - Parameter tokenSended: Tells if the token was sended to the client
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection, 1 if is a successful response and 2 if the token expired and you need to create a new one.
      */
-    func resendSMSToken(curp: String, processID: String, subprocessID: String, factorID: String, originID: String, phoneNumber: String, completion: @escaping (_ tokenSended: Bool, _ responseCode: Int) -> ()) {
+    public static func resendSMSToken(curp: String, processID: Int, subprocessID: Int, originID: Int, phoneNumber: String, completion: @escaping (_ tokenSended: Bool, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -275,7 +273,7 @@ class APIConsumption {
             case 0:
                 completion(false, code)
             case 1:
-                TokenRequests().resendSMSToken(curp: curp, processID: processID, subprocessID: subprocessID, factorID: factorID, originID: originID, phoneNumber: phoneNumber) { tokenSended, code in
+                TokenRequests().resendSMSToken(curp: curp, processID: processID, subprocessID: subprocessID, originID: originID, phoneNumber: phoneNumber) { tokenSended, code in
                     completion(tokenSended, code)
                 }
             default:
@@ -289,13 +287,12 @@ class APIConsumption {
      - Parameter curp: Client's CURP
      - Parameter processID: ID of the process
      - Parameter subprocessID: ID of the subprocess
-     - Parameter factorID: ID of the factor
      - Parameter originID: ID of the origin
      - Parameter clientEmail: Client's email
      - Parameter tokenSended: Tells if the token was sended to the client
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection, 1 if is a successful response and 3 if the user exceeded daily trys.
      */
-    func sendEmailToken(curp: String, processID: String, subprocessID: String, factorID: String, originID: String, clientEmail: String, completion: @escaping (_ tokenSended: Bool, _ responseCode: Int) -> ()) {
+    public static func sendEmailToken(curp: String, processID: Int, subprocessID: Int, originID: Int, clientEmail: String, completion: @escaping (_ tokenSended: Bool, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -303,7 +300,7 @@ class APIConsumption {
             case 0:
                 completion(false, code)
             case 1:
-                TokenRequests().sendEmailToken(curp: curp, processID: processID, subprocessID: subprocessID, factorID: factorID, originID: originID, clientEmail: clientEmail) { tokenSended, code in
+                TokenRequests().sendEmailToken(curp: curp, processID: processID, subprocessID: subprocessID, originID: originID, clientEmail: clientEmail) { tokenSended, code in
                     completion(tokenSended, code)
                 }
             default:
@@ -317,13 +314,12 @@ class APIConsumption {
      - Parameter curp: Client's CURP
      - Parameter processID: ID of the process
      - Parameter subprocessID: ID of the subprocess
-     - Parameter factorID: ID of the factor
      - Parameter originID: ID of the origin
      - Parameter clientEmail: Client's email
      - Parameter tokenSended: Tells if the token was sended to the client
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection, 1 if is a successful response and 2 if the token expired and you need to create a new one.
      */
-    func resendEmailToken(curp: String, processID: String, subprocessID: String, factorID: String, originID: String, clientEmail: String, completion: @escaping (_ tokenSended: Bool, _ responseCode: Int) -> ()) {
+    public static func resendEmailToken(curp: String, processID: Int, subprocessID: Int, originID: Int, clientEmail: String, completion: @escaping (_ tokenSended: Bool, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -331,7 +327,7 @@ class APIConsumption {
             case 0:
                 completion(false, code)
             case 1:
-                TokenRequests().sendEmailToken(curp: curp, processID: processID, subprocessID: subprocessID, factorID: factorID, originID: originID, clientEmail: clientEmail) { tokenSended, code in
+                TokenRequests().sendEmailToken(curp: curp, processID: processID, subprocessID: subprocessID, originID: originID, clientEmail: clientEmail) { tokenSended, code in
                     completion(tokenSended, code)
                 }
             default:
@@ -345,13 +341,13 @@ class APIConsumption {
      - Parameter curp: Client's CURP
      - Parameter processID: ID of the process
      - Parameter subprocessID: ID of the subprocess
-     - Parameter factorID: ID of the factor
      - Parameter originID: ID of the origin
      - Parameter token: Token to validate
+     - Parameter isEmailToken: true if the token comes from email
      - Parameter isValid: Tells if the token is valid with the one stored in the server
      - Parameter responseCode: Internal value for flow control. It returns -1 if is a server error, 0 if don't have Internet connection and 1 if is a successful response.
      */
-    func validateToken(curp: String, processID: String, subprocessID: String, factorID: String, originID: String, token: String, completion: @escaping (_ isValid: Bool, _ responseCode: Int) -> ()) {
+    public static func validateToken(curp: String, processID: Int, subprocessID: Int, originID: Int, token: String, isEmailToken: Bool, completion: @escaping (_ isValid: Bool, _ responseCode: Int) -> ()) {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
@@ -359,7 +355,7 @@ class APIConsumption {
             case 0:
                 completion(false, code)
             case 1:
-                TokenRequests().validateToken(curp: curp, processID: processID, subprocessID: subprocessID, factorID: factorID, originID: originID, token: token) { validToken, code in
+                TokenRequests().validateToken(curp: curp, processID: processID, subprocessID: subprocessID, originID: originID, token: token, isEmailToken: isEmailToken) { validToken, code in
                     completion(validToken, code)
                 }
             default:

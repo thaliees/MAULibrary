@@ -11,7 +11,7 @@ import ObjectMapper
 /**
  For the profile response, if the authentication (email or sms) data has status ID = 136, is valid. For facial and dactilar, must be status ID = 201.
  */
-class ProfileResponse: Mappable {
+public class ProfileResponse: Mappable {
     /// Client CURP data
     var curpData: CURPData?
     /// Client phone number data
@@ -25,9 +25,9 @@ class ProfileResponse: Mappable {
     /// Client BAU data
     var bauData: BAUData?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         curpData <- map["curp"]
         phoneNumberData <- map["celular"]
         emailData <- map["correo"]
@@ -38,7 +38,7 @@ class ProfileResponse: Mappable {
 }
 
 /// Data of client CURP
-class CURPData: Mappable {
+public class CURPData: Mappable {
     /// Client CURP
     var curp: String?
     /// Status of the CURP
@@ -48,9 +48,9 @@ class CURPData: Mappable {
     /// Last update date of the CURP
     var updateDate: String?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         curp <- map["curp"]
         status <- map["estado"]
         origin <- map["origen"]
@@ -59,7 +59,7 @@ class CURPData: Mappable {
 }
 
 /// Data of client phone number
-class PhoneNumberData: Mappable {
+public class PhoneNumberData: Mappable {
     /// Client phone number
     var phoneNumber: String?
     /// Status of the phone number
@@ -69,9 +69,9 @@ class PhoneNumberData: Mappable {
     /// Last update date of the phone number
     var updateDate: String?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         phoneNumber <- map["celular"]
         status <- map["estado"]
         origin <- map["origen"]
@@ -80,7 +80,7 @@ class PhoneNumberData: Mappable {
 }
 
 /// Data of client email
-class EmailData: Mappable {
+public class EmailData: Mappable {
     /// Client email
     var email: String?
     /// Status of the email
@@ -90,9 +90,9 @@ class EmailData: Mappable {
     /// Last update date of the email
     var updateDate: String?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         email <- map["correo"]
         status <- map["estado"]
         origin <- map["origen"]
@@ -101,7 +101,7 @@ class EmailData: Mappable {
 }
 
 /// Data of client facial biometrics
-class FacialBiometricsData: Mappable {
+public class FacialBiometricsData: Mappable {
     /// Status of the facial biometrics
     var status: ValueID?
     /// Origin of the facial biometrics
@@ -109,9 +109,9 @@ class FacialBiometricsData: Mappable {
     /// Last update date of the facial biometrics
     var updateDate: String?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         status <- map["estado"]
         origin <- map["origen"]
         updateDate <- map["fechaActualizacion"]
@@ -119,7 +119,7 @@ class FacialBiometricsData: Mappable {
 }
 
 /// Data of client fingerprint biometrics
-class FingerprintBiometricsData: Mappable {
+public class FingerprintBiometricsData: Mappable {
     /// Status of the fingerprint biometrics
     var status: ValueID?
     /// Origin of the fingerprint biometrics
@@ -127,9 +127,9 @@ class FingerprintBiometricsData: Mappable {
     /// Last update date of the fingerprint biometrics
     var updateDate: String?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         status <- map["estado"]
         origin <- map["origen"]
         updateDate <- map["fechaActualizacion"]
@@ -137,7 +137,7 @@ class FingerprintBiometricsData: Mappable {
 }
 
 /// BAU Data
-class BAUData: Mappable {
+public class BAUData: Mappable {
     /// Role of the client from BAU
     var role: ValueID?
     /// Origin of the BAU data
@@ -145,9 +145,9 @@ class BAUData: Mappable {
     /// Register date in BAU
     var registerDate: String?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         role <- map["rol"]
         origin <- map["origen"]
         registerDate <- map["fechaRegistro"]
@@ -155,15 +155,15 @@ class BAUData: Mappable {
 }
 
 //Generic class with ID-Value relation
-class ValueID: Mappable {
+public class ValueID: Mappable {
     ///ID of the element
     var id: String?
     ///Current value of the element (linked with the ID)
     var value: String?
     
-    required init?(map: Map) { }
+    public required init?(map: Map) { }
     
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         id <- map["id"]
         value <- map["valor"]
     }

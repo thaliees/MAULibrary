@@ -8,20 +8,19 @@
 import Foundation
 
 public class User: Codable {
+    public var name: String
+    public var lastName: String
+    public var mothersLastName: String
+    public var client: String
+    public var phoneNumber: String = ""
+    public var email: String = ""
+    public var account: String
+    public var curp: String
+    public var processID: Int
+    public var subProcessID: Int
+    public var originID: Int
     
-    var name: String
-    var lastName: String
-    var mothersLastName: String
-    var client: String
-    var phoneNumber: String = ""
-    var email: String = ""
-    var account: String
-    var curp: String
-    var processID: String
-    var subProcessID: String
-    var originID: String
-    
-    init(name: String, lastName: String, mothersLastName: String, client: String, account: String, curp: String, processID: String, subProcessID: String, originID: String) {
+    public init(name: String, lastName: String, mothersLastName: String, client: String, account: String, curp: String, processID: Int, subProcessID: Int, originID: Int) {
         self.name = name
         self.lastName = lastName
         self.mothersLastName = mothersLastName

@@ -20,7 +20,7 @@
         <!--Authentication Error View Controller-->
         <scene sceneID="fjG-cK-YLG">
             <objects>
-                <viewController storyboardIdentifier="AuthenticationErrorViewController" modalPresentationStyle="fullScreen" id="xjr-vU-UvN" customClass="AuthenticationErrorViewController" customModule="Autenticacion_Universal" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthenticationErrorViewController" modalPresentationStyle="fullScreen" id="xjr-vU-UvN" customClass="AuthenticationErrorViewController" customModule="MAULibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zKO-Ew-vi1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -103,12 +103,164 @@ tu identidad</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aWO-Y8-jSy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3884" y="151"/>
+            <point key="canvasLocation" x="3828" y="151"/>
+        </scene>
+        <!--Limit Exceeded Try Another View Controller-->
+        <scene sceneID="hpP-Ca-74W">
+            <objects>
+                <viewController storyboardIdentifier="LimitExceededTryAnotherViewController" modalPresentationStyle="fullScreen" id="HjT-h2-xha" customClass="LimitExceededTryAnotherViewController" customModule="MAULibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kqa-ac-Z2a">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" alpha="0.98000001907348633" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ahM-M2-hDp">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Rtn-Ho-Pu3">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vei-wb-70d">
+                                <rect key="frame" x="355" y="68" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="LHB-An-HOs"/>
+                                    <constraint firstAttribute="height" constant="35" id="bQD-mP-i3L"/>
+                                </constraints>
+                                <state key="normal" image="close"/>
+                                <connections>
+                                    <action selector="closeTapped:" destination="HjT-h2-xha" eventType="touchUpInside" id="1Xj-hw-tAg"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redError" translatesAutoresizingMaskIntoConstraints="NO" id="0Mz-SA-dEe">
+                                <rect key="frame" x="170.5" y="218" width="73" height="73"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="73" id="192-SI-Mxv"/>
+                                    <constraint firstAttribute="height" constant="73" id="TWf-GR-Evz"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qd0-vJ-P4A">
+                                <rect key="frame" x="79" y="772" width="256" height="50"/>
+                                <color key="backgroundColor" name="NavyBlue"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="256" id="9E9-gP-43n"/>
+                                    <constraint firstAttribute="height" constant="50" id="WPE-Lp-eMb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="16"/>
+                                <state key="normal" title="Inténtalo nuevamente">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="25"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="tryAgainTapped:" destination="HjT-h2-xha" eventType="touchUpInside" id="kPP-8V-zhJ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAQ-oT-V19">
+                                <rect key="frame" x="60" y="341" width="294.5" height="70"/>
+                                <string key="text">Excediste el número
+de intentos por día, inténtalo
+con otra opción de autenticación</string>
+                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="20"/>
+                                <color key="textColor" name="Cerulean"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="DpF-ub-AQr"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="ahM-M2-hDp" secondAttribute="bottom" id="0tN-Zl-hEV"/>
+                            <constraint firstItem="ahM-M2-hDp" firstAttribute="leading" secondItem="DpF-ub-AQr" secondAttribute="leading" id="25l-dV-wWQ"/>
+                            <constraint firstItem="0Mz-SA-dEe" firstAttribute="top" secondItem="vei-wb-70d" secondAttribute="bottom" constant="115" id="73H-XQ-giC"/>
+                            <constraint firstItem="0Mz-SA-dEe" firstAttribute="centerX" secondItem="kqa-ac-Z2a" secondAttribute="centerX" id="IE4-GK-yyU"/>
+                            <constraint firstItem="DpF-ub-AQr" firstAttribute="trailing" secondItem="vei-wb-70d" secondAttribute="trailing" constant="24" id="Jt0-NW-ccZ"/>
+                            <constraint firstItem="kAQ-oT-V19" firstAttribute="centerX" secondItem="kqa-ac-Z2a" secondAttribute="centerX" id="Ojb-VO-yVs"/>
+                            <constraint firstItem="Qd0-vJ-P4A" firstAttribute="centerX" secondItem="kqa-ac-Z2a" secondAttribute="centerX" id="aVu-1F-s1i"/>
+                            <constraint firstItem="kAQ-oT-V19" firstAttribute="top" secondItem="0Mz-SA-dEe" secondAttribute="bottom" constant="50" id="gkQ-uy-thc"/>
+                            <constraint firstItem="vei-wb-70d" firstAttribute="top" secondItem="DpF-ub-AQr" secondAttribute="top" constant="24" id="ibZ-Rd-Sca"/>
+                            <constraint firstItem="ahM-M2-hDp" firstAttribute="trailing" secondItem="DpF-ub-AQr" secondAttribute="trailing" id="jNT-vk-LU6"/>
+                            <constraint firstItem="ahM-M2-hDp" firstAttribute="top" secondItem="kqa-ac-Z2a" secondAttribute="top" id="piP-b9-6EA"/>
+                            <constraint firstItem="DpF-ub-AQr" firstAttribute="bottom" secondItem="Qd0-vJ-P4A" secondAttribute="bottom" constant="40" id="yEs-SI-LPf"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="wP1-5A-Mip"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ytc-ga-I1B" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5236" y="151"/>
+        </scene>
+        <!--Limit Exceeded View Controller-->
+        <scene sceneID="gNb-yh-11A">
+            <objects>
+                <viewController storyboardIdentifier="LimitExceededViewController" modalPresentationStyle="fullScreen" id="xoh-do-JIz" customClass="LimitExceededViewController" customModule="MAULibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fCf-wq-9Ce">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" alpha="0.98000001907348633" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xa4-Od-xRU">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="QQ3-2L-79m">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uYK-2q-SlX">
+                                <rect key="frame" x="355" y="68" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="46b-4y-Re6"/>
+                                    <constraint firstAttribute="height" constant="35" id="gMX-9g-jeR"/>
+                                </constraints>
+                                <state key="normal" image="close"/>
+                                <connections>
+                                    <action selector="closeTapped:" destination="xoh-do-JIz" eventType="touchUpInside" id="yNl-Vb-0zc"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redError" translatesAutoresizingMaskIntoConstraints="NO" id="Phb-D9-eGN">
+                                <rect key="frame" x="170.5" y="218" width="73" height="73"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="73" id="BaS-st-bnm"/>
+                                    <constraint firstAttribute="height" constant="73" id="ZXP-S8-Lft"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sS-Kf-DkY">
+                                <rect key="frame" x="61" y="341" width="292.5" height="70"/>
+                                <string key="text">Excediste el número de intentos 
+por día, intenta nuevamente
+ mañana</string>
+                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="20"/>
+                                <color key="textColor" name="Cerulean"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="9tD-be-BUW"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="uYK-2q-SlX" firstAttribute="top" secondItem="9tD-be-BUW" secondAttribute="top" constant="24" id="2Om-ad-w7q"/>
+                            <constraint firstItem="xa4-Od-xRU" firstAttribute="top" secondItem="fCf-wq-9Ce" secondAttribute="top" id="5lu-gs-a0l"/>
+                            <constraint firstItem="xa4-Od-xRU" firstAttribute="leading" secondItem="9tD-be-BUW" secondAttribute="leading" id="CZm-cm-qeL"/>
+                            <constraint firstAttribute="bottom" secondItem="xa4-Od-xRU" secondAttribute="bottom" id="FZM-EL-tfa"/>
+                            <constraint firstItem="9tD-be-BUW" firstAttribute="trailing" secondItem="uYK-2q-SlX" secondAttribute="trailing" constant="24" id="Vr2-MW-bJT"/>
+                            <constraint firstItem="Phb-D9-eGN" firstAttribute="centerX" secondItem="fCf-wq-9Ce" secondAttribute="centerX" id="X6U-1q-8Ka"/>
+                            <constraint firstItem="7sS-Kf-DkY" firstAttribute="top" secondItem="Phb-D9-eGN" secondAttribute="bottom" constant="50" id="hd7-Pm-xyS"/>
+                            <constraint firstItem="Phb-D9-eGN" firstAttribute="top" secondItem="uYK-2q-SlX" secondAttribute="bottom" constant="115" id="msT-gg-jUq"/>
+                            <constraint firstItem="7sS-Kf-DkY" firstAttribute="centerX" secondItem="fCf-wq-9Ce" secondAttribute="centerX" id="nUD-hp-b09"/>
+                            <constraint firstItem="xa4-Od-xRU" firstAttribute="trailing" secondItem="9tD-be-BUW" secondAttribute="trailing" id="pxw-wq-1Um"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="OBL-tL-gjJ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pU9-KY-F2a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5967" y="151"/>
         </scene>
         <!--Authentication Successful View Controller-->
         <scene sceneID="TJ3-E0-8la">
             <objects>
-                <viewController storyboardIdentifier="AuthenticationSuccessfulViewController" modalPresentationStyle="fullScreen" id="TO6-m6-oRe" customClass="AuthenticationSuccessfulViewController" customModule="Autenticacion_Universal" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthenticationSuccessfulViewController" modalPresentationStyle="fullScreen" id="TO6-m6-oRe" customClass="AuthenticationSuccessfulViewController" customModule="MAULibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rMh-ab-ec6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -173,7 +325,7 @@ de manera exitosa</string>
         <!--Connection Error View Controller-->
         <scene sceneID="sjp-yE-QYK">
             <objects>
-                <viewController storyboardIdentifier="ConnectionErrorViewController" modalPresentationStyle="fullScreen" id="J7e-VV-WCE" customClass="ConnectionErrorViewController" customModule="Autenticacion_Universal" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConnectionErrorViewController" modalPresentationStyle="fullScreen" id="J7e-VV-WCE" customClass="ConnectionErrorViewController" customModule="MAULibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gqL-SL-iaX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -235,7 +387,7 @@ más tarde</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0qC-x4-NRr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4586" y="151"/>
+            <point key="canvasLocation" x="4520" y="151"/>
         </scene>
     </scenes>
     <resources>

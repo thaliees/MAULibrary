@@ -16,9 +16,9 @@ enum ConsumptionRouter: URLRequestConvertible {
     //User WS
     case requestAccessToken
     case getProfileInformation(curp: String)
-    case getCriticalityMatrix(processID: String, subprocessID: String, originID: String)
+    case getCriticalityMatrix(processID: Int, subprocessID: Int, originID: Int)
     case createUserProfile(curp: String, parameters: [String: Any])
-    case getPrivacyPolicy(businessLine: String)
+    case getPrivacyPolicy(businessLine: Int)
     case getPrivacyPolicyStatus(curp: String)
     case savePrivacyPolicyResponse(curp: String, parameters: [String: Any])
     case getARCO(parameters: [String: Any])
@@ -72,11 +72,7 @@ enum ConsumptionRouter: URLRequestConvertible {
     }
     
     func asURLRequest() throws -> URLRequest {
-        #if DEBUG
-        let url = URL(string: Servers.developmentURL)!
-        #else
-        let url = URL(string: Servers.productionURL)!
-        #endif
+        let url = URL(string: Servers.url)!
         
         var urlRequest = URLRequest(url: url.appendingPathComponent(path))
         urlRequest.httpMethod = method.rawValue

@@ -26,7 +26,7 @@ class ConnectionErrorViewController: UIViewController {
      Action when the close button is tapped
      */
     @IBAction func closeTapped(_ sender: UIButton) {
-        dismiss(animated: false)
+        dismiss(animated: true)
         NotificationCenter.default.post(name: Notification.Name(observerToCall.rawValue), object: nil)
     }
 }

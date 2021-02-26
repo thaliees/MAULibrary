@@ -8,11 +8,7 @@
 import UIKit
 import Lottie
 
-public protocol AuthenticationMAU {
-    func authentication(wasSuccesful: Bool)
-}
-
-class SelectAuthenticationMethodViewController: UIViewController {
+public class SelectAuthenticationMethodViewController: UIViewController {
     
     //MARK: - UI Properties
     @IBOutlet var extensionView: UIView!
@@ -28,26 +24,38 @@ class SelectAuthenticationMethodViewController: UIViewController {
     let presenter = SelectAuthenticationMethodPresenter()
     //This object comes from the main application
     var user: User!
-    
+    //Observers
+    var closeMAUObserver: NSObjectProtocol!
     
     //MARK: - Init
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //Save user information
-        //DUMMY DATA
-        user = User(name: "Ángel Eduardo", lastName: "Domínguez", mothersLastName: "Delgado", client: "0", account: "", curp: "DODA961018HVZMLN06", processID: "226", subProcessID: "406", originID: "34")
-        //END DUMMY DATA
-        UserDefaults.standard.userInformation = user
         
         presenter.setViewDelegate(selectAuthenticationMethodDelegate: self)
         
-        self.customizeWithProfuturoBar(view: extensionView)
+        createUIInitialModifications()
         addGesturesToViews()
-        defineObservers()
         
         animationView = LoaderAnimation()
         presenter.generateToken()
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //Add observers
+        defineObservers()
+        
+        //Block the cards for the user authentication options
+        blockedTokenAuthView.isHidden = UserDefaults.standard.canUseTokenAuthentication
+        blockedFaceAuthView.isHidden = UserDefaults.standard.canUseFacialAuthentication
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        //Remove observers
+        NotificationCenter.default.removeObserver(closeMAUObserver!)
     }
     
     //MARK: - Logic
@@ -65,8 +73,10 @@ class SelectAuthenticationMethodViewController: UIViewController {
      Defines the observers for this ViewControllers, specifically for connection errors
      */
     func defineObservers() {
-        NotificationCenter.default.addObserver(forName: Notification.Name(NotificationObserverServices.closeMAU.rawValue), object: nil, queue: nil) { _ in
-            self.dismiss(animated: true)
+        closeMAUObserver = NotificationCenter.default.addObserver(forName: Notification.Name(NotificationObserverServices.closeMAUSelectAuthentication.rawValue), object: nil, queue: nil) { _ in
+            self.hideLoader()
+            self.navigationController?.popViewController(animated: false)
+            NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.authenticationDenied.rawValue), object: nil)
         }
     }
     
@@ -124,14 +134,26 @@ class SelectAuthenticationMethodViewController: UIViewController {
             present(stepsTokenVC, animated: true)
         }
     }
+    
+    //MARK: - UI Modifications
+    /**
+     Adds initial modifications to the UI (like back buttons, navigation bar)
+     */
+    func createUIInitialModifications() {
+        //Add back button
+        self.addCustomBackButton()
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        self.customizeWithProfuturoBar(view: extensionView)
+    }
 }
 
 //MARK: - SelectAuthenticationMethodDelegate
 extension SelectAuthenticationMethodViewController: SelectAuthenticationMethodDelegate {
     func showConnectionErrorMessage() {
         let connectionErrorVC = ConnectionErrorViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
+        connectionErrorVC.observerToCall = .closeMAUSelectAuthentication
         connectionErrorVC.modalPresentationStyle = .overFullScreen
-        connectionErrorVC.observerToCall = .closeMAU
         animationView.stopAnimation()
         self.present(connectionErrorVC, animated: true)
     }
@@ -154,6 +176,11 @@ extension SelectAuthenticationMethodViewController: SelectAuthenticationMethodDe
         } else if (!UserDefaults.standard.canUseTokenAuthentication && UserDefaults.standard.canUseFacialAuthentication) {
             let instructionsFacialVC = InstructionsFacialViewController.instantiateFromAppStoryboard(appStoryboard: .facial)
             navigationController?.pushViewController(instructionsFacialVC, animated: true)
+        } else if (!UserDefaults.standard.canUseFacialAuthentication && !UserDefaults.standard.canUseTokenAuthentication) {
+            NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.closeMAUSelectAuthentication.rawValue), object: nil)
         }
     }
 }
+
+//MARK: - UIGestureRecognizerDelegate
+extension SelectAuthenticationMethodViewController: UIGestureRecognizerDelegate { }
