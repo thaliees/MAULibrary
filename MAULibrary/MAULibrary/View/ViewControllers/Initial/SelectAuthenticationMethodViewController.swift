@@ -45,17 +45,13 @@ public class SelectAuthenticationMethodViewController: UIViewController {
         
         //Add observers
         defineObservers()
-        
-        //Block the cards for the user authentication options
-        blockedTokenAuthView.isHidden = UserDefaults.standard.canUseTokenAuthentication
-        blockedFaceAuthView.isHidden = UserDefaults.standard.canUseFacialAuthentication
     }
     
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         //Remove observers
-        NotificationCenter.default.removeObserver(closeMAUObserver!)
+        NotificationCenter.default.removeObserver(closeMAUObserver)
     }
     
     //MARK: - Logic

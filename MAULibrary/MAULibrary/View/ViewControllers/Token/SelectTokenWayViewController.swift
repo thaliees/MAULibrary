@@ -27,14 +27,6 @@ class SelectTokenWayViewController: UIViewController {
         addGesturesToViews()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        //Check the current options for authentication
-        blockedCellphoneView.isHidden = UserDefaults.standard.canUseSMSTokenAuthentication
-        blockedEmailView.isHidden = UserDefaults.standard.canUseEmailTokenAuthentication
-    }
-    
     //MARK: - Logic
     /**
      Add tapped gestures to the views

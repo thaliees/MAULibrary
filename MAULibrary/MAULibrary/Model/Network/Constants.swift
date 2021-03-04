@@ -21,7 +21,7 @@ struct Servers {
     #elseif QA
     static let url = "https://api.qa.profuturo.mx/"
     #else
-    static let url = "https://api.profuturo.mx/"
+    static let url = "https://api.release.profuturo.mx/"
     #endif
 }
 
@@ -34,6 +34,7 @@ struct Paths {
     static let sendEmailToken = "mau/1/gt/token/correo/enviar"
     static let resendEmailToken = "mau/1/gt/token/correo/reenviar"
     static let validateToken = "mau/1/gt/token/validar"
+    static let getRemainingAttempts = "mau/1/gbd/dactilar/usuario"
 }
 
 struct ServerErrors {

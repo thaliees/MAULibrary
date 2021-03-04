@@ -21,10 +21,11 @@ enum Router: URLRequestConvertible {
     case sendEmailToken(parameters: [String: Any])
     case resendEmailToken(parameters: [String: Any])
     case validateToken(parameters: [String: Any])
+    case getRemainingAttempts(curp: String, processID: Int, subprocessID: Int, originID: Int, factorID: Int)
     
     var method: HTTPMethod {
         switch self {
-        case .getCriticalityMatrix, .getProfile:
+        case .getCriticalityMatrix, .getProfile, .getRemainingAttempts:
             return .get
         default:
             return .post
@@ -49,11 +50,13 @@ enum Router: URLRequestConvertible {
             return Paths.resendEmailToken
         case .validateToken:
             return Paths.validateToken
+        case .getRemainingAttempts:
+            return Paths.getRemainingAttempts
         }
     }
     
     func asURLRequest() throws -> URLRequest {
-        let url = URL(string: Servers.url)!
+        let url = URL(string: Servers.url)
         
         var urlRequest = URLRequest(url: url!.appendingPathComponent(path))
         urlRequest.httpMethod = method.rawValue
@@ -87,6 +90,10 @@ enum Router: URLRequestConvertible {
             return try JSONEncoding.default.encode(urlRequest, with: parameters)
         case .validateToken(let parameters):
             return try JSONEncoding.default.encode(urlRequest, with: parameters)
+        case .getRemainingAttempts(let curp, let processID, let subprocessID, let originID, let factorID):
+            urlRequest.url?.appendPathComponent("/\(curp)/origen/\(originID)/proceso/\(processID)/subproceso/\(subprocessID)/factor-autenticacion/\(factorID)/intentos")
+            urlRequest.url = URL(string: (urlRequest.url?.absoluteString.removingPercentEncoding)!)
+            return try URLEncoding.default.encode(urlRequest, with: nil)
         }
     }
 }

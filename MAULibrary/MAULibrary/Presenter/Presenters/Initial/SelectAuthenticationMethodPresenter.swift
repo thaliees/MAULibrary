@@ -83,19 +83,22 @@ class SelectAuthenticationMethodPresenter {
                         if let httpStatusCode = response.response?.statusCode {
                             switch httpStatusCode {
                             case 200:
-                                //SMS Authentication
-                                if criticalityResponse.contains(where: { $0.factor?.id == "154"} ) {
-                                    UserDefaults.standard.canUseSMSTokenAuthentication = true
-                                }
-                                
-                                //Email Authentication
-                                if criticalityResponse.contains(where: { $0.factor?.id == "155"} ) {
-                                    UserDefaults.standard.canUseEmailTokenAuthentication = true
-                                }
-                                
-                                //Facial Authentication
-                                if criticalityResponse.contains(where: { $0.factor?.id == "159"} ) {
-                                    UserDefaults.standard.canUseFacialAuthentication = true
+                                //Check for valid status
+                                if criticalityResponse.contains(where: { $0.status?.id == "176"} ) {
+                                    //SMS Authentication
+                                    if criticalityResponse.contains(where: { $0.factor?.id == "154"} ) {
+                                        UserDefaults.standard.canUseSMSTokenAuthentication = true
+                                    }
+                                    
+                                    //Email Authentication
+                                    if criticalityResponse.contains(where: { $0.factor?.id == "155"} ) {
+                                        UserDefaults.standard.canUseEmailTokenAuthentication = true
+                                    }
+                                    
+                                    //Facial Authentication
+                                    if criticalityResponse.contains(where: { $0.factor?.id == "159"} ) {
+                                        UserDefaults.standard.canUseFacialAuthentication = true
+                                    }
                                 }
                                 
                                 //Check authentication methods of the user
@@ -162,8 +165,59 @@ class SelectAuthenticationMethodPresenter {
                                     UserDefaults.standard.canUseFacialAuthentication = false
                                 }
                                 
-                                self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
-                                self.selectAuthenticationMethodDelegate?.hideLoader()
+                                self.getDailyAttempts(factorID: 154)
+                            default:
+                                self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
+                            }
+                        }
+                    case .failure(_):
+                        self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
+                    }
+                }
+        } else {
+            self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
+        }
+    }
+    
+    /**
+     Check if the authentication method has attempts
+     */
+    
+    func getDailyAttempts(factorID: Int) {
+        //Check internet connection
+        let reachability = try! Reachability()
+        
+        //Consumption
+        if reachability.connection != .unavailable {
+            Router.self.token = UserDefaults.standard.token
+            
+            let userInformation = UserDefaults.standard.userInformation
+            
+            Alamofire.request(
+                Router.getRemainingAttempts(curp: userInformation.curp, processID: userInformation.processID, subprocessID: userInformation.subProcessID, originID: userInformation.originID, factorID: factorID))
+                .responseObject { (response: DataResponse<DailyAttemptsResponse>) in
+                    switch response.result {
+                    case .success(let attemptsResponse):
+                        if let httpStatusCode = response.response?.statusCode {
+                            switch httpStatusCode {
+                            case 200:
+                                switch factorID {
+                                case 154:
+                                    UserDefaults.standard.canUseSMSTokenAuthentication = attemptsResponse.attempts == "0" ? false : true
+                                    
+                                    self.getDailyAttempts(factorID: 155)
+                                case 155:
+                                    UserDefaults.standard.canUseEmailTokenAuthentication = attemptsResponse.attempts == "0" ? false : true
+                                    
+                                    self.getDailyAttempts(factorID: 159)
+                                case 159:
+                                    UserDefaults.standard.canUseFacialAuthentication = attemptsResponse.attempts == "0" ? false : true
+                                    
+                                    self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
+                                    self.selectAuthenticationMethodDelegate?.hideLoader()
+                                default:
+                                    break
+                                }
                             default:
                                 self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
                             }

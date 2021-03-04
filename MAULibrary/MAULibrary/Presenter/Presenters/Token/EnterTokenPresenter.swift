@@ -161,6 +161,7 @@ class EnterTokenPresenter {
                         case 404:
                             if resendSMSTokenResponse.errorMessage == ServerErrors.timeExceededCreateNewToken {
                                 self.sendSMSToken()
+                                
                             } else {
                                 self.enterTokenDelegate?.showConnectionErrorMessage()
                             }

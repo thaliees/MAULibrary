@@ -62,9 +62,9 @@ class EnterTokenViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         //Remove observers
-        NotificationCenter.default.removeObserver(closeMAUPassedObserver!)
-        NotificationCenter.default.removeObserver(closeMAUDeniedObserver!)
-        NotificationCenter.default.removeObserver(tryAgainObserver!)
+        NotificationCenter.default.removeObserver(closeMAUPassedObserver)
+        NotificationCenter.default.removeObserver(closeMAUDeniedObserver)
+        NotificationCenter.default.removeObserver(tryAgainObserver)
     }
     
     //MARK: - Logic
