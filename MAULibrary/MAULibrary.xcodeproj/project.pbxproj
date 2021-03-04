@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55713C4822010F2DECE954F9 /* Pods_MAULibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916C685122262D547A142E /* Pods_MAULibrary.framework */; };
 		5D0E29EC25E8389600B0452A /* Token.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D0E29EB25E8389600B0452A /* Token.storyboard */; };
 		5DA0749825E75D3100122F0D /* MAULibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA0749625E75D3100122F0D /* MAULibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA074AF25E75D4C00122F0D /* TokenRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA074A225E75D4C00122F0D /* TokenRequests.swift */; };
@@ -91,8 +90,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0D898C89769275AEBBE5B4F6 /* Pods-MAULibrary.qa.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAULibrary.qa.xcconfig"; path = "Target Support Files/Pods-MAULibrary/Pods-MAULibrary.qa.xcconfig"; sourceTree = "<group>"; };
-		3778C69A72AB7807112BD972 /* Pods-MAULibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAULibrary.release.xcconfig"; path = "Target Support Files/Pods-MAULibrary/Pods-MAULibrary.release.xcconfig"; sourceTree = "<group>"; };
 		5D0E29EB25E8389600B0452A /* Token.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Token.storyboard; sourceTree = "<group>"; };
 		5DA0749325E75D3100122F0D /* MAULibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MAULibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DA0749625E75D3100122F0D /* MAULibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MAULibrary.h; sourceTree = "<group>"; };
@@ -175,8 +172,6 @@
 		5DA0751625E75D5300122F0D /* LoaderAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderAnimation.swift; sourceTree = "<group>"; };
 		5DA0751725E75D5300122F0D /* AppStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoryboard.swift; sourceTree = "<group>"; };
 		5DA0751925E75D5300122F0D /* profuturoAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = profuturoAnimation.json; sourceTree = "<group>"; };
-		88916C685122262D547A142E /* Pods_MAULibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MAULibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1A1601BB106283F2F584F1E /* Pods-MAULibrary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAULibrary.debug.xcconfig"; path = "Target Support Files/Pods-MAULibrary/Pods-MAULibrary.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,31 +179,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55713C4822010F2DECE954F9 /* Pods_MAULibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0FDB5F2261E4C0CA88000B9C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				E1A1601BB106283F2F584F1E /* Pods-MAULibrary.debug.xcconfig */,
-				0D898C89769275AEBBE5B4F6 /* Pods-MAULibrary.qa.xcconfig */,
-				3778C69A72AB7807112BD972 /* Pods-MAULibrary.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		5DA0748925E75D3100122F0D = {
 			isa = PBXGroup;
 			children = (
 				5DA0749525E75D3100122F0D /* MAULibrary */,
 				5DA0749425E75D3100122F0D /* Products */,
-				7FA7393942B5440F1050D468 /* Frameworks */,
-				0FDB5F2261E4C0CA88000B9C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -540,14 +521,6 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
-		7FA7393942B5440F1050D468 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				88916C685122262D547A142E /* Pods_MAULibrary.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -822,7 +795,6 @@
 		};
 		5D7D8E3F25E9659A00EFE982 /* QA */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D898C89769275AEBBE5B4F6 /* Pods-MAULibrary.qa.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -974,7 +946,6 @@
 		};
 		5DA0749C25E75D3100122F0D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E1A1601BB106283F2F584F1E /* Pods-MAULibrary.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -1001,7 +972,6 @@
 		};
 		5DA0749D25E75D3100122F0D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3778C69A72AB7807112BD972 /* Pods-MAULibrary.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;

@@ -55,7 +55,7 @@ enum Router: URLRequestConvertible {
     func asURLRequest() throws -> URLRequest {
         let url = URL(string: Servers.url)!
         
-        var urlRequest = URLRequest(url: url.appendingPathComponent(path))
+        var urlRequest = URLRequest(url: url!.appendingPathComponent(path))
         urlRequest.httpMethod = method.rawValue
         urlRequest.timeoutInterval = 60
         

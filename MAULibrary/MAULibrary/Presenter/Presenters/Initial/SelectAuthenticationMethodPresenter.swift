@@ -83,22 +83,19 @@ class SelectAuthenticationMethodPresenter {
                         if let httpStatusCode = response.response?.statusCode {
                             switch httpStatusCode {
                             case 200:
-                                //Check for valid status
-                                if criticalityResponse.contains(where: { $0.status?.id == "176"} ) {
-                                    //SMS Authentication
-                                    if criticalityResponse.contains(where: { $0.factor?.id == "154"} ) {
-                                        UserDefaults.standard.canUseSMSTokenAuthentication = true
-                                    }
-                                    
-                                    //Email Authentication
-                                    if criticalityResponse.contains(where: { $0.factor?.id == "155"} ) {
-                                        UserDefaults.standard.canUseEmailTokenAuthentication = true
-                                    }
-                                    
-                                    //Facial Authentication
-                                    if criticalityResponse.contains(where: { $0.factor?.id == "159"} ) {
-                                        UserDefaults.standard.canUseFacialAuthentication = true
-                                    }
+                                //SMS Authentication
+                                if criticalityResponse.contains(where: { $0.factor?.id == "154"} ) {
+                                    UserDefaults.standard.canUseSMSTokenAuthentication = true
+                                }
+                                
+                                //Email Authentication
+                                if criticalityResponse.contains(where: { $0.factor?.id == "155"} ) {
+                                    UserDefaults.standard.canUseEmailTokenAuthentication = true
+                                }
+                                
+                                //Facial Authentication
+                                if criticalityResponse.contains(where: { $0.factor?.id == "159"} ) {
+                                    UserDefaults.standard.canUseFacialAuthentication = true
                                 }
                                 
                                 //Check authentication methods of the user
