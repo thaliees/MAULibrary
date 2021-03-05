@@ -100,6 +100,9 @@ tu identidad</string>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jNE-II-DsH"/>
+                    <connections>
+                        <outlet property="tryAgainButton" destination="aN4-MS-ymJ" id="tc3-sj-kcr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aWO-Y8-jSy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

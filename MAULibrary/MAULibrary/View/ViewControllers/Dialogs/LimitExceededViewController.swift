@@ -8,6 +8,10 @@
 import UIKit
 
 class LimitExceededViewController: UIViewController {
+    
+    //Logic Properties
+    /// Observer to call when the error screen show
+    var observerToCall: NotificationObserverServices!
  
     //MARK: - Init
     override func viewDidLoad() {
@@ -20,6 +24,6 @@ class LimitExceededViewController: UIViewController {
      */
     @IBAction func closeTapped(_ sender: UIButton) {
         dismiss(animated: false)
-        NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.closeMAUDeniedEnterToken.rawValue), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(observerToCall.rawValue), object: nil)
     }
 }

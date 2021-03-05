@@ -87,7 +87,7 @@ class EnterTokenViewController: UIViewController {
             NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.authenticationDenied.rawValue), object: nil)
         }
         
-        tryAgainObserver = NotificationCenter.default.addObserver(forName: Notification.Name(NotificationObserverServices.tryAgainAuthentication.rawValue), object: nil, queue: nil) {
+        tryAgainObserver = NotificationCenter.default.addObserver(forName: Notification.Name(NotificationObserverServices.tryAgainAuthenticationInToken.rawValue), object: nil, queue: nil) {
             _ in
             self.animationView.hideLoaderView()
             
@@ -210,13 +210,19 @@ extension EnterTokenViewController: EnterTokenDelegate {
     
     func showAuthenticationSuccesful() {
         let authenticationSuccessfulVC = AuthenticationSuccessfulViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
+        authenticationSuccessfulVC.observerToCall = .closeMAUPassedEnterToken
         authenticationSuccessfulVC.modalPresentationStyle = .overFullScreen
         animationView.stopAnimation()
         present(authenticationSuccessfulVC, animated: true)
     }
     
     func showAuthenticationError() {
+        let canUseAnotherAuthenticationOption = UserDefaults.standard.canUseSMSTokenAuthentication || UserDefaults.standard.canUseEmailTokenAuthentication || UserDefaults.standard.canUseFacialAuthentication
+        
         let authenticationErrorVC = AuthenticationErrorViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
+        authenticationErrorVC.observerToCall = .tryAgainAuthenticationInToken
+        authenticationErrorVC.observerToCallClose = .closeMAUDeniedEnterToken
+        authenticationErrorVC.showTryAgainButton = canUseAnotherAuthenticationOption
         authenticationErrorVC.modalPresentationStyle = .overFullScreen
         animationView.stopAnimation()
         present(authenticationErrorVC, animated: true)
@@ -233,11 +239,14 @@ extension EnterTokenViewController: EnterTokenDelegate {
         
         if canUseAnotherAuthenticationOption {
             let limitExceededVC = LimitExceededTryAnotherViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
+            limitExceededVC.observerToCall = .tryAgainAuthenticationInToken
+            limitExceededVC.closeObserverToCall = .closeMAUDeniedEnterToken
             limitExceededVC.modalPresentationStyle = .overFullScreen
             animationView.stopAnimation()
             present(limitExceededVC, animated: true)
         } else {
             let limitExceededVC = LimitExceededViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
+            limitExceededVC.observerToCall = .closeMAUDeniedEnterToken
             limitExceededVC.modalPresentationStyle = .overFullScreen
             animationView.stopAnimation()
             present(limitExceededVC, animated: true)

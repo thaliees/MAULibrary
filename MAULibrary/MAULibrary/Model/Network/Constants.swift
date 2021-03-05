@@ -21,7 +21,7 @@ struct Servers {
     #elseif QA
     static let url = "https://api.qa.profuturo.mx/"
     #else
-    static let url = "https://api.release.profuturo.mx/"
+    static let url = "https://api.profuturo.mx/"
     #endif
 }
 
@@ -49,9 +49,12 @@ enum NotificationObserverServices: String {
     case authenticationPassed = "AuthenticationPassed"
     case authenticationDenied = "AuthenticationDenied"
     case closeMAUPassedEnterToken = "CloseMAUPassedEnterToken"
+    case closeMAUPassedFacial = "CloseMAUPassedFacial"
     case closeMAUDeniedEnterToken = "CloseMAUDeniedEnterToken"
     case closeMAUSelectAuthentication = "CloseMAUSelectAuthentication"
-    case tryAgainAuthentication = "TryAgainAuthentication"
+    case closeMAUInstructionsFacial = "CloseMAUInstructionsFacial"
+    case tryAgainAuthenticationInToken = "TryAgainAuthenticationInToken"
+    case tryAgainAuthenticationInFacial = "TryAgainAuthenticationInFacial"
 }
 
 /**

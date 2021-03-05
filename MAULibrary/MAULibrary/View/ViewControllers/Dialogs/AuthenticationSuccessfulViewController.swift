@@ -10,7 +10,7 @@ import UIKit
 class AuthenticationSuccessfulViewController: UIViewController {
     
     //MARK: - Logic Properties
-    var mauDelegate: AuthenticationMAUDelegate?
+    var observerToCall: NotificationObserverServices!
     
     //MARK: - Init
     override func viewDidLoad() {
@@ -20,6 +20,6 @@ class AuthenticationSuccessfulViewController: UIViewController {
     //MARK: - Actions
     @IBAction func closeTapped(_ sender: UIButton) {
         dismiss(animated: true)
-        NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.closeMAUPassedEnterToken.rawValue), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(observerToCall.rawValue), object: nil)
     }
 }

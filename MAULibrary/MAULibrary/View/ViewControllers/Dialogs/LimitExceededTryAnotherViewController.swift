@@ -9,6 +9,11 @@ import UIKit
 
 class LimitExceededTryAnotherViewController: UIViewController {
     
+    //Logic Properties
+    /// Observer to call when the error screen show
+    var observerToCall: NotificationObserverServices!
+    var closeObserverToCall: NotificationObserverServices!
+    
     //MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,11 +22,11 @@ class LimitExceededTryAnotherViewController: UIViewController {
     //MARK: - Actions
     @IBAction func tryAgainTapped(_ sender: UIButton) {
         dismiss(animated: true)
-        NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.tryAgainAuthentication.rawValue), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(observerToCall.rawValue), object: nil)
     }
     
     @IBAction func closeTapped(_ sender: UIButton) {
         dismiss(animated: true)
-        NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.closeMAUDeniedEnterToken.rawValue), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(closeObserverToCall.rawValue), object: nil)
     }
 }

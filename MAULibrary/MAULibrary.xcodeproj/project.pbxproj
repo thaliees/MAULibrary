@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5D0E29EC25E8389600B0452A /* Token.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D0E29EB25E8389600B0452A /* Token.storyboard */; };
+		5D41D44525F18BA700E2D096 /* InstructionsFacialPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D41D44425F18BA700E2D096 /* InstructionsFacialPresenter.swift */; };
+		5D41D44925F18BC700E2D096 /* InstructionsFacialDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D41D44825F18BC700E2D096 /* InstructionsFacialDelegate.swift */; };
 		5DA0749825E75D3100122F0D /* MAULibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DA0749625E75D3100122F0D /* MAULibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DA074AF25E75D4C00122F0D /* TokenRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA074A225E75D4C00122F0D /* TokenRequests.swift */; };
 		5DA074B025E75D4C00122F0D /* ConsumptionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA074A325E75D4C00122F0D /* ConsumptionRouter.swift */; };
@@ -92,6 +94,8 @@
 
 /* Begin PBXFileReference section */
 		5D0E29EB25E8389600B0452A /* Token.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Token.storyboard; sourceTree = "<group>"; };
+		5D41D44425F18BA700E2D096 /* InstructionsFacialPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsFacialPresenter.swift; sourceTree = "<group>"; };
+		5D41D44825F18BC700E2D096 /* InstructionsFacialDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsFacialDelegate.swift; sourceTree = "<group>"; };
 		5DA0749325E75D3100122F0D /* MAULibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MAULibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DA0749625E75D3100122F0D /* MAULibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MAULibrary.h; sourceTree = "<group>"; };
 		5DA0749725E75D3100122F0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -187,6 +191,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D41D44325F18B9C00E2D096 /* Facial */ = {
+			isa = PBXGroup;
+			children = (
+				5D41D44425F18BA700E2D096 /* InstructionsFacialPresenter.swift */,
+			);
+			path = Facial;
+			sourceTree = "<group>";
+		};
+		5D41D44B25F18BCD00E2D096 /* Facial */ = {
+			isa = PBXGroup;
+			children = (
+				5D41D44825F18BC700E2D096 /* InstructionsFacialDelegate.swift */,
+			);
+			path = Facial;
+			sourceTree = "<group>";
+		};
 		5DA0748925E75D3100122F0D = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +290,7 @@
 		5DA074BC25E75D5200122F0D /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
+				5D41D44325F18B9C00E2D096 /* Facial */,
 				5DA074BD25E75D5200122F0D /* Token */,
 				5DA074BF25E75D5200122F0D /* Initial */,
 			);
@@ -296,6 +317,7 @@
 		5DA074C225E75D5200122F0D /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
+				5D41D44B25F18BCD00E2D096 /* Facial */,
 				5DA074C325E75D5200122F0D /* Token */,
 				5DA074C525E75D5200122F0D /* Initial */,
 				5DA074C825E75D5200122F0D /* BaseDelegate.swift */,
@@ -678,6 +700,7 @@
 				5DA0753D25E75D5300122F0D /* StepsFacialViewController.swift in Sources */,
 				5DA0755D25E75D5300122F0D /* LoaderAnimation.swift in Sources */,
 				5DA0751F25E75D5300122F0D /* ContactInformationDelegate.swift in Sources */,
+				5D41D44525F18BA700E2D096 /* InstructionsFacialPresenter.swift in Sources */,
 				5DA0754125E75D5300122F0D /* AuthenticationSuccessfulViewController.swift in Sources */,
 				5DA0752725E75D5300122F0D /* SMSEmailTokenResponse.swift in Sources */,
 				5DA0753A25E75D5300122F0D /* SelectAuthenticationMethodViewController.swift in Sources */,
@@ -715,6 +738,7 @@
 				5DA0752B25E75D5300122F0D /* User.swift in Sources */,
 				5DA0754025E75D5300122F0D /* AuthenticationErrorViewController.swift in Sources */,
 				5DA0755E25E75D5300122F0D /* AppStoryboard.swift in Sources */,
+				5D41D44925F18BC700E2D096 /* InstructionsFacialDelegate.swift in Sources */,
 				5DA0753625E75D5300122F0D /* UILabel.swift in Sources */,
 				5DA0752525E75D5300122F0D /* TokenResponse.swift in Sources */,
 				5DA0752125E75D5300122F0D /* BaseDelegate.swift in Sources */,

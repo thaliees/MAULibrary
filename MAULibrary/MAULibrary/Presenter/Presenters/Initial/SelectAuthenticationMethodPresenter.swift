@@ -182,7 +182,6 @@ class SelectAuthenticationMethodPresenter {
     /**
      Check if the authentication method has attempts
      */
-    
     func getDailyAttempts(factorID: Int) {
         //Check internet connection
         let reachability = try! Reachability()
