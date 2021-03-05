@@ -21,29 +21,37 @@ extension String {
      Masks the first seven digits of a phone number with *
      */
     func maskPhone() -> String {
-        var chars = Array(self)
-        
-        for index in 0...6 {
-            chars[index] = "*"
+        if self.count > 0 {
+            var chars = Array(self)
+            
+            for index in 0...6 {
+                chars[index] = "*"
+            }
+            
+            return String(chars)
+        } else {
+            return ""
         }
-        
-        return String(chars)
     }
     
     /**
      Masks the user email with *
      */
     func maskEmail() -> String {
-        var emailArray = self.components(separatedBy: "@")
-        
-        var chars = Array(emailArray[0])
-        
-        for index in 3...(chars.count-1) {
-            chars[index] = "*"
+        if self.count > 0 {
+            var emailArray = self.components(separatedBy: "@")
+            
+            var chars = Array(emailArray[0])
+            
+            for index in 3...(chars.count-1) {
+                chars[index] = "*"
+            }
+            
+            emailArray[0] = String(chars)
+            
+            return emailArray.joined(separator: "@")
+        } else {
+            return ""
         }
-        
-        emailArray[0] = String(chars)
-        
-        return emailArray.joined(separator: "@")
     }
 }

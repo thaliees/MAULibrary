@@ -202,15 +202,16 @@ class SelectAuthenticationMethodPresenter {
                             case 200:
                                 switch factorID {
                                 case 154:
-                                    UserDefaults.standard.canUseSMSTokenAuthentication = attemptsResponse.attempts == "0" ? false : true
+                                    UserDefaults.standard.canUseSMSTokenAuthentication =
+                                        (attemptsResponse.attempts == "0" ? false : true) && UserDefaults.standard.canUseSMSTokenAuthentication
                                     
                                     self.getDailyAttempts(factorID: 155)
                                 case 155:
-                                    UserDefaults.standard.canUseEmailTokenAuthentication = attemptsResponse.attempts == "0" ? false : true
+                                    UserDefaults.standard.canUseEmailTokenAuthentication = (attemptsResponse.attempts == "0" ? false : true) && UserDefaults.standard.canUseEmailTokenAuthentication
                                     
                                     self.getDailyAttempts(factorID: 159)
                                 case 159:
-                                    UserDefaults.standard.canUseFacialAuthentication = attemptsResponse.attempts == "0" ? false : true
+                                    UserDefaults.standard.canUseFacialAuthentication = (attemptsResponse.attempts == "0" ? false : true) && UserDefaults.standard.canUseFacialAuthentication
                                     
                                     self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
                                     self.selectAuthenticationMethodDelegate?.hideLoader()
