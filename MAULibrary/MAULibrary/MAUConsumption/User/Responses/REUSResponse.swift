@@ -11,7 +11,7 @@ import ObjectMapper
 /// Object mapper for the REUS response
 class REUSResponse: Mappable {
     /// String that contains "SI" or "NO" if the client's has REUS rights
-    var hasREUS: String?
+    public var hasREUS: String?
     
     required init?(map: Map) { }
     

@@ -69,9 +69,9 @@ número celular</string>
                                         <color key="textColor" name="GrayText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHu-4B-Zeg">
+                                    <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHu-4B-Zeg">
                                         <rect key="frame" x="10" y="10" width="290" height="160"/>
-                                        <color key="backgroundColor" white="1" alpha="0.80080782309999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -101,9 +101,9 @@ número celular</string>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnv-sk-deo">
-                                        <rect key="frame" x="36.5" y="73" width="237" height="42"/>
+                                        <rect key="frame" x="15" y="73" width="280" height="42"/>
                                         <string key="text">Código vía correo electrónico
-pro*****@gmail.com</string>
+pro*****@profuturo.com.mx</string>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="18"/>
                                         <color key="textColor" name="NavyBlue"/>
                                         <nil key="highlightedColor"/>
@@ -116,19 +116,21 @@ correo electrónico</string>
                                         <color key="textColor" name="GrayText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ixL-g4-6Ne">
+                                    <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ixL-g4-6Ne">
                                         <rect key="frame" x="10" y="10" width="290" height="160"/>
-                                        <color key="backgroundColor" white="1" alpha="0.80080782309999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="tnv-sk-deo" secondAttribute="trailing" constant="15" id="1yf-HP-znx"/>
                                     <constraint firstItem="tnv-sk-deo" firstAttribute="centerX" secondItem="KmS-eo-mmq" secondAttribute="centerX" id="2R7-L4-L2k"/>
                                     <constraint firstAttribute="width" constant="310" id="3ax-wl-0kH"/>
                                     <constraint firstItem="ixL-g4-6Ne" firstAttribute="top" secondItem="KmS-eo-mmq" secondAttribute="top" constant="10" id="Bii-qb-oIU"/>
                                     <constraint firstAttribute="trailing" secondItem="ixL-g4-6Ne" secondAttribute="trailing" constant="10" id="JHw-Ao-025"/>
                                     <constraint firstItem="ixL-g4-6Ne" firstAttribute="leading" secondItem="KmS-eo-mmq" secondAttribute="leading" constant="10" id="JI0-go-cwN"/>
                                     <constraint firstItem="4CN-14-r5m" firstAttribute="centerX" secondItem="KmS-eo-mmq" secondAttribute="centerX" id="Kn4-rx-fT4"/>
+                                    <constraint firstItem="tnv-sk-deo" firstAttribute="leading" secondItem="KmS-eo-mmq" secondAttribute="leading" constant="15" id="SEu-Lu-fMs"/>
                                     <constraint firstAttribute="bottom" secondItem="ixL-g4-6Ne" secondAttribute="bottom" constant="10" id="ZgT-RO-Eat"/>
                                     <constraint firstAttribute="height" constant="180" id="dgR-SR-uvY"/>
                                     <constraint firstItem="4CN-14-r5m" firstAttribute="top" secondItem="KmS-eo-mmq" secondAttribute="top" constant="27" id="hzq-RQ-Zna"/>
@@ -166,9 +168,13 @@ correo electrónico</string>
                         <outlet property="blockedEmailView" destination="ixL-g4-6Ne" id="gFg-dG-P1y"/>
                         <outlet property="cellphoneNumberToSend" destination="2BX-XB-fRD" id="62X-5K-ida"/>
                         <outlet property="cellphoneView" destination="dBj-kn-HP1" id="7s7-NJ-ZMg"/>
+                        <outlet property="emailSecondaryInstruction" destination="4uu-hV-D65" id="IrK-jk-Tb9"/>
                         <outlet property="emailToSend" destination="tnv-sk-deo" id="M0n-vH-Bx4"/>
+                        <outlet property="emailTokenImage" destination="4CN-14-r5m" id="ji0-We-F0y"/>
                         <outlet property="emailView" destination="KmS-eo-mmq" id="qJO-Zf-dRY"/>
                         <outlet property="extensionView" destination="Np2-fh-z3e" id="GWO-mG-z4b"/>
+                        <outlet property="smsSecondaryInstruction" destination="vYH-fO-bzl" id="B0I-FQ-aXM"/>
+                        <outlet property="smsTokenImage" destination="0OR-nw-Huk" id="QCK-5z-sne"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hfb-QQ-1xA" sceneMemberID="firstResponder"/>
@@ -294,8 +300,8 @@ que recibiste al celular:</string>
                                 <color key="textColor" name="GrayText"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*******070" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOn-Ii-gr0">
-                                <rect key="frame" x="165.5" y="248" width="83" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*******070" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOn-Ii-gr0">
+                                <rect key="frame" x="165.5" y="248" width="83" height="23.5"/>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="20"/>
                                 <color key="textColor" name="NavyBlue"/>
                                 <nil key="highlightedColor"/>
@@ -320,7 +326,7 @@ que recibiste al celular:</string>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIS-A3-2dF" customClass="SVPinView" customModule="SVPinView">
-                                <rect key="frame" x="20" y="304" width="374" height="100"/>
+                                <rect key="frame" x="20" y="303.5" width="374" height="100"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="USH-of-R05"/>
@@ -396,7 +402,7 @@ que recibiste al celular:</string>
             <color red="0.0039215686274509803" green="0.50588235294117645" blue="0.7686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="GrayText">
-            <color red="0.21600000560283661" green="0.25099998712539673" blue="0.27799999713897705" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.21568627450980393" green="0.25098039215686274" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="NavyBlue">
             <color red="0.0" green="0.28627450980392155" blue="0.55294117647058827" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

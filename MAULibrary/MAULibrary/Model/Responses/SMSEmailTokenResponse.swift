@@ -13,9 +13,9 @@ import ObjectMapper
  */
 class SMSEmailTokenResponse: Mappable {
     /// Status of the token was sended
-    var statusText: String?
+    public var statusText: String?
     /// Message when an error (404) occurs
-    var errorMessage: String?
+    public var errorMessage: String?
     
     
     required init?(map: Map) { }

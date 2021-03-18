@@ -41,13 +41,17 @@ extension String {
         if self.count > 0 {
             var emailArray = self.components(separatedBy: "@")
             
-            var chars = Array(emailArray[0])
+            let chars = Array(emailArray[0])
             
-            for index in 3...(chars.count-1) {
-                chars[index] = "*"
+            var maskedEmail = ""
+            
+            for index in 0...2 {
+                maskedEmail += String(chars[index])
             }
             
-            emailArray[0] = String(chars)
+            maskedEmail += "*****"
+            
+            emailArray[0] = maskedEmail
             
             return emailArray.joined(separator: "@")
         } else {

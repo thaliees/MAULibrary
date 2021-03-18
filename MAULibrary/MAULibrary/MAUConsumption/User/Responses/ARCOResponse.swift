@@ -11,9 +11,9 @@ import ObjectMapper
 /// Object mapper for the ARCO response
 class ARCOResponse: Mappable {
     /// Client's  CURP
-    var curp: String?
+    public var curp: String?
     /// String that container "SI" o "NO" if the client's has ARCO rights
-    var hasARCO: String?
+    public var hasARCO: String?
     
     required init?(map: Map) { }
     

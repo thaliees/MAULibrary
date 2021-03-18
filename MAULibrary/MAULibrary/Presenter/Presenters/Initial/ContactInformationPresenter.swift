@@ -23,7 +23,7 @@ class ContactInfromationPresenter {
      Open the phone helper to call to CDMX Profuturo's phone
      */
     func callCDMXPhone() {
-        if let url = URL(string: "tel://58096555"), UIApplication.shared.canOpenURL(url) {
+        if let url = URL(string: "tel://5558096555"), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
     }

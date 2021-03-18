@@ -94,11 +94,6 @@ class SelectAuthenticationMethodPresenter {
                                     if criticalityResponse.contains(where: { $0.factor?.id == "155"} ) {
                                         UserDefaults.standard.canUseEmailTokenAuthentication = true
                                     }
-                                    
-                                    //Facial Authentication
-                                    if criticalityResponse.contains(where: { $0.factor?.id == "159"} ) {
-                                        UserDefaults.standard.canUseFacialAuthentication = true
-                                    }
                                 }
                                 
                                 //Check authentication methods of the user
@@ -161,10 +156,6 @@ class SelectAuthenticationMethodPresenter {
                                     UserDefaults.standard.canUseSMSTokenAuthentication = false
                                 }
                                 
-                                if !(profileResponse.facialBiometricsData != nil) {
-                                    UserDefaults.standard.canUseFacialAuthentication = false
-                                }
-                                
                                 self.getDailyAttempts(factorID: 154)
                             default:
                                 self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
@@ -200,18 +191,27 @@ class SelectAuthenticationMethodPresenter {
                         if let httpStatusCode = response.response?.statusCode {
                             switch httpStatusCode {
                             case 200:
+                                
+                                let attempts = Int(attemptsResponse.attempts ?? "0") ?? 0
+                                
                                 switch factorID {
                                 case 154:
-                                    UserDefaults.standard.canUseSMSTokenAuthentication =
-                                        (attemptsResponse.attempts == "0" ? false : true) && UserDefaults.standard.canUseSMSTokenAuthentication
+                                    UserDefaults.standard.hasDailyAttemptsOfSMS = attempts < 1 ? false : true
+                                    
+                                    UserDefaults.standard.canUseSMSTokenAuthentication = UserDefaults.standard.hasDailyAttemptsOfSMS && UserDefaults.standard.canUseSMSTokenAuthentication
+                                    
                                     
                                     self.getDailyAttempts(factorID: 155)
                                 case 155:
-                                    UserDefaults.standard.canUseEmailTokenAuthentication = (attemptsResponse.attempts == "0" ? false : true) && UserDefaults.standard.canUseEmailTokenAuthentication
+                                    UserDefaults.standard.hasDailyAttemptsOfEmail = attempts < 1 ? false : true
+                                    
+                                    UserDefaults.standard.canUseEmailTokenAuthentication = UserDefaults.standard.hasDailyAttemptsOfEmail && UserDefaults.standard.canUseEmailTokenAuthentication
                                     
                                     self.getDailyAttempts(factorID: 159)
                                 case 159:
-                                    UserDefaults.standard.canUseFacialAuthentication = (attemptsResponse.attempts == "0" ? false : true) && UserDefaults.standard.canUseFacialAuthentication
+                                    UserDefaults.standard.hasDailyAttemptsOfFacial = attempts < 1 ? false : true
+                                    
+                                    UserDefaults.standard.canUseFacialAuthentication = UserDefaults.standard.hasDailyAttemptsOfFacial
                                     
                                     self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
                                     self.selectAuthenticationMethodDelegate?.hideLoader()

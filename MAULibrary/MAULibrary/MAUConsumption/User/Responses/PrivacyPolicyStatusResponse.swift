@@ -11,11 +11,11 @@ import ObjectMapper
 /// Object mapper response for the privacy policy status service
 public class PrivacyPolicyStatusResponse: Mappable {
     /// ID of the status
-    var id: String?
+    public var id: String?
     /// Client's CURP
-    var curp: String?
+    public var curp: String?
     /// Client's privacy policies
-    var privacyPolicies: [PrivacyPolicy]?
+    public var privacyPolicies: [PrivacyPolicy]?
     
     public required init?(map: Map) { }
     
@@ -29,9 +29,9 @@ public class PrivacyPolicyStatusResponse: Mappable {
 /// Privacy Policy business line and acceptance by the user
 public class PrivacyPolicy: Mappable {
     /// Business data
-    var businessLine: ValueID?
+    public var businessLine: ValueID?
     /// Acceptance date of the privacy policy
-    var acceptanceDate: String?
+    public var acceptanceDate: String?
     
     public required init?(map: Map) { }
     

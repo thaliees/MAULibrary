@@ -18,6 +18,16 @@ public class SelectAuthenticationMethodViewController: UIViewController {
     @IBOutlet var blockedTokenAuthView: UIView!
     @IBOutlet var facialQuestionMark: UIImageView!
     @IBOutlet var tokenQuestionMark: UIImageView!
+    //Facial card
+    @IBOutlet var selfieImage: UIImageView!
+    @IBOutlet var facialPrimaryInstruction: UILabel!
+    @IBOutlet var facialSecondaryInstruction: UILabel!
+    @IBOutlet var dontHaveIDButton: UIButton!
+    //Token card
+    @IBOutlet var tokenImage: UIImageView!
+    @IBOutlet var tokenPrimaryInstruction: UILabel!
+    @IBOutlet var tokenSecondaryInstruction: UILabel!
+    
     var animationView: LoaderAnimation!
     
     //MARK: - Logic Properties
@@ -37,7 +47,6 @@ public class SelectAuthenticationMethodViewController: UIViewController {
         addGesturesToViews()
         
         animationView = LoaderAnimation()
-        presenter.generateToken()
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +54,9 @@ public class SelectAuthenticationMethodViewController: UIViewController {
         
         //Add observers
         defineObservers()
+        
+        //Refresh information
+        presenter.generateToken()
     }
     
     public override func viewWillDisappear(_ animated: Bool) {
@@ -163,18 +175,42 @@ extension SelectAuthenticationMethodViewController: SelectAuthenticationMethodDe
     }
     
     func setAuthenticationMethodsFromCriticality() {
-        blockedTokenAuthView.isHidden = UserDefaults.standard.canUseTokenAuthentication
-        blockedFaceAuthView.isHidden = UserDefaults.standard.canUseFacialAuthentication
         
-        if (!UserDefaults.standard.canUseFacialAuthentication && UserDefaults.standard.canUseTokenAuthentication) {
+        let canUseToken = UserDefaults.standard.canUseTokenAuthentication
+        let canUseFacial = UserDefaults.standard.canUseFacialAuthentication
+        
+        //Facial modifications
+        blockedFaceAuthView.isHidden = canUseFacial
+        selfieImage.image = canUseFacial ? UIImage(named: "selfie") : UIImage(named: "selfieGray")
+        facialPrimaryInstruction.textColor = canUseFacial ? UIColor(named: "NavyBlue") : UIColor(named: "IntentGray")
+        facialSecondaryInstruction.textColor = canUseFacial ? UIColor(named: "GrayText") : UIColor(named: "IntentGray")
+        facialQuestionMark.image = canUseFacial ? UIImage(named: "question") : UIImage(named: "questionGray")
+        
+        //Token modifications
+        blockedTokenAuthView.isHidden = canUseToken
+        tokenImage.image = canUseToken ? UIImage(named: "password") : UIImage(named: "passwordGray")
+        tokenPrimaryInstruction.textColor = canUseToken ? UIColor(named: "NavyBlue") : UIColor(named: "IntentGray")
+        tokenSecondaryInstruction.textColor = canUseToken ? UIColor(named: "GrayText") : UIColor(named: "IntentGray")
+        tokenQuestionMark.image = canUseToken ? UIImage(named: "question") : UIImage(named: "questionGray")
+        
+        let hasFacialAttempts = UserDefaults.standard.hasDailyAttemptsOfFacial
+        let hasTokenAttempts = UserDefaults.standard.hasDailyAttemptsOfSMS && UserDefaults.standard.hasDailyAttemptsOfEmail
+        
+        facialSecondaryInstruction.text = hasFacialAttempts ? "Ten a la mano tu INE/IFE o Pasaporte vigente" : "Has excedido el número de intentos,\nvuelve a intentarlo en 24 hrs."
+        dontHaveIDButton.isHidden = !hasFacialAttempts
+        
+        tokenSecondaryInstruction.text = hasTokenAttempts ? "Recibirás un código de 6 dígitos en tu\ncelular o correo electrónico" : "Has excedido el número de intentos,\nvuelve a intentarlo en 24 hrs."
+        
+
+        /*if (!canUseFacial && canUseToken) {
             let tokenPreinformationVC = TokenPreInformationViewController.instantiateFromAppStoryboard(appStoryboard: .token)
             navigationController?.pushViewController(tokenPreinformationVC, animated: true)
-        } else if (!UserDefaults.standard.canUseTokenAuthentication && UserDefaults.standard.canUseFacialAuthentication) {
+        } else if (!canUseToken && canUseFacial) {
             let instructionsFacialVC = InstructionsFacialViewController.instantiateFromAppStoryboard(appStoryboard: .facial)
             navigationController?.pushViewController(instructionsFacialVC, animated: true)
-        } else if (!UserDefaults.standard.canUseFacialAuthentication && !UserDefaults.standard.canUseTokenAuthentication) {
+        } else if (!canUseFacial && !canUseToken) {
             NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.closeMAUSelectAuthentication.rawValue), object: nil)
-        }
+        }*/
     }
 }
 

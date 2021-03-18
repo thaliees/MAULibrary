@@ -8,5 +8,5 @@
 import Foundation
 
 protocol InstructionsFacialDelegate: BaseDelegate {
-    func showFacialAttempts(hasFacialAttempts: Bool)
+    func showFacialAttempts()
 }

@@ -41,7 +41,10 @@ class InstructionsFacialPresenter {
                         if let httpStatusCode = response.response?.statusCode {
                             switch httpStatusCode {
                             case 200:
-                                self.instructionsFacialDelegate?.showFacialAttempts(hasFacialAttempts: attemptsResponse.attempts != "0")
+                                let attempts = Int(attemptsResponse.attempts ?? "0") ?? 0
+                                UserDefaults.standard.hasDailyAttemptsOfFacial = attempts < 1 ? false : true
+                                
+                                self.instructionsFacialDelegate?.showFacialAttempts()
                             default:
                                 self.instructionsFacialDelegate?.showConnectionErrorMessage()
                             }

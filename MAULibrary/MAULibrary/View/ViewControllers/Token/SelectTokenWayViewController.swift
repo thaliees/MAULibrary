@@ -17,7 +17,10 @@ class SelectTokenWayViewController: UIViewController {
     @IBOutlet var blockedCellphoneView: UIView!
     @IBOutlet var emailView: UIView!
     @IBOutlet var blockedEmailView: UIView!
-    
+    @IBOutlet var smsTokenImage: UIImageView!
+    @IBOutlet var emailTokenImage: UIImageView!
+    @IBOutlet var smsSecondaryInstruction: UILabel!
+    @IBOutlet var emailSecondaryInstruction: UILabel!
     
     //MARK: - Init
     override func viewDidLoad() {
@@ -82,8 +85,26 @@ class SelectTokenWayViewController: UIViewController {
         emailToSend.text = "Código vía correo electrónico\n\(maskedEmail)"
         
         //Block authentication ways from user permissions
-        blockedCellphoneView.isHidden = UserDefaults.standard.canUseSMSTokenAuthentication
-        blockedEmailView.isHidden = UserDefaults.standard.canUseEmailTokenAuthentication
+        let canUseSMS = UserDefaults.standard.canUseSMSTokenAuthentication
+        let canUseEmail = UserDefaults.standard.canUseEmailTokenAuthentication
+        
+        //SMS card
+        blockedCellphoneView.isHidden = canUseSMS
+        cellphoneNumberToSend.textColor = canUseSMS ? UIColor(named: "NavyBlue") : UIColor(named: "IntentGray")
+        smsSecondaryInstruction.textColor = canUseSMS ? UIColor(named: "GrayText") : UIColor(named: "IntentGray")
+        smsTokenImage.image = canUseSMS ? UIImage(named: "password") : UIImage(named: "passwordGray")
+        
+        //Email card
+        blockedEmailView.isHidden = canUseEmail
+        emailToSend.textColor = canUseEmail ? UIColor(named: "NavyBlue") : UIColor(named: "IntentGray")
+        emailSecondaryInstruction.textColor = canUseEmail ? UIColor(named: "GrayText") : UIColor(named: "IntentGray")
+        emailTokenImage.image = canUseEmail ? UIImage(named: "password") : UIImage(named: "passwordGray")
+        
+        let hasSMSAttempts = UserDefaults.standard.hasDailyAttemptsOfSMS
+        let hasEmailAttempts = UserDefaults.standard.hasDailyAttemptsOfEmail
+        
+        smsSecondaryInstruction.text = hasSMSAttempts ? "Recibirás un código de 6 dígitos en tu\nnúmero celular" : "Has excedido el número de intentos,\nvuelve a intentarlo en 24 hrs."
+        emailSecondaryInstruction.text = hasEmailAttempts ? "Recibirás un código de 6 dígitos en tu\ncorreo electrónico" : "Has excedido el número de intentos,\nvuelve a intentarlo en 24 hrs."
     }
 }
 

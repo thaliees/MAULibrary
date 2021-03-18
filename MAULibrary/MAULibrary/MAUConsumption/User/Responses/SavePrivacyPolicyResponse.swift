@@ -11,13 +11,13 @@ import ObjectMapper
 /// Object mapper response for the privacy policy saving service
 public class SavePrivacyPolicyResponse: Mappable {
     /// ID of the stored data
-    var id: String?
+    public var id: String?
     /// Client's CURP
-    var curp: String?
+    public var curp: String?
     /// Business line of the privacy policy
-    var businessLine: ValueID?
+    public var businessLine: ValueID?
     /// Date when the privacy policy was accepted
-    var updateDate: String?
+    public var updateDate: String?
     
     public required init?(map: Map) { }
     

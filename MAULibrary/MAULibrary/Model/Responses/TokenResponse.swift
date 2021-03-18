@@ -13,7 +13,7 @@ import ObjectMapper
  */
 class TokenResponse: Mappable {
     /// Access token
-    var token: String?
+    public var token: String?
     
     required init?(map: Map) { }
     

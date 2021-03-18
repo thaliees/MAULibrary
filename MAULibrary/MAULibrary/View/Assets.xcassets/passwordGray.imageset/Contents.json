@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "infoCorner.png",
+      "filename" : "passwordGray.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "infoCorner@2x.png",
+      "filename" : "passwordGray@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "infoCorner@3x.png",
+      "filename" : "passwordGray@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

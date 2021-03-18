@@ -151,7 +151,9 @@ extension InstructionsFacialViewController: FaceAuthDelegate {
 
 //MARK: - InstructionsFacialDelegate
 extension InstructionsFacialViewController: InstructionsFacialDelegate {
-    func showFacialAttempts(hasFacialAttempts: Bool) {
+    func showFacialAttempts() {
+        let hasFacialAttempts = UserDefaults.standard.hasDailyAttemptsOfFacial
+        
         if hasFacialAttempts {
             let canUseAnotherAuthenticationOption = UserDefaults.standard.canUseSMSTokenAuthentication || UserDefaults.standard.canUseEmailTokenAuthentication || UserDefaults.standard.canUseFacialAuthentication
             

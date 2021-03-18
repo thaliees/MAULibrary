@@ -80,4 +80,31 @@ extension UserDefaults {
             return self.canUseEmailTokenAuthentication || self.canUseSMSTokenAuthentication
         }
     }
+    
+    var hasDailyAttemptsOfSMS: Bool {
+        get {
+            return self.bool(forKey: "hasDailyAttemptsOfSMS")
+        }
+        set(hasDailyAttemptsOfSMS) {
+            self.set(hasDailyAttemptsOfSMS, forKey: "hasDailyAttemptsOfSMS")
+        }
+    }
+    
+    var hasDailyAttemptsOfEmail: Bool {
+        get {
+            return self.bool(forKey: "hasDailyAttemptsOfEmail")
+        }
+        set(hasDailyAttemptsOfEmail) {
+            self.set(hasDailyAttemptsOfEmail, forKey: "hasDailyAttemptsOfEmail")
+        }
+    }
+    
+    var hasDailyAttemptsOfFacial: Bool {
+        get {
+            return self.bool(forKey: "hasDailyAttemptsOfFacial")
+        }
+        set(hasDailyAttemptsOfFacial) {
+            self.set(hasDailyAttemptsOfFacial, forKey: "hasDailyAttemptsOfFacial")
+        }
+    }
 }

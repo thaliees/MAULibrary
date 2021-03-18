@@ -13,19 +13,19 @@ import ObjectMapper
  */
 public class CriticalityMatrixResponse: Mappable {
     /// Factor of the matrix (155 for email, 159 for facial and 154 for phone number)
-    var factor: ValueID?
+    public var factor: ValueID?
     /// Origin of the factor
-    var origin: ValueID?
+    public var origin: ValueID?
     /// Status of the factor (is 176 when is active)
-    var status: ValueID?
+    public var status: ValueID?
     /// Validity of the factor
-    var validity: Validity?
+    public var validity: Validity?
     /// Trys for the factor
-    var trys: Try?
+    public var trys: Try?
     /// Process
-    var process: ValueID?
+    public var process: ValueID?
     /// Subprocess
-    var subprocess: ValueID?
+    public var subprocess: ValueID?
     
     public required init?(map: Map) { }
     
@@ -43,9 +43,9 @@ public class CriticalityMatrixResponse: Mappable {
 /// Validity of the factor
 public class Validity: Mappable {
     /// Autentication of validity
-    var autentication: Int?
+    public var autentication: Int?
     /// Enrollment of validity
-    var enrollment: Int?
+    public var enrollment: Int?
     
     public required init?(map: Map) { }
     
@@ -58,9 +58,9 @@ public class Validity: Mappable {
 /// Trys for the factor
 public class Try: Mappable {
     /// Limit of trys
-    var limit: Int?
+    public var limit: Int?
     /// Limit of daily trys
-    var dailyTrys: Int?
+    public var dailyTrys: Int?
     
     public required init?(map: Map) { }
     

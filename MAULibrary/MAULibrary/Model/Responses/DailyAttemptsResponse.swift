@@ -13,7 +13,7 @@ import ObjectMapper
  */
 class DailyAttemptsResponse: Mappable {
     /// Remaining attempts
-    var attempts: String?
+    public var attempts: String?
     
     required init?(map: Map) { }
     

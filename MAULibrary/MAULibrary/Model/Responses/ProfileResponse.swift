@@ -13,17 +13,17 @@ import ObjectMapper
  */
 public class ProfileResponse: Mappable {
     /// Client CURP data
-    var curpData: CURPData?
+    public var curpData: CURPData?
     /// Client phone number data
-    var phoneNumberData: PhoneNumberData?
+    public var phoneNumberData: PhoneNumberData?
     /// Client email data
-    var emailData: EmailData?
+    public var emailData: EmailData?
     /// Client facial biometrics data
-    var facialBiometricsData: FacialBiometricsData?
+    public var facialBiometricsData: FacialBiometricsData?
     /// Client fingerprint biometrics data
-    var fingerprintBiometricsData: FingerprintBiometricsData?
+    public var fingerprintBiometricsData: FingerprintBiometricsData?
     /// Client BAU data
-    var bauData: BAUData?
+    public var bauData: BAUData?
     
     public required init?(map: Map) { }
     

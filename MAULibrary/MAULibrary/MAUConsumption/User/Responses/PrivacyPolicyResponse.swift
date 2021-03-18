@@ -11,9 +11,9 @@ import ObjectMapper
 /// Object mapper response for the privacy policy service
 public class PrivacyPolicyResponse: Mappable {
     /// Business line of the required privacy policy
-    var businessLine: ValueID?
+    public var businessLine: ValueID?
     /// Required privacy policy
-    var privacyPolicy: String?
+    public var privacyPolicy: String?
     
     public required init?(map: Map) { }
     
