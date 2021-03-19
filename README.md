@@ -63,7 +63,7 @@ La biblioteca fue creada utilizando la tecnología <b>Swift</b> y utiliza los si
 * [AlamofireObjectMapper (5.2.0)](https://github.com/tristanhimmelman/AlamofireObjectMapper)
 * [Lottie](https://github.com/airbnb/lottie-ios)
 * [ReachabilitySwift](https://github.com/ashleymills/Reachability.swift)
-* [FWFaceAuth (2.1.12)](https://github.com/grupo-profuturo/ios-facephi-framework-pod)
+* [FWFaceAuth (2.1.16)](https://github.com/grupo-profuturo/ios-facephi-framework-pod)
 
 <!-- GETTING STARTED -->
 
@@ -136,6 +136,7 @@ Además, se necesitan agregar los siguientes atributos en el Info.plist:
 		<string>OpenSans-Light.ttf</string>
 		<string>OpenSans-Regular.ttf</string>
 	</array>
+</key>
 ```
 
 ### Motor de Autenticación

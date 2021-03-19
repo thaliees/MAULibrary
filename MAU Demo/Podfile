@@ -1,10 +1,12 @@
 platform :ios, '13.2'
+install! 'cocoapods', :disable_input_output_paths => true
+source 'https://github.com/adomingd/mau-pod-spec'
 source 'https://github.com/grupo-profuturo/ios-framework-pod-spec'
 source 'https://github.com/CocoaPods/Specs.git'
 
-target 'TestingMAU' do
+target 'MAU Demo' do
 
   use_frameworks!
-  pod 'MAULibrary'
+  pod 'MAULibrary', '3.6.0'
 
 end

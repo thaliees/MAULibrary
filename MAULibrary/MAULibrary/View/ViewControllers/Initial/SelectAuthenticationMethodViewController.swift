@@ -36,6 +36,8 @@ public class SelectAuthenticationMethodViewController: UIViewController {
     var user: User!
     //Observers
     var closeMAUObserver: NSObjectProtocol!
+    //First time in MAU
+    var firstTime = true
     
     //MARK: - Init
     public override func viewDidLoad() {
@@ -56,14 +58,22 @@ public class SelectAuthenticationMethodViewController: UIViewController {
         defineObservers()
         
         //Refresh information
-        presenter.generateToken()
+        if firstTime {
+            presenter.generateToken(showLoader: firstTime)
+            firstTime = false
+        } else {
+            presenter.generateToken(showLoader: firstTime)
+        }
     }
     
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        //Remove observers
-        NotificationCenter.default.removeObserver(closeMAUObserver)
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if (isBeingDismissed || isMovingFromParent) {
+            NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.authenticationDenied.rawValue), object: nil)
+
+            //Remove observers
+            NotificationCenter.default.removeObserver(closeMAUObserver)
+        }
     }
     
     //MARK: - Logic
@@ -194,23 +204,26 @@ extension SelectAuthenticationMethodViewController: SelectAuthenticationMethodDe
         tokenQuestionMark.image = canUseToken ? UIImage(named: "question") : UIImage(named: "questionGray")
         
         let hasFacialAttempts = UserDefaults.standard.hasDailyAttemptsOfFacial
-        let hasTokenAttempts = UserDefaults.standard.hasDailyAttemptsOfSMS && UserDefaults.standard.hasDailyAttemptsOfEmail
+        let hasTokenAttempts = UserDefaults.standard.hasDailyAttemptsOfSMS || UserDefaults.standard.hasDailyAttemptsOfEmail
         
         facialSecondaryInstruction.text = hasFacialAttempts ? "Ten a la mano tu INE/IFE o Pasaporte vigente" : "Has excedido el número de intentos,\nvuelve a intentarlo en 24 hrs."
         dontHaveIDButton.isHidden = !hasFacialAttempts
         
         tokenSecondaryInstruction.text = hasTokenAttempts ? "Recibirás un código de 6 dígitos en tu\ncelular o correo electrónico" : "Has excedido el número de intentos,\nvuelve a intentarlo en 24 hrs."
         
-
-        /*if (!canUseFacial && canUseToken) {
-            let tokenPreinformationVC = TokenPreInformationViewController.instantiateFromAppStoryboard(appStoryboard: .token)
-            navigationController?.pushViewController(tokenPreinformationVC, animated: true)
-        } else if (!canUseToken && canUseFacial) {
-            let instructionsFacialVC = InstructionsFacialViewController.instantiateFromAppStoryboard(appStoryboard: .facial)
-            navigationController?.pushViewController(instructionsFacialVC, animated: true)
-        } else if (!canUseFacial && !canUseToken) {
+        if (!canUseFacial && !canUseToken) {
             NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.closeMAUSelectAuthentication.rawValue), object: nil)
-        }*/
+        }
+        
+        /*if (!canUseFacial && canUseToken) {
+         let tokenPreinformationVC = TokenPreInformationViewController.instantiateFromAppStoryboard(appStoryboard: .token)
+         navigationController?.pushViewController(tokenPreinformationVC, animated: true)
+         } else if (!canUseToken && canUseFacial) {
+         let instructionsFacialVC = InstructionsFacialViewController.instantiateFromAppStoryboard(appStoryboard: .facial)
+         navigationController?.pushViewController(instructionsFacialVC, animated: true)
+         } else if (!canUseFacial && !canUseToken) {
+         NotificationCenter.default.post(name: Notification.Name(NotificationObserverServices.closeMAUSelectAuthentication.rawValue), object: nil)
+         }*/
     }
 }
 

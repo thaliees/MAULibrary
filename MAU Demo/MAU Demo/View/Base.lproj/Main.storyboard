@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bI8-ej-Ghe">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Motor de Autenticación Universal-->
+        <scene sceneID="hf6-7b-fqM">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="mZn-iB-R7d" customClass="ViewController" customModule="MAU_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4ZB-Sx-H2b">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PuP-Tr-JlT">
+                                <rect key="frame" x="57" y="757" width="300" height="60"/>
+                                <color key="backgroundColor" name="AccentColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="H44-Ig-MYr"/>
+                                    <constraint firstAttribute="height" constant="60" id="dXY-oF-ajh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Abrir MAU">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="openMAUTapped:" destination="mZn-iB-R7d" eventType="touchUpInside" id="Thd-UD-h9U"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2P1-bD-adD">
+                                <rect key="frame" x="40" y="627" width="334" height="70"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autenticación pendiente" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uxd-sq-c4m">
+                                        <rect key="frame" x="56" y="22.5" width="222" height="25.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="038-bE-efh"/>
+                                    <constraint firstItem="Uxd-sq-c4m" firstAttribute="centerX" secondItem="2P1-bD-adD" secondAttribute="centerX" id="LRi-EX-LpI"/>
+                                    <constraint firstItem="Uxd-sq-c4m" firstAttribute="centerY" secondItem="2P1-bD-adD" secondAttribute="centerY" id="qMe-lV-AjN"/>
+                                </constraints>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoDemo" translatesAutoresizingMaskIntoConstraints="NO" id="028-Td-ORn">
+                                <rect key="frame" x="40" y="88" width="334" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="Jl0-4G-xQb"/>
+                                </constraints>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="CURP (Default: DODA961018HVZMLN06)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oR5-j2-Oht">
+                                <rect key="frame" x="20" y="218" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" returnKeyType="done"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ID Proceso (Default: 226)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8tb-O3-vm3">
+                                <rect key="frame" x="20" y="277" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ID Subproceso (Default: 405)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="roF-7B-O4m">
+                                <rect key="frame" x="20" y="336" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ID Origen (Default: 34)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gl8-Zj-FIg">
+                                <rect key="frame" x="20" y="395" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="NYW-sw-j6o"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8tb-O3-vm3" firstAttribute="leading" secondItem="NYW-sw-j6o" secondAttribute="leading" constant="20" id="47O-rn-scq"/>
+                            <constraint firstItem="roF-7B-O4m" firstAttribute="leading" secondItem="NYW-sw-j6o" secondAttribute="leading" constant="20" id="4kc-Tu-Qh8"/>
+                            <constraint firstItem="oR5-j2-Oht" firstAttribute="top" secondItem="028-Td-ORn" secondAttribute="bottom" constant="30" id="4rg-Y1-Bqs"/>
+                            <constraint firstItem="oR5-j2-Oht" firstAttribute="leading" secondItem="NYW-sw-j6o" secondAttribute="leading" constant="20" id="9rc-w4-PKI"/>
+                            <constraint firstItem="NYW-sw-j6o" firstAttribute="trailing" secondItem="oR5-j2-Oht" secondAttribute="trailing" constant="20" id="AAt-1d-mXN"/>
+                            <constraint firstItem="028-Td-ORn" firstAttribute="top" secondItem="NYW-sw-j6o" secondAttribute="top" id="Blk-3T-a2e"/>
+                            <constraint firstItem="NYW-sw-j6o" firstAttribute="trailing" secondItem="2P1-bD-adD" secondAttribute="trailing" constant="40" id="CUK-7Z-oOW"/>
+                            <constraint firstItem="NYW-sw-j6o" firstAttribute="trailing" secondItem="Gl8-Zj-FIg" secondAttribute="trailing" constant="20" id="Lee-TL-FwC"/>
+                            <constraint firstItem="NYW-sw-j6o" firstAttribute="trailing" secondItem="roF-7B-O4m" secondAttribute="trailing" constant="20" id="QCX-wJ-ytH"/>
+                            <constraint firstItem="PuP-Tr-JlT" firstAttribute="centerX" secondItem="4ZB-Sx-H2b" secondAttribute="centerX" id="SlN-q0-lii"/>
+                            <constraint firstItem="2P1-bD-adD" firstAttribute="leading" secondItem="NYW-sw-j6o" secondAttribute="leading" constant="40" id="Y65-4h-zoL"/>
+                            <constraint firstItem="NYW-sw-j6o" firstAttribute="trailing" secondItem="028-Td-ORn" secondAttribute="trailing" constant="40" id="ZiT-Xd-Xej"/>
+                            <constraint firstItem="Gl8-Zj-FIg" firstAttribute="leading" secondItem="NYW-sw-j6o" secondAttribute="leading" constant="20" id="czx-Bo-9lZ"/>
+                            <constraint firstItem="Gl8-Zj-FIg" firstAttribute="top" secondItem="roF-7B-O4m" secondAttribute="bottom" constant="25" id="dWp-nZ-6gm"/>
+                            <constraint firstItem="PuP-Tr-JlT" firstAttribute="top" secondItem="2P1-bD-adD" secondAttribute="bottom" constant="60" id="fPB-eX-3mb"/>
+                            <constraint firstItem="028-Td-ORn" firstAttribute="leading" secondItem="NYW-sw-j6o" secondAttribute="leading" constant="40" id="gVJ-k9-Mda"/>
+                            <constraint firstItem="8tb-O3-vm3" firstAttribute="top" secondItem="oR5-j2-Oht" secondAttribute="bottom" constant="25" id="hbc-Ij-DaC"/>
+                            <constraint firstItem="roF-7B-O4m" firstAttribute="top" secondItem="8tb-O3-vm3" secondAttribute="bottom" constant="25" id="mUc-Fg-3Aw"/>
+                            <constraint firstItem="NYW-sw-j6o" firstAttribute="trailing" secondItem="8tb-O3-vm3" secondAttribute="trailing" constant="20" id="uoO-ES-CdS"/>
+                            <constraint firstItem="NYW-sw-j6o" firstAttribute="bottom" secondItem="PuP-Tr-JlT" secondAttribute="bottom" constant="45" id="vZT-5v-UAR"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Motor de Autenticación Universal" id="4sV-sB-Raw"/>
+                    <connections>
+                        <outlet property="authorizationStatus" destination="Uxd-sq-c4m" id="wpg-dk-xSR"/>
+                        <outlet property="colorBox" destination="2P1-bD-adD" id="coF-1e-bWR"/>
+                        <outlet property="curpField" destination="oR5-j2-Oht" id="CAr-88-c1W"/>
+                        <outlet property="originIDField" destination="Gl8-Zj-FIg" id="nWx-Oa-XR7"/>
+                        <outlet property="processIDField" destination="8tb-O3-vm3" id="Bwr-At-ytq"/>
+                        <outlet property="subprocessIDField" destination="roF-7B-O4m" id="vLs-SE-Qh3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ubv-An-XKO" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5298.5507246376819" y="93.75"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="nYO-Hz-UeD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bI8-ej-Ghe" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zhc-HY-eQM">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="mZn-iB-R7d" kind="relationship" relationship="rootViewController" id="Bbd-QD-JI5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FjV-55-uEl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4388.4057971014499" y="93.75"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logoDemo" width="136" height="20"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

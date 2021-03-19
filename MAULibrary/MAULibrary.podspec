@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name             = "MAULibrary"
-  spec.version          = "1.2.1"
+  spec.version          = "1.2.3"
   spec.summary          = "Authentication and consumption library for the Profuturo MAU services"
   spec.static_framework = true
   spec.description      = "Authentication (UI) and consumption (functions calls) library for the Profuturo MAU services"
@@ -20,5 +20,5 @@ Pod::Spec.new do |spec|
   spec.dependency         'lottie-ios'
   spec.dependency         'ReachabilitySwift'
   spec.dependency         'SVPinView'
-  spec.dependency         'FWFaceAuth', '2.1.12'
+  spec.dependency         'FWFaceAuth', '2.1.16'
 end

@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  TestingMAU
+//  MAU Demo
 //
-//  Created by Ángel Eduardo Domínguez Delgado on 25/02/21.
+//  Created by Ángel Eduardo Domínguez Delgado on 09/03/21.
 //
 
 import UIKit

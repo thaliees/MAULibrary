@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  TestingMAU
+//  MAU Demo
 //
-//  Created by Ángel Eduardo Domínguez Delgado on 25/02/21.
+//  Created by Ángel Eduardo Domínguez Delgado on 09/03/21.
 //
 
 import UIKit
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         let processID = processIDField.text ?? ""
         let subprocessID = subprocessIDField.text ?? ""
         let originID = originIDField.text ?? ""
-        
+
         let userInformation = User.init(
             name: "Ángel Eduardo",
             lastName: "Domínguez",
@@ -66,7 +66,6 @@ extension ViewController: AuthenticationMAUDelegate {
     }
 
     public func authentication(wasSuccesful: Bool) {
-        print(wasSuccesful)
         if wasSuccesful {
             colorBox.backgroundColor = .systemGreen
             authorizationStatus.text = "Autenticación exitosa"
@@ -79,4 +78,6 @@ extension ViewController: AuthenticationMAUDelegate {
 
 //MARK: - UITextFieldDelegate
 extension ViewController: UITextFieldDelegate {}
+
+
 
