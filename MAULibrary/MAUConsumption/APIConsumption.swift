@@ -372,15 +372,15 @@ public class APIConsumption {
         UserRequests().getAccessToken() { token, code in
             switch code {
             case -1:
-                completion("", code)
+                completion(token, code)
             case 0:
-                completion("", code)
+                completion(token, code)
             case 1:
                 UserRequests().getSessionId() { validToken, code in
                     completion(validToken, code)
                 }
             default:
-                completion("", -1)
+                completion(token, -1)
             }
         }
     }

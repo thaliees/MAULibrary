@@ -39,18 +39,18 @@ class UserRequests {
                                 UserDefaults.standard.mauToken = token
                                 completion(token, 1)
                             } else {
-                                completion("", -1)
+                                completion("Estatus 200, error", -1)
                             }
                         default:
-                            completion("", -1)
+                            completion("Estatus !200, error", -1)
                         }
                     }
                 case .failure(_):
-                    completion("", -1)
+                    completion("Falló la solicitud", -1)
                 }
             }
         } else {
-            completion("", 0)
+            completion("Conexión Fallida", 0)
         }
     }
     
@@ -414,18 +414,18 @@ class UserRequests {
                             if let token = tokenResponse.id {
                                 completion(token, 1)
                             } else {
-                                completion("", -1)
+                                completion("Estatus 200, error: getSessionId", -1)
                             }
                         default:
-                            completion("", -1)
+                            completion("Estatus !200, error: getSessionId", -1)
                         }
                     }
                 case .failure(_):
-                    completion("", -1)
+                    completion("Falló la solicitud, error: getSessionId", -1)
                 }
             }
         } else {
-            completion("", 0)
+            completion("Conexión fallida, getSessionId", 0)
         }
     }
 }
