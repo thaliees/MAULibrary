@@ -463,11 +463,97 @@ class SelectAuthenticationMethodPresenter {
                         if let httpStatusCode = response.response?.statusCode {
                             switch httpStatusCode {
                             case 200:
-                                let active = "01"
-                                let enrollFacial = userResponse.enrollFacial ?? "02"
-                                UserDefaults.standard.canUseFacialAuthentication = enrollFacial == active
-                                self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
-                                self.selectAuthenticationMethodDelegate?.hideLoader()
+                                if let list = userResponse.listDiagnosticsOp {
+                                    let active = "01"
+                                    let enrollFacial = userResponse.enrollFacial ?? "00"
+                                    UserDefaults.standard.canUseFacialAuthentication = enrollFacial == active
+                                    if list.isEmpty {
+                                        self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
+                                        self.selectAuthenticationMethodDelegate?.hideLoader()
+                                    } else {
+                                        self.validateFlow(listOper: list)
+                                    }
+                                } else {
+                                    self.selectAuthenticationMethodDelegate?.showRequestFailed()
+                                }
+                            case 400, 401, 404, 500, 503:
+                                self.selectAuthenticationMethodDelegate?.showRequestFailed()
+                            default:
+                                self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
+                            }
+                        }
+                    case .failure(_):
+                        self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
+                    }
+                }
+        } else {
+            self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
+        }
+    }
+    
+    /**
+     Validate listOperation to continue or stop the flow
+     */
+    func validateFlow(listOper: [String]) {
+        let specialCases = listOper.contains(where: { code in
+            code == "A12"
+        })
+        
+        let userInformation = UserDefaults.standard.userInformation
+        if userInformation.businessLine != "922" && specialCases {
+            self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
+            self.selectAuthenticationMethodDelegate?.hideLoader()
+        } else {
+            self.getMessageResponse(listOper: listOper)
+        }
+    }
+    
+    /**
+     Get messages
+     */
+    func getMessageResponse(listOper: [String]) {
+        //Check internet connection
+        let reachability = try! Reachability()
+        
+        //Consumption
+        if reachability.connection != .unavailable {
+            Router.self.token = UserDefaults.standard.token
+            
+            let parameters: [String: Any] = ["listaDiagnosticosOp": listOper]
+            
+            Alamofire.request(
+                Router.getMessages(parameters: parameters))
+                .responseObject { (response: DataResponse<MessageResponse>) in
+                    switch response.result {
+                    case .success(let messageResponse):
+                        if let httpStatusCode = response.response?.statusCode {
+                            switch httpStatusCode {
+                            case 200:
+                                if let list = messageResponse.listMessages {
+                                    if list.isEmpty {
+                                        self.selectAuthenticationMethodDelegate?.showRequestFailed()
+                                    } else {
+                                        var message = ""
+                                        for item in list {
+                                            if let processId = item.processId {
+                                                message += "\(processId) - "
+                                            }
+                                            
+                                            if let msg = item.userMessage {
+                                                message += "\(msg)"
+                                                print("MAU: Mensaje a mostrar >", msg)
+                                            }
+                                            
+                                            if let m = item.technicalMessage {
+                                                print("MAU: Mensaje técnico >", m)
+                                            }
+                                            
+                                            message += "\n"
+                                        }
+                                        self.selectAuthenticationMethodDelegate?.showErrorMessage(error: message)
+                                        self.selectAuthenticationMethodDelegate?.hideLoader()
+                                    }
+                                }
                             default:
                                 self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
                             }

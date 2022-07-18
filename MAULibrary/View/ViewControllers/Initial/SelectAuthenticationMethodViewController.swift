@@ -251,6 +251,24 @@ extension SelectAuthenticationMethodViewController: SelectAuthenticationMethodDe
         animationView.stopAnimation()
         present(authenticationSuccessfulVC, animated: true)
     }
+    
+    func showRequestFailed() {
+        let requestFailedVC = RequestFailedViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
+        requestFailedVC.observerToCall = .closeMAUSelectAuthentication
+        requestFailedVC.modalPresentationStyle = .overFullScreen
+        animationView.stopAnimation()
+        self.present(requestFailedVC, animated: true)
+    }
+    
+    func showErrorMessage(error: String) {
+        let requestFailedVC = RequestFailedViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
+        requestFailedVC.observerToCall = .closeMAUSelectAuthentication
+        requestFailedVC.modalPresentationStyle = .overFullScreen
+        requestFailedVC.showError = true
+        requestFailedVC.error = error
+        animationView.stopAnimation()
+        self.present(requestFailedVC, animated: true)
+    }
 }
 
 //MARK: - UIGestureRecognizerDelegate

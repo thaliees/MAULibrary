@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -74,7 +74,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXq-X4-btq">
-                                <rect key="frame" x="95" y="341" width="224.5" height="47"/>
+                                <rect key="frame" x="95.5" y="341" width="223" height="47"/>
                                 <string key="text">No logramos comprobar 
 tu identidad</string>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="20"/>
@@ -163,7 +163,7 @@ tu identidad</string>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAQ-oT-V19">
-                                <rect key="frame" x="60" y="341" width="294.5" height="70"/>
+                                <rect key="frame" x="60.5" y="341" width="293" height="70.5"/>
                                 <string key="text">Excediste el número
 de intentos por día, inténtalo
 con otra opción de autenticación</string>
@@ -230,7 +230,7 @@ con otra opción de autenticación</string>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sS-Kf-DkY">
-                                <rect key="frame" x="61" y="341" width="292.5" height="70"/>
+                                <rect key="frame" x="62" y="341" width="290.5" height="70.5"/>
                                 <string key="text">Excediste el número de intentos 
 por día, intenta nuevamente
  mañana</string>
@@ -296,7 +296,7 @@ por día, intenta nuevamente
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u2U-5O-E6d">
-                                <rect key="frame" x="105" y="341" width="204" height="47"/>
+                                <rect key="frame" x="104" y="341" width="206" height="47"/>
                                 <string key="text">Validamos tu identidad
 de manera exitosa</string>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="20"/>
@@ -360,7 +360,7 @@ de manera exitosa</string>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQd-wC-47L">
-                                <rect key="frame" x="84" y="341" width="246.5" height="47"/>
+                                <rect key="frame" x="84.5" y="341" width="245" height="47"/>
                                 <string key="text">Error de conexión, inténtalo
 más tarde</string>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="20"/>
@@ -391,6 +391,75 @@ más tarde</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0qC-x4-NRr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4520" y="151"/>
+        </scene>
+        <!--Request Failed View Controller-->
+        <scene sceneID="8vd-Om-InW">
+            <objects>
+                <viewController storyboardIdentifier="RequestFailedViewController" modalPresentationStyle="fullScreen" id="GUD-Mv-fWt" customClass="RequestFailedViewController" customModule="MAULibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cxu-TH-vEC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" alpha="0.98000001907348633" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EBU-nK-oOL">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kuc-Dn-Ci1">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvF-bp-HGd">
+                                <rect key="frame" x="355" y="68" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="aop-xw-yTR"/>
+                                    <constraint firstAttribute="height" constant="35" id="h0O-gu-bNR"/>
+                                </constraints>
+                                <state key="normal" image="close"/>
+                                <connections>
+                                    <action selector="closeTapped:" destination="GUD-Mv-fWt" eventType="touchUpInside" id="3pG-7E-53D"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redError" translatesAutoresizingMaskIntoConstraints="NO" id="5NW-gd-91K">
+                                <rect key="frame" x="170.5" y="218" width="73" height="73"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="73" id="Fiy-oa-toP"/>
+                                    <constraint firstAttribute="height" constant="73" id="zw9-gV-TSo"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h9l-ha-Eh7">
+                                <rect key="frame" x="50" y="341" width="314" height="41"/>
+                                <string key="text">Hubo un error en el proceso de solicitud.
+Por favor, intenta nuevamente más tarde.</string>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                <color key="textColor" name="Cerulean"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="VtP-Mv-kvu"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="h9l-ha-Eh7" firstAttribute="leading" secondItem="VtP-Mv-kvu" secondAttribute="leading" constant="50" id="8Qb-Yb-gbg"/>
+                            <constraint firstItem="pvF-bp-HGd" firstAttribute="top" secondItem="VtP-Mv-kvu" secondAttribute="top" constant="24" id="BJy-mT-r8D"/>
+                            <constraint firstItem="h9l-ha-Eh7" firstAttribute="top" secondItem="5NW-gd-91K" secondAttribute="bottom" constant="50" id="CUq-RT-491"/>
+                            <constraint firstItem="EBU-nK-oOL" firstAttribute="leading" secondItem="VtP-Mv-kvu" secondAttribute="leading" id="Qj3-ps-bPB"/>
+                            <constraint firstItem="5NW-gd-91K" firstAttribute="centerX" secondItem="cxu-TH-vEC" secondAttribute="centerX" id="WDr-Ph-n8X"/>
+                            <constraint firstItem="EBU-nK-oOL" firstAttribute="top" secondItem="cxu-TH-vEC" secondAttribute="top" id="ZPQ-XZ-fVg"/>
+                            <constraint firstItem="h9l-ha-Eh7" firstAttribute="centerX" secondItem="cxu-TH-vEC" secondAttribute="centerX" id="bBk-pb-k74"/>
+                            <constraint firstItem="VtP-Mv-kvu" firstAttribute="trailing" secondItem="h9l-ha-Eh7" secondAttribute="trailing" constant="50" id="cr9-sU-uCD"/>
+                            <constraint firstAttribute="bottom" secondItem="EBU-nK-oOL" secondAttribute="bottom" id="dwB-4p-9pv"/>
+                            <constraint firstItem="EBU-nK-oOL" firstAttribute="trailing" secondItem="VtP-Mv-kvu" secondAttribute="trailing" id="eHq-tZ-8Ak"/>
+                            <constraint firstItem="VtP-Mv-kvu" firstAttribute="trailing" secondItem="pvF-bp-HGd" secondAttribute="trailing" constant="24" id="gsT-qq-79V"/>
+                            <constraint firstItem="5NW-gd-91K" firstAttribute="top" secondItem="pvF-bp-HGd" secondAttribute="bottom" constant="115" id="pxI-OO-pXS"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="XcB-AD-SDh"/>
+                    <connections>
+                        <outlet property="message" destination="h9l-ha-Eh7" id="Zey-8V-Q4v"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="39N-x8-GY6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6687" y="151"/>
         </scene>
     </scenes>
     <resources>

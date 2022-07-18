@@ -28,6 +28,7 @@ enum Router: URLRequestConvertible {
     case saveValidateAuthentication(curp: String, factorID: String, parameters: [String: Any])
     case getValidateEditData(account: String, factor: String)
     case validateAuthentication(businessLine: String, parameters: [String:Any])
+    case getMessages(parameters: [String: Any])
     
     var method: HTTPMethod {
         switch self {
@@ -70,6 +71,8 @@ enum Router: URLRequestConvertible {
             return Paths.getValidateEditData
         case .validateAuthentication:
             return Paths.validateAuthentication
+        case .getMessages:
+            return Paths.getMessages
         }
     }
     
@@ -134,6 +137,9 @@ enum Router: URLRequestConvertible {
             return try URLEncoding.default.encode(urlRequest, with: nil)
         case .validateAuthentication(let businessLine, let parameters):
             urlRequest.url?.appendPathComponent("\(businessLine)/valida")
+            urlRequest.url = URL(string: (urlRequest.url?.absoluteString.removingPercentEncoding)!)
+            return try JSONEncoding.default.encode(urlRequest, with: parameters)
+        case .getMessages(let parameters):
             urlRequest.url = URL(string: (urlRequest.url?.absoluteString.removingPercentEncoding)!)
             return try JSONEncoding.default.encode(urlRequest, with: parameters)
         }

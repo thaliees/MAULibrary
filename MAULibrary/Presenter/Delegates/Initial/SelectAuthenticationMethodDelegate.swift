@@ -10,4 +10,6 @@ import Foundation
 protocol SelectAuthenticationMethodDelegate: BaseDelegate {
     func setAuthenticationMethodsFromCriticality()
     func showAuthenticationSuccessful()
+    func showRequestFailed()
+    func showErrorMessage(error: String)
 }

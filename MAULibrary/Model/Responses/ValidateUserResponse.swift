@@ -22,7 +22,7 @@ public class ValidateUserResponse: Mappable {
     /// Client enrolamientoFacial data
     public var enrollFacial: String?
     /// Object listaDiagnosticosOp enabled
-    public var listDiagnosticsOp: Array<Any>?
+    public var listDiagnosticsOp: Array<String>?
     /// Client  resultadoOperacion data
     public var operationResult: String?
     /// Client tipoUsuario data
@@ -43,23 +43,5 @@ public class ValidateUserResponse: Mappable {
         operationResult <- map["resultadoOperacion"]
         usertype <- map["tipoUsuario"]
         token <- map["token"]
-    }
-}
-
-/// Data of client facial biometrics
-public class DiagnosticosOp: Mappable {
-    /// Status of the facial biometrics
-    var status: ValueID?
-    /// Origin of the facial biometrics
-    var origin: ValueID?
-    /// Last update date of the facial biometrics
-    var updateDate: String?
-    
-    public required init?(map: Map) { }
-    
-    public func mapping(map: Map) {
-        status <- map["estado"]
-        origin <- map["origen"]
-        updateDate <- map["fechaActualizacion"]
     }
 }

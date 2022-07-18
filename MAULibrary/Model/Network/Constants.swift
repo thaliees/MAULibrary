@@ -41,6 +41,7 @@ struct Paths {
     static let saveValidateAuthentication = "mau/1/ga/autenticacion/"
     static let getValidateEditData = "mau/1/gu/usuarios/cuenta"
     static let validateAuthentication = "mau/1/gu/usuarios/validaUsuarios/"
+    static let getMessages = "mau/1/ga/gau/procesar/messages"
 }
 
 struct ServerErrors {
