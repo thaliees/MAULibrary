@@ -22,5 +22,7 @@
 	<array>
 		<string>Roboto-Light.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Requerimos acceso a tu galería para el proceso de identificación o enrolamiento</string>
 </dict>
 </plist>
