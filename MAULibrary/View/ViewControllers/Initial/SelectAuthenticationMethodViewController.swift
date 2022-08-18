@@ -196,7 +196,8 @@ extension SelectAuthenticationMethodViewController: SelectAuthenticationMethodDe
     func setAuthenticationMethodsFromCriticality() {
         var canUseToken = UserDefaults.standard.canUseTokenAuthentication
         let canUseFacial = UserDefaults.standard.canUseFacialAuthentication
-        
+        let isEnrolled = UserDefaults.standard.isUserEnrolled
+
         // New Validation edit data in progress
         if (!UserDefaults.standard.canUseSMSTokenDM && !UserDefaults.standard.canUseEmailTokenDM) {
             canUseToken = false
@@ -218,9 +219,11 @@ extension SelectAuthenticationMethodViewController: SelectAuthenticationMethodDe
         
         let hasFacialAttempts = UserDefaults.standard.hasDailyAttemptsOfFacial
         let hasTokenAttempts = UserDefaults.standard.hasDailyAttemptsOfSMS || UserDefaults.standard.hasDailyAttemptsOfEmail
-        
-        facialSecondaryInstruction.text = hasFacialAttempts ? "Ten a la mano tu INE/IFE o Pasaporte vigente" : "Has excedido el número de intentos,\nvuelve a intentarlo en 24 hrs."
-        dontHaveIDButton.isHidden = !hasFacialAttempts
+        let messageFacial = isEnrolled ?
+            "Validaremos tu identidad tomándote una selfie" :
+            "Ten a la mano tu INE o Pasaporte vigente"
+        facialSecondaryInstruction.text = hasFacialAttempts ? messageFacial : "Has excedido el número de intentos,\nvuelve a intentarlo en 24 hrs."
+        dontHaveIDButton.isHidden = !hasFacialAttempts || isEnrolled
         
         tokenSecondaryInstruction.text = hasTokenAttempts ? "Recibirás un código de 6 dígitos en tu\ncelular o correo electrónico" : "Has excedido el número de intentos,\nvuelve a intentarlo en 24 hrs."
         

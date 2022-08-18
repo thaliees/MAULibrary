@@ -90,7 +90,11 @@
 		5DA0755E25E75D5300122F0D /* AppStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA0751725E75D5300122F0D /* AppStoryboard.swift */; };
 		5DA0755F25E75D5300122F0D /* profuturoAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DA0751925E75D5300122F0D /* profuturoAnimation.json */; };
 		5DD95E2D25F173B700C82656 /* DailyAttemptsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD95E2C25F173B700C82656 /* DailyAttemptsResponse.swift */; };
+		7281AC17289B3940007745E8 /* EnrollOrValidationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281AC16289B3940007745E8 /* EnrollOrValidationResponse.swift */; };
+		729D48E32885A29700CD6C90 /* MessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729D48E22885A29700CD6C90 /* MessagesResponse.swift */; };
+		72CEA0F528A5695F00AF3254 /* SaveStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CEA0F428A5695F00AF3254 /* SaveStatusResponse.swift */; };
 		72F3B0802875E9DD00010A3D /* ValidateUserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F3B07F2875E9DD00010A3D /* ValidateUserResponse.swift */; };
+		72F3B0842876454A00010A3D /* RequestFailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F3B0832876454A00010A3D /* RequestFailedViewController.swift */; };
 		85669FC52697B34D00A820B4 /* ValidityAuthenticationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85669FC42697B34D00A820B4 /* ValidityAuthenticationResponse.swift */; };
 		85669FC82697B60500A820B4 /* Factor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85669FC72697B60500A820B4 /* Factor.swift */; };
 		85669FCB2697B66D00A820B4 /* IdentificatorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85669FCA2697B66D00A820B4 /* IdentificatorResponse.swift */; };
@@ -183,7 +187,11 @@
 		5DA0751725E75D5300122F0D /* AppStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoryboard.swift; sourceTree = "<group>"; };
 		5DA0751925E75D5300122F0D /* profuturoAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = profuturoAnimation.json; sourceTree = "<group>"; };
 		5DD95E2C25F173B700C82656 /* DailyAttemptsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAttemptsResponse.swift; sourceTree = "<group>"; };
+		7281AC16289B3940007745E8 /* EnrollOrValidationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollOrValidationResponse.swift; sourceTree = "<group>"; };
+		729D48E22885A29700CD6C90 /* MessagesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesResponse.swift; sourceTree = "<group>"; };
+		72CEA0F428A5695F00AF3254 /* SaveStatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStatusResponse.swift; sourceTree = "<group>"; };
 		72F3B07F2875E9DD00010A3D /* ValidateUserResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateUserResponse.swift; sourceTree = "<group>"; };
+		72F3B0832876454A00010A3D /* RequestFailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFailedViewController.swift; sourceTree = "<group>"; };
 		85669FC42697B34D00A820B4 /* ValidityAuthenticationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidityAuthenticationResponse.swift; sourceTree = "<group>"; };
 		85669FC72697B60500A820B4 /* Factor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factor.swift; sourceTree = "<group>"; };
 		85669FCA2697B66D00A820B4 /* IdentificatorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentificatorResponse.swift; sourceTree = "<group>"; };
@@ -385,6 +393,9 @@
 				85669FC42697B34D00A820B4 /* ValidityAuthenticationResponse.swift */,
 				85669FCD2697B6AC00A820B4 /* EditDataResponse.swift */,
 				72F3B07F2875E9DD00010A3D /* ValidateUserResponse.swift */,
+				729D48E22885A29700CD6C90 /* MessagesResponse.swift */,
+				7281AC16289B3940007745E8 /* EnrollOrValidationResponse.swift */,
+				72CEA0F428A5695F00AF3254 /* SaveStatusResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -494,6 +505,7 @@
 				5DA074F725E75D5300122F0D /* LimitExceededTryAnotherViewController.swift */,
 				5DA074F825E75D5300122F0D /* LimitExceededViewController.swift */,
 				5DA074F925E75D5300122F0D /* ConnectionErrorViewController.swift */,
+				72F3B0832876454A00010A3D /* RequestFailedViewController.swift */,
 			);
 			path = Dialogs;
 			sourceTree = "<group>";
@@ -739,6 +751,7 @@
 				5DA074B025E75D4C00122F0D /* ConsumptionRouter.swift in Sources */,
 				5DA0753425E75D5300122F0D /* UIImage.swift in Sources */,
 				5DA0753525E75D5300122F0D /* UIViewController.swift in Sources */,
+				72CEA0F528A5695F00AF3254 /* SaveStatusResponse.swift in Sources */,
 				85669FC52697B34D00A820B4 /* ValidityAuthenticationResponse.swift in Sources */,
 				5DA0751B25E75D5300122F0D /* EnterTokenPresenter.swift in Sources */,
 				5DA074AF25E75D4C00122F0D /* TokenRequests.swift in Sources */,
@@ -753,12 +766,15 @@
 				5DA0754325E75D5300122F0D /* LimitExceededViewController.swift in Sources */,
 				5DA074B625E75D4C00122F0D /* REUSResponse.swift in Sources */,
 				5DA0754425E75D5300122F0D /* ConnectionErrorViewController.swift in Sources */,
+				72F3B0842876454A00010A3D /* RequestFailedViewController.swift in Sources */,
 				5DA0752B25E75D5300122F0D /* User.swift in Sources */,
+				7281AC17289B3940007745E8 /* EnrollOrValidationResponse.swift in Sources */,
 				5DA0754025E75D5300122F0D /* AuthenticationErrorViewController.swift in Sources */,
 				5DA0755E25E75D5300122F0D /* AppStoryboard.swift in Sources */,
 				5D41D44925F18BC700E2D096 /* InstructionsFacialDelegate.swift in Sources */,
 				5DA0753625E75D5300122F0D /* UILabel.swift in Sources */,
 				5DA0752525E75D5300122F0D /* TokenResponse.swift in Sources */,
+				729D48E32885A29700CD6C90 /* MessagesResponse.swift in Sources */,
 				5DA0752125E75D5300122F0D /* BaseDelegate.swift in Sources */,
 				5DA074B425E75D4C00122F0D /* ARCOResponse.swift in Sources */,
 				5DA0753925E75D5300122F0D /* TokenPreInformationViewController.swift in Sources */,

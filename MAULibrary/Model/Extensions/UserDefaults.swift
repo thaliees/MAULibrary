@@ -157,4 +157,31 @@ extension UserDefaults {
             self.set(canUseSMSTokenDM, forKey: "canUseSMSTokenDM")
         }
     }
+    
+    var isUserEnrolled: Bool {
+        get {
+            return self.bool(forKey: "userEnrolled")
+        }
+        set(isUserEnrolled) {
+            self.set(isUserEnrolled, forKey: "userEnrolled")
+        }
+    }
+
+    var tokenOperation: String {
+        get {
+            return self.string(forKey: "tokenOperation") ?? ""
+        }
+        set(tokenOperation) {
+            self.set(tokenOperation, forKey: "tokenOperation")
+        }
+    }
+    
+    var uuidSession: String {
+        get {
+            return self.string(forKey: "uuidSession") ?? ""
+        }
+        set(uuidSession) {
+            self.set(uuidSession, forKey: "uuidSession")
+        }
+    }
 }

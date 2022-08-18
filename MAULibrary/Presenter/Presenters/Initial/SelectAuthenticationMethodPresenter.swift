@@ -434,7 +434,7 @@ class SelectAuthenticationMethodPresenter {
             self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
         }
     }
-    
+    // MARK: OLA3
     /**
      Get the validation information for the user
      */
@@ -447,12 +447,19 @@ class SelectAuthenticationMethodPresenter {
             Router.self.token = UserDefaults.standard.token
             
             let userInformation = UserDefaults.standard.userInformation
+            let binnacle: [String: Any] = [
+                "idProceso": userInformation.processID,
+                "idSubProceso": userInformation.subProcessID,
+                "idOrigen": userInformation.originID,
+                "idFactor": "159"
+            ]
             let parameters: [String: Any] = [
                 "curp": userInformation.curp,
                 "cveOrigen": userInformation.cveOrigin,
                 "cveEntSolicitante": userInformation.cveEntity,
                 "cveOperacion": userInformation.cveOperation,
                 "tipoUsuario": userInformation.userType,
+                "dataBitacora": binnacle
             ]
             
             Alamofire.request(
@@ -466,7 +473,8 @@ class SelectAuthenticationMethodPresenter {
                                 if let list = userResponse.listDiagnosticsOp {
                                     let active = "01"
                                     let enrollFacial = userResponse.enrollFacial ?? "00"
-                                    UserDefaults.standard.canUseFacialAuthentication = enrollFacial == active
+                                    UserDefaults.standard.isUserEnrolled = enrollFacial == active
+                                    UserDefaults.standard.tokenOperation = userResponse.token ?? ""
                                     if list.isEmpty {
                                         self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
                                         self.selectAuthenticationMethodDelegate?.hideLoader()
@@ -541,11 +549,6 @@ class SelectAuthenticationMethodPresenter {
                                             
                                             if let msg = item.userMessage {
                                                 message += "\(msg)"
-                                                print("MAU: Mensaje a mostrar >", msg)
-                                            }
-                                            
-                                            if let m = item.technicalMessage {
-                                                print("MAU: Mensaje técnico >", m)
                                             }
                                             
                                             message += "\n"

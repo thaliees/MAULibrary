@@ -68,7 +68,7 @@ mano:</string>
                                                 <color key="textColor" name="GrayText"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="• INE/IFE o Pasaporte vigente" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kn5-1R-aNd">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="• INE o Pasaporte vigente" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kn5-1R-aNd">
                                                 <rect key="frame" x="20" y="345.5" width="335" height="21"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="18"/>
                                                 <nil key="textColor"/>
@@ -141,6 +141,8 @@ mano:</string>
                     <navigationItem key="navigationItem" id="bsJ-s3-Qlz"/>
                     <connections>
                         <outlet property="extensionView" destination="Bkk-W2-3gY" id="kgB-dC-DGU"/>
+                        <outlet property="helpText" destination="YmM-sa-jNB" id="znC-WP-FvQ"/>
+                        <outlet property="textID" destination="Kn5-1R-aNd" id="q7m-Xi-lKO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u6h-YO-kWe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

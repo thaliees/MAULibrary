@@ -93,7 +93,7 @@
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNE-zt-VJS">
                                                 <rect key="frame" x="0.0" y="14.5" width="124.5" height="33"/>
-                                                <string key="text">Captura tu INE/IFE
+                                                <string key="text">Captura tu INE
 o Pasaporte vigente</string>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <color key="textColor" name="GrayText"/>
@@ -465,9 +465,9 @@ verificar tu identidad</string>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJe-1T-Cc8">
-                                                        <rect key="frame" x="71.5" y="142" width="177" height="29"/>
+                                                        <rect key="frame" x="82" y="142" width="156" height="29"/>
                                                         <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="12"/>
-                                                        <state key="normal" title="¿No tienes INE/IFE o Pasaporte?"/>
+                                                        <state key="normal" title="¿No tienes INE o Pasaporte?"/>
                                                         <connections>
                                                             <action selector="noIDTapped:" destination="Mgb-uk-u4J" eventType="touchUpInside" id="iLw-D2-njp"/>
                                                         </connections>

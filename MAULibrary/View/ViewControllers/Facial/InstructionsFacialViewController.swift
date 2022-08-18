@@ -14,7 +14,9 @@ class InstructionsFacialViewController: UIViewController {
     
     //MARK: - UI Properties
     @IBOutlet var extensionView: UIView!
-    
+    @IBOutlet weak var helpText: UILabel!
+    @IBOutlet weak var textID: UILabel!
+
     //MARK: - Logic Properties
     let presenter = InstructionsFacialPresenter()
     /// Loader for the view
@@ -35,6 +37,12 @@ class InstructionsFacialViewController: UIViewController {
         super.viewWillAppear(animated)
         createUIInitialModifications()
         
+        let isEnrolled = UserDefaults.standard.isUserEnrolled
+        if isEnrolled {
+            helpText.text = "Vamos a tomarte una selfie"
+            textID.isHidden = true
+        }
+
         //Add observers
         defineObservers()
     }
@@ -90,7 +98,6 @@ class InstructionsFacialViewController: UIViewController {
         let uiConfiguration = FaceAuthModel.UIConfiguration(activityIndicator: ActivityData(), withInstructions: true)
         
         let userInformation = UserDefaults.standard.userInformation
-        
         let request = FaceAuthModel.Request(
             client: userInformation.client,
             account: userInformation.account,
@@ -127,6 +134,10 @@ extension InstructionsFacialViewController: UIGestureRecognizerDelegate { }
 
 //MARK: - FaceAuthDelegate
 extension InstructionsFacialViewController: FaceAuthDelegate {
+    func modalViewController<T>(viewController: T) { }
+    
+    func hiddenModalViewController() { }
+    
     func showViewController<T>(viewController: T, error: Bool) {
         animationView.hideLoaderView()
         if let faceAuthVC = viewController as? FaceAuthViewController {
@@ -135,8 +146,25 @@ extension InstructionsFacialViewController: FaceAuthDelegate {
     }
     
     func responseHandler(response: FaceAuthModel.Response) {
-        if response.authResult ?? false {
-            presenter.saveValidityAuthentication()
+        if let authResult = response.authResult {
+            if authResult {
+                animationView.showLoaderView()
+                let isEnrolled = UserDefaults.standard.isUserEnrolled
+                let token = UserDefaults.standard.tokenOperation
+                let userInformation = UserDefaults.standard.userInformation
+                var operation = ""
+                let entity = Int(userInformation.cveEntity) ?? 0
+                if entity == 534 {
+                    operation = !isEnrolled ? "PA10" : "PA30"
+                } else if entity == 601 {
+                    operation = !isEnrolled ? "PG10" : "PG30"
+                } else if entity == 602 {
+                    operation = !isEnrolled ? "PS10" : "PS30"
+                }
+                presenter.enrollOrValidation(token: token, operation: operation, response: response)
+            } else {
+                presenter.getFacialAttempts()
+            }
         } else {
             presenter.getFacialAttempts()
         }
@@ -204,5 +232,20 @@ extension InstructionsFacialViewController: InstructionsFacialDelegate {
         connectionErrorVC.modalPresentationStyle = .overFullScreen
         animationView.stopAnimation()
         self.present(connectionErrorVC, animated: true)
+    }
+    
+    func showErrorMessage(error: String) {
+        let requestFailedVC = RequestFailedViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
+        requestFailedVC.observerToCall = .closeMAUInstructionsFacial
+        requestFailedVC.modalPresentationStyle = .overFullScreen
+        requestFailedVC.showError = true
+        requestFailedVC.error = error
+        animationView.stopAnimation()
+        self.present(requestFailedVC, animated: true)
+    }
+    
+    func failedRequest() {
+        let observerToCall: NotificationObserverServices = .closeMAUInstructionsFacial
+        NotificationCenter.default.post(name: Notification.Name(observerToCall.rawValue), object: nil)
     }
 }

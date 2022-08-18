@@ -39,7 +39,7 @@ public class ValidateUserResponse: Mappable {
         cveOrigin <- map["cveOrigen"]
         enrollDactilar <- map["enrolamientoDactilar"]
         enrollFacial <- map["enrolamientoFacial"]
-        listDiagnosticsOp <- map["listaDiagnosticosOp"]
+        listDiagnosticsOp <- map["diagnostico"]
         operationResult <- map["resultadoOperacion"]
         usertype <- map["tipoUsuario"]
         token <- map["token"]

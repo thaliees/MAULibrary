@@ -16,13 +16,13 @@ struct Keys {
 }
 
 struct Servers {
-//    #if DEBUG
+    #if DEBUG
     static let url = "https://api.dev.profuturo.mx/"
-//    #elseif QA
-//    static let url = "https://api.qa.profuturo.mx/"
-//    #else
-//    static let url = "https://api.profuturo.mx/"
-//    #endif
+    #elseif QA
+    static let url = "https://api.qa.profuturo.mx/"
+    #else
+    static let url = "https://api.profuturo.mx/"
+    #endif
 }
 
 struct Paths {
@@ -42,6 +42,8 @@ struct Paths {
     static let getValidateEditData = "mau/1/gu/usuarios/cuenta"
     static let validateAuthentication = "mau/1/gu/usuarios/validaUsuarios/"
     static let getMessages = "mau/1/ga/gau/procesar/messages"
+    static let enrollOrValidation = "mau/1/gbf/enrolamientoFacial"
+    static let saveStatus = "mau/1/gu/usuarios/"
 }
 
 struct ServerErrors {

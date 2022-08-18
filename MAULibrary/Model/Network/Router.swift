@@ -29,6 +29,8 @@ enum Router: URLRequestConvertible {
     case getValidateEditData(account: String, factor: String)
     case validateAuthentication(businessLine: String, parameters: [String:Any])
     case getMessages(parameters: [String: Any])
+    case enrollOrValidation(parameters: [String: Any])
+    case saveStatus(curp: String, parameters: [String: Any])
     
     var method: HTTPMethod {
         switch self {
@@ -73,6 +75,10 @@ enum Router: URLRequestConvertible {
             return Paths.validateAuthentication
         case .getMessages:
             return Paths.getMessages
+        case .enrollOrValidation:
+            return Paths.enrollOrValidation
+        case .saveStatus:
+            return Paths.saveStatus
         }
     }
     
@@ -140,6 +146,13 @@ enum Router: URLRequestConvertible {
             urlRequest.url = URL(string: (urlRequest.url?.absoluteString.removingPercentEncoding)!)
             return try JSONEncoding.default.encode(urlRequest, with: parameters)
         case .getMessages(let parameters):
+            urlRequest.url = URL(string: (urlRequest.url?.absoluteString.removingPercentEncoding)!)
+            return try JSONEncoding.default.encode(urlRequest, with: parameters)
+        case .enrollOrValidation(let parameters):
+            urlRequest.url = URL(string: (urlRequest.url?.absoluteString.removingPercentEncoding)!)
+            return try JSONEncoding.default.encode(urlRequest, with: parameters)
+        case .saveStatus(curp: let curp, parameters: let parameters):
+            urlRequest.url?.appendPathComponent("\(curp)/check-tramite")
             urlRequest.url = URL(string: (urlRequest.url?.absoluteString.removingPercentEncoding)!)
             return try JSONEncoding.default.encode(urlRequest, with: parameters)
         }
