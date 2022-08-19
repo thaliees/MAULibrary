@@ -42,7 +42,7 @@ class UserRequests {
                                 completion("No se logró obtener el token.", -1)
                             }
                         default:
-                            completion("Ocurrió un error en la petición.", -1)
+                            completion("Ocurrió un error en la petición (token).", -1)
                         }
                     }
                 case .failure(_):
@@ -414,10 +414,10 @@ class UserRequests {
                             if let token = tokenResponse.id {
                                 completion(token, 1)
                             } else {
-                                completion("No se logró obtener el token", -1)
+                                completion("No se logró obtener el token sesión", -1)
                             }
                         default:
-                            completion("Ocurrió un error en la petición", -1)
+                            completion("Ocurrió un error en la petición (sesión)", -1)
                         }
                     }
                 case .failure(_):

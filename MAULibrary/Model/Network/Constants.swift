@@ -16,13 +16,13 @@ struct Keys {
 }
 
 struct Servers {
-    #if DEBUG
+//    #if DEBUG
     static let url = "https://api.dev.profuturo.mx/"
-    #elseif QA
-    static let url = "https://api.qa.profuturo.mx/"
-    #else
-    static let url = "https://api.profuturo.mx/"
-    #endif
+//    #elseif QA
+//    static let url = "https://api.qa.profuturo.mx/"
+//    #else
+//    static let url = "https://api.profuturo.mx/"
+//    #endif
 }
 
 struct Paths {
