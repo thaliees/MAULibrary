@@ -470,11 +470,11 @@ class SelectAuthenticationMethodPresenter {
                         if let httpStatusCode = response.response?.statusCode {
                             switch httpStatusCode {
                             case 200:
+                                let active = "01"
+                                let enrollFacial = userResponse.enrollFacial ?? "00"
+                                UserDefaults.standard.isUserEnrolled = enrollFacial == active
+                                UserDefaults.standard.tokenOperation = userResponse.token ?? ""
                                 if let list = userResponse.listDiagnosticsOp {
-                                    let active = "01"
-                                    let enrollFacial = userResponse.enrollFacial ?? "00"
-                                    UserDefaults.standard.isUserEnrolled = enrollFacial == active
-                                    UserDefaults.standard.tokenOperation = userResponse.token ?? ""
                                     if list.isEmpty {
                                         self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
                                         self.selectAuthenticationMethodDelegate?.hideLoader()
@@ -482,7 +482,8 @@ class SelectAuthenticationMethodPresenter {
                                         self.validateFlow(listOper: list)
                                     }
                                 } else {
-                                    self.selectAuthenticationMethodDelegate?.showRequestFailed()
+                                    self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
+                                    self.selectAuthenticationMethodDelegate?.hideLoader()
                                 }
                             case 400, 401, 404, 500, 503:
                                 self.selectAuthenticationMethodDelegate?.showRequestFailed()

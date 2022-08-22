@@ -236,7 +236,7 @@ class InstructionsFacialPresenter {
                                                 self.getMessageResponse(listOper: list)
                                             }
                                         } else {
-                                            self.instructionsFacialDelegate?.showConnectionErrorMessage()
+                                            self.checkFlow(result: result)
                                         }
                                     default:
                                         self.instructionsFacialDelegate?.showConnectionErrorMessage()
