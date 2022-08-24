@@ -10,6 +10,7 @@ import UIKit
 class AuthenticationErrorViewController: UIViewController {
     
     //UI Properties
+    @IBOutlet weak var message: UILabel!
     @IBOutlet var tryAgainButton: UIButton!
     
     //Logic Properties
@@ -17,6 +18,8 @@ class AuthenticationErrorViewController: UIViewController {
     var observerToCall: NotificationObserverServices!
     var observerToCallClose: NotificationObserverServices!
     var showTryAgainButton: Bool!
+    public var showError = false
+    public var error = ""
     
     //MARK: - Init
     override func viewDidLoad() {
@@ -24,6 +27,12 @@ class AuthenticationErrorViewController: UIViewController {
         
         //Hide button if the user don't have more authentication methods
         tryAgainButton.isHidden = !showTryAgainButton
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if showError {
+            message.text = error
+        }
     }
     
     //MARK: - Actions

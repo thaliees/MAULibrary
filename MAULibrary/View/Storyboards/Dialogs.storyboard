@@ -74,7 +74,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXq-X4-btq">
-                                <rect key="frame" x="95.5" y="341" width="223" height="47"/>
+                                <rect key="frame" x="50" y="341" width="314" height="47"/>
                                 <string key="text">No logramos comprobar 
 tu identidad</string>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="20"/>
@@ -88,19 +88,21 @@ tu identidad</string>
                             <constraint firstItem="l9G-yo-eJv" firstAttribute="trailing" secondItem="9Py-cR-pYr" secondAttribute="trailing" constant="24" id="7PC-Uv-uu0"/>
                             <constraint firstItem="m6S-dC-sQb" firstAttribute="trailing" secondItem="l9G-yo-eJv" secondAttribute="trailing" id="7a4-MQ-pbg"/>
                             <constraint firstItem="w7D-gg-bdG" firstAttribute="centerX" secondItem="zKO-Ew-vi1" secondAttribute="centerX" id="CzL-Pw-yUz"/>
+                            <constraint firstItem="l9G-yo-eJv" firstAttribute="trailing" secondItem="HXq-X4-btq" secondAttribute="trailing" constant="50" id="DPo-3E-D1O"/>
                             <constraint firstAttribute="bottom" secondItem="m6S-dC-sQb" secondAttribute="bottom" id="Dvp-Lf-fyh"/>
                             <constraint firstItem="aN4-MS-ymJ" firstAttribute="centerX" secondItem="zKO-Ew-vi1" secondAttribute="centerX" id="X0g-IV-0lc"/>
                             <constraint firstItem="9Py-cR-pYr" firstAttribute="top" secondItem="l9G-yo-eJv" secondAttribute="top" constant="24" id="aXu-AG-Yl5"/>
                             <constraint firstItem="l9G-yo-eJv" firstAttribute="bottom" secondItem="aN4-MS-ymJ" secondAttribute="bottom" constant="40" id="aug-ji-a8B"/>
+                            <constraint firstItem="HXq-X4-btq" firstAttribute="leading" secondItem="l9G-yo-eJv" secondAttribute="leading" constant="50" id="bdh-0o-VzB"/>
                             <constraint firstItem="HXq-X4-btq" firstAttribute="top" secondItem="w7D-gg-bdG" secondAttribute="bottom" constant="50" id="brH-rx-b40"/>
                             <constraint firstItem="w7D-gg-bdG" firstAttribute="top" secondItem="9Py-cR-pYr" secondAttribute="bottom" constant="115" id="dlS-yf-WeP"/>
-                            <constraint firstItem="HXq-X4-btq" firstAttribute="centerX" secondItem="zKO-Ew-vi1" secondAttribute="centerX" id="fAN-j5-2Yb"/>
                             <constraint firstItem="m6S-dC-sQb" firstAttribute="top" secondItem="zKO-Ew-vi1" secondAttribute="top" id="jNk-nI-RXI"/>
                             <constraint firstItem="m6S-dC-sQb" firstAttribute="leading" secondItem="l9G-yo-eJv" secondAttribute="leading" id="yhr-Mt-iDl"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jNE-II-DsH"/>
                     <connections>
+                        <outlet property="message" destination="HXq-X4-btq" id="Qcd-PG-68X"/>
                         <outlet property="tryAgainButton" destination="aN4-MS-ymJ" id="tc3-sj-kcr"/>
                     </connections>
                 </viewController>
@@ -427,10 +429,10 @@ más tarde</string>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h9l-ha-Eh7">
-                                <rect key="frame" x="50" y="341" width="314" height="41"/>
+                                <rect key="frame" x="50" y="341" width="314" height="94"/>
                                 <string key="text">Hubo un error en el proceso de solicitud.
 Por favor, intenta nuevamente más tarde.</string>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="20"/>
                                 <color key="textColor" name="Cerulean"/>
                                 <nil key="highlightedColor"/>
                             </label>

@@ -148,17 +148,21 @@ extension InstructionsFacialViewController: FaceAuthDelegate {
     func responseHandler(response: FaceAuthModel.Response) {
         if let authResult = response.authResult {
             if authResult {
+                let businessAFORE = 534
+                let businessASEGURADORA = 601
+                let businessSOFOM = 602
+                
                 animationView.showLoaderView()
                 let isEnrolled = UserDefaults.standard.isUserEnrolled
                 let token = UserDefaults.standard.tokenOperation
                 let userInformation = UserDefaults.standard.userInformation
                 var operation = ""
                 let entity = Int(userInformation.cveEntity) ?? 0
-                if entity == 534 {
+                if entity == businessAFORE {
                     operation = !isEnrolled ? "PA10" : "PA30"
-                } else if entity == 601 {
+                } else if entity == businessASEGURADORA {
                     operation = !isEnrolled ? "PG10" : "PG30"
-                } else if entity == 602 {
+                } else if entity == businessSOFOM {
                     operation = !isEnrolled ? "PS10" : "PS30"
                 }
                 presenter.enrollOrValidation(token: token, operation: operation, response: response)
@@ -235,13 +239,15 @@ extension InstructionsFacialViewController: InstructionsFacialDelegate {
     }
     
     func showErrorMessage(error: String) {
-        let requestFailedVC = RequestFailedViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
-        requestFailedVC.observerToCall = .closeMAUInstructionsFacial
-        requestFailedVC.modalPresentationStyle = .overFullScreen
-        requestFailedVC.showError = true
-        requestFailedVC.error = error
+        let authenticationErrorVC = AuthenticationErrorViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
+        authenticationErrorVC.observerToCall = .tryAgainAuthenticationInFacial
+        authenticationErrorVC.observerToCallClose = .closeMAUInstructionsFacial
+        authenticationErrorVC.showTryAgainButton = true
+        authenticationErrorVC.showError = true
+        authenticationErrorVC.error = error
+        authenticationErrorVC.modalPresentationStyle = .overFullScreen
         animationView.stopAnimation()
-        self.present(requestFailedVC, animated: true)
+        present(authenticationErrorVC, animated: true)
     }
     
     func failedRequest() {
