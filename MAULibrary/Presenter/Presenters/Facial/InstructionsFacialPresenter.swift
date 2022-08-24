@@ -173,6 +173,8 @@ class InstructionsFacialPresenter {
         if reachability.connection != .unavailable {
             Router.self.token = UserDefaults.standard.token
             let userInformation = UserDefaults.standard.userInformation
+            let forceEnroll = userInformation.forceEnroll
+            let forceError = userInformation.forceError
             
             guard let selfie = response.selphiResult.image.jpegData(compressionQuality: 0.95) else {
                 self.instructionsFacialDelegate?.showConnectionErrorMessage()
@@ -186,7 +188,7 @@ class InstructionsFacialPresenter {
                 if let frontID = response.selphIdResult?.frontImage {
                     front = frontID.jpegData(compressionQuality: 0.95)
                 }
-                
+
                 if let backID = response.selphIdResult?.backImage {
                     back = backID.jpegData(compressionQuality: 0.95)
                 }
@@ -224,28 +226,59 @@ class InstructionsFacialPresenter {
             Alamofire.request(Router.enrollOrValidation(parameters: parameters))
                 .responseObject { (response: DataResponse<EnrollOrValidationResponse>) in
                     self.removeTemp(directoryTemp: urlTemp)
-                    switch response.result {
-                        case .success(let result):
-                            if let httpStatusCode = response.response?.statusCode {
-                                switch httpStatusCode {
-                                    case 200:
-                                        if let list = result.listOp {
-                                            if list.isEmpty {
-                                                self.checkFlow(result: result)
+                    if let data = response.data {
+                        let encoding = String(data: data, encoding: String.Encoding.utf8)
+                        guard let enc = encoding else { return }
+                        
+                        if enc.contains("<!DOCTYPE html>") || enc.contains("<html>") || enc == "" {
+                            print("MAU: enc", enc)
+                        }
+                        
+                        let datas = enc.data(using: .utf8)
+                        do {
+                            let json  = try JSONSerialization.jsonObject(with: datas!) as! NSDictionary
+                            print("MAU: json", json.debugDescription)
+                        } catch {
+                            
+                        }
+                    }
+                    if forceEnroll {
+                        if forceError {
+                            let list = ["A10"]
+                            self.getMessageResponse(listOper: list)
+                        } else {
+                            let r: [String : Any] = [
+                                "resultadoOperacion" : "01",
+                                "enrolado": "01",
+                                "resultadoValidacion": "MATCH"
+                            ]
+                            let result = EnrollOrValidationResponse(JSON: r)!
+                            self.checkFlow(result: result)
+                        }
+                    } else {
+                        switch response.result {
+                            case .success(let result):
+                                if let httpStatusCode = response.response?.statusCode {
+                                    switch httpStatusCode {
+                                        case 200:
+                                            if let list = result.listOp {
+                                                if list.isEmpty {
+                                                    self.checkFlow(result: result)
+                                                } else {
+                                                    self.getMessageResponse(listOper: list)
+                                                }
                                             } else {
-                                                self.getMessageResponse(listOper: list)
+                                                self.checkFlow(result: result)
                                             }
-                                        } else {
-                                            self.checkFlow(result: result)
-                                        }
-                                    default:
-                                        self.instructionsFacialDelegate?.showConnectionErrorMessage()
+                                        default:
+                                            self.instructionsFacialDelegate?.showConnectionErrorMessage()
+                                    }
+                                } else {
+                                    self.instructionsFacialDelegate?.showConnectionErrorMessage()
                                 }
-                            } else {
+                            case .failure(_):
                                 self.instructionsFacialDelegate?.showConnectionErrorMessage()
-                            }
-                        case .failure(_):
-                            self.instructionsFacialDelegate?.showConnectionErrorMessage()
+                        }
                     }
             }
         } else {

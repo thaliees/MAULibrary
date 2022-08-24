@@ -28,6 +28,7 @@ class SelectAuthenticationMethodPresenter {
      Generates a new token to request petitions to the server
      */
     func generateToken() {
+        print("MAU: generateToken")
         //Show loader
         selectAuthenticationMethodDelegate?.showLoader()
         
@@ -68,6 +69,7 @@ class SelectAuthenticationMethodPresenter {
      Consult the criticality matrix for processes and subprocesses
      */
     func getCriticalityMatrix() {
+        print("MAU: getCriticalityMatrix")
         //Check internet connection
         let reachability = try! Reachability()
         
@@ -143,6 +145,7 @@ class SelectAuthenticationMethodPresenter {
      Consult the validity time of authentication method
      */
     func getValidityAuthenticationFactor() {
+        print("MAU: getValidityAuthenticationFactor")
         //Set parameters
         let factor : Factor = self.arrayFactors[self.countArrayFactors]
         let userInformation = UserDefaults.standard.userInformation
@@ -197,6 +200,7 @@ class SelectAuthenticationMethodPresenter {
      Send the bitacora time of authentication method
      */
     func sendBitacoraAuthenticationFactor(factorID : String) {
+        print("MAU: sendBitacoraAuthenticationFactor")
         //Check internet connection
         let reachability = try! Reachability()
         
@@ -269,6 +273,7 @@ class SelectAuthenticationMethodPresenter {
      Get the authentication information for the user
      */
     func getProfileAuthenticationMethods() {
+        print("MAU: getProfileAuthenticationMethods")
         //Check internet connection
         let reachability = try! Reachability()
         
@@ -327,6 +332,7 @@ class SelectAuthenticationMethodPresenter {
      Check if the authentication method has attempts
      */
     func getDailyAttempts(factorID: TypesFactor) {
+        print("MAU: getDailyAttempts")
         //Check internet connection
         let reachability = try! Reachability()
         
@@ -389,6 +395,7 @@ class SelectAuthenticationMethodPresenter {
      - Parameter factor (correo / celular)
      */
     func getEditDataStatus(factor: String) {
+        print("MAU: getEditDataStatus")
         //Check internet connection
         let reachability = try! Reachability()
         
@@ -439,6 +446,7 @@ class SelectAuthenticationMethodPresenter {
      Get the validation information for the user
      */
     func getValidationUsersMethods() {
+        print("MAU: getValidationUsersMethods")
         //Check internet connection
         let reachability = try! Reachability()
         
@@ -447,6 +455,7 @@ class SelectAuthenticationMethodPresenter {
             Router.self.token = UserDefaults.standard.token
             
             let userInformation = UserDefaults.standard.userInformation
+            let forceEnroll = userInformation.forceEnroll
             let binnacle: [String: Any] = [
                 "idProceso": userInformation.processID,
                 "idSubProceso": userInformation.subProcessID,
@@ -465,34 +474,42 @@ class SelectAuthenticationMethodPresenter {
             Alamofire.request(
                 Router.validateAuthentication(businessLine: userInformation.businessLine, parameters: parameters))
                 .responseObject { (response: DataResponse<ValidateUserResponse>) in
-                    switch response.result {
-                    case .success(let userResponse):
-                        if let httpStatusCode = response.response?.statusCode {
-                            switch httpStatusCode {
-                            case 200:
-                                let active = "01"
-                                let enrollFacial = userResponse.enrollFacial ?? "00"
-                                UserDefaults.standard.isUserEnrolled = enrollFacial == active
-                                UserDefaults.standard.tokenOperation = userResponse.token ?? ""
-                                if let list = userResponse.listDiagnosticsOp {
-                                    if list.isEmpty {
+                    if forceEnroll {
+                        UserDefaults.standard.isUserEnrolled = false
+                        UserDefaults.standard.tokenOperation = "kjdhadjada="
+                        
+                        self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
+                        self.selectAuthenticationMethodDelegate?.hideLoader()
+                    } else {
+                        switch response.result {
+                        case .success(let userResponse):
+                            if let httpStatusCode = response.response?.statusCode {
+                                switch httpStatusCode {
+                                case 200:
+                                    let active = "01"
+                                    let enrollFacial = userResponse.enrollFacial ?? "00"
+                                    UserDefaults.standard.isUserEnrolled = enrollFacial == active
+                                    UserDefaults.standard.tokenOperation = userResponse.token ?? ""
+                                    if let list = userResponse.listDiagnosticsOp {
+                                        if list.isEmpty {
+                                            self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
+                                            self.selectAuthenticationMethodDelegate?.hideLoader()
+                                        } else {
+                                            self.validateFlow(listOper: list)
+                                        }
+                                    } else {
                                         self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
                                         self.selectAuthenticationMethodDelegate?.hideLoader()
-                                    } else {
-                                        self.validateFlow(listOper: list)
                                     }
-                                } else {
-                                    self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
-                                    self.selectAuthenticationMethodDelegate?.hideLoader()
+                                case 400, 401, 404, 500, 503:
+                                    self.selectAuthenticationMethodDelegate?.showRequestFailed()
+                                default:
+                                    self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
                                 }
-                            case 400, 401, 404, 500, 503:
-                                self.selectAuthenticationMethodDelegate?.showRequestFailed()
-                            default:
-                                self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
                             }
+                        case .failure(_):
+                            self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
                         }
-                    case .failure(_):
-                        self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
                     }
                 }
         } else {
