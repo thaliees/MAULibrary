@@ -456,6 +456,7 @@ class SelectAuthenticationMethodPresenter {
             
             let userInformation = UserDefaults.standard.userInformation
             let forceEnroll = userInformation.forceEnroll
+            let forceSprint1 = false
             let binnacle: [String: Any] = [
                 "idProceso": userInformation.processID,
                 "idSubProceso": userInformation.subProcessID,
@@ -474,41 +475,69 @@ class SelectAuthenticationMethodPresenter {
             Alamofire.request(
                 Router.validateAuthentication(businessLine: userInformation.businessLine, parameters: parameters))
                 .responseObject { (response: DataResponse<ValidateUserResponse>) in
-                    if forceEnroll {
-                        UserDefaults.standard.isUserEnrolled = false
-                        UserDefaults.standard.tokenOperation = "kjdhadjada="
+                    if let data = response.data {
+                        let encoding = String(data: data, encoding: String.Encoding.utf8)
+                        guard let enc = encoding else { return }
                         
-                        self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
-                        self.selectAuthenticationMethodDelegate?.hideLoader()
+                        if enc.contains("<!DOCTYPE html>") || enc.contains("<html>") || enc == "" {
+                            print("MAU: enc", enc)
+                        }
+                        
+                        let datas = enc.data(using: .utf8)
+                        do {
+                            let json  = try JSONSerialization.jsonObject(with: datas!) as! NSDictionary
+                            print("MAU: json", json.debugDescription)
+                        } catch {
+                            
+                        }
+                    }
+                    if forceSprint1 && !forceEnroll {
+                        if userInformation.curp == "REJJ950731HQTSSL03" {
+                            UserDefaults.standard.isUserEnrolled = false
+                            UserDefaults.standard.tokenOperation = "kjdhadjada="
+                            
+                            self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
+                            self.selectAuthenticationMethodDelegate?.hideLoader()
+                        } else {
+                            self.validateFlow(listOper: ["A12"])
+                        }
                     } else {
-                        switch response.result {
-                        case .success(let userResponse):
-                            if let httpStatusCode = response.response?.statusCode {
-                                switch httpStatusCode {
-                                case 200:
-                                    let active = "01"
-                                    let enrollFacial = userResponse.enrollFacial ?? "00"
-                                    UserDefaults.standard.isUserEnrolled = enrollFacial == active
-                                    UserDefaults.standard.tokenOperation = userResponse.token ?? ""
-                                    if let list = userResponse.listDiagnosticsOp {
-                                        if list.isEmpty {
+                        if forceEnroll {
+                            UserDefaults.standard.isUserEnrolled = false
+                            UserDefaults.standard.tokenOperation = "kjdhadjada="
+                            
+                            self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
+                            self.selectAuthenticationMethodDelegate?.hideLoader()
+                        } else {
+                            switch response.result {
+                            case .success(let userResponse):
+                                if let httpStatusCode = response.response?.statusCode {
+                                    switch httpStatusCode {
+                                    case 200:
+                                        let active = "01"
+                                        let enrollFacial = userResponse.enrollFacial ?? "00"
+                                        UserDefaults.standard.isUserEnrolled = enrollFacial == active
+                                        UserDefaults.standard.tokenOperation = userResponse.token ?? ""
+                                        if let list = userResponse.listDiagnosticsOp {
+                                            if list.isEmpty {
+                                                self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
+                                                self.selectAuthenticationMethodDelegate?.hideLoader()
+                                            } else {
+                                                self.validateFlow(listOper: list)
+                                            }
+                                        } else {
                                             self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
                                             self.selectAuthenticationMethodDelegate?.hideLoader()
-                                        } else {
-                                            self.validateFlow(listOper: list)
                                         }
-                                    } else {
-                                        self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
-                                        self.selectAuthenticationMethodDelegate?.hideLoader()
+                                    case 400, 401, 404, 500, 503:
+                                        self.selectAuthenticationMethodDelegate?.showRequestFailed()
+                                    default:
+                                        self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
                                     }
-                                case 400, 401, 404, 500, 503:
-                                    self.selectAuthenticationMethodDelegate?.showRequestFailed()
-                                default:
-                                    self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
                                 }
+                            case .failure(_):
+                                self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
                             }
-                        case .failure(_):
-                            self.selectAuthenticationMethodDelegate?.showConnectionErrorMessage()
                         }
                     }
                 }

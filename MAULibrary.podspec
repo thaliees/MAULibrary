@@ -20,5 +20,6 @@ Pod::Spec.new do |spec|
   spec.dependency         'lottie-ios'
   spec.dependency         'ReachabilitySwift'
   spec.dependency         'SVPinView'
-  spec.dependency         'FWFaceAuth', '3.0.0.2'
+  spec.dependency         'FWFaceAuth'
+  spec.dependency	  'ZIPFoundation'
 end

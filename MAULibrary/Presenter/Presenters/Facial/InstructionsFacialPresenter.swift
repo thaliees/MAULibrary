@@ -10,6 +10,7 @@ import Reachability
 import Alamofire
 import AlamofireObjectMapper
 import FWFaceAuth
+import ZIPFoundation
 
 class InstructionsFacialPresenter {
     
@@ -182,9 +183,10 @@ class InstructionsFacialPresenter {
             }
             
             let isEnrolled = UserDefaults.standard.isUserEnrolled
+            let cveAFORE = "534"
             var front: Data?
             var back: Data?
-            if !isEnrolled {
+            if userInformation.cveEntity != cveAFORE {
                 if let frontID = response.selphIdResult?.frontImage {
                     front = frontID.jpegData(compressionQuality: 0.95)
                 }
@@ -193,7 +195,11 @@ class InstructionsFacialPresenter {
                     back = backID.jpegData(compressionQuality: 0.95)
                 }
             }
-            
+            let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let dir = documentDirectory.appendingPathComponent("temp")
+            let dir2 = documentDirectory.appendingPathComponent("zip")
+            removeTemp(directoryTemp: dir)
+            removeTemp(directoryTemp: dir2)
             let (list, urlDir, zip) = createZIP(selfie: selfie, frontID: front, backID: back)
             guard let urlTemp = urlDir else {
                 self.instructionsFacialDelegate?.showConnectionErrorMessage()
@@ -290,8 +296,10 @@ class InstructionsFacialPresenter {
         // Obtaining the Location of the Documents Directory
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let dir = documentDirectory.appendingPathComponent("temp")
+        let dir2 = documentDirectory.appendingPathComponent("zip")
         do {
             try FileManager.default.createDirectory(atPath: dir.path, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: dir2.path, withIntermediateDirectories: true, attributes: nil)
             // Create URL
             let urlSelfie = dir.appendingPathComponent("01.jpg")
             var list = ["01"]
@@ -310,11 +318,12 @@ class InstructionsFacialPresenter {
                     list.append("03")
                 }
                 
-                let (result, url) = zip(itemAtURL: dir, in: dir, zipName: "temp.zip")
+                let (result, url) = zip(itemAtURL: dir, in: dir2, zipName: "temp.zip")
                 if result == "" {
                     do {
                         let dataZIP = try Data(contentsOf: url!)
                         let base64 = dataZIP.base64EncodedString()
+                        removeTemp(directoryTemp: dir2)
                         return (list, dir, base64)
                     } catch {
                         print("MAU: Error to base64")
@@ -333,28 +342,38 @@ class InstructionsFacialPresenter {
     }
     
     private func zip(itemAtURL itemURL: URL, in destinationFolderURL: URL, zipName: String) -> (String, URL?) {
-        var error: NSError?
-        var internalError: NSError?
-        var finalUrl: URL!
-        NSFileCoordinator().coordinate(readingItemAt: itemURL, options: [.forUploading], error: &error) { (zipUrl) in
-            // zipUrl points to the zip file created by the coordinator
-            // zipUrl is valid only until the end of this block, so we move the file to a temporary folder
-            finalUrl = destinationFolderURL.appendingPathComponent(zipName)
-            do {
-                try FileManager.default.moveItem(at: zipUrl, to: finalUrl)
-            } catch let localError {
-                internalError = localError as NSError
-            }
+        let fileManager = FileManager.default
+        do {
+            let finalUrl = destinationFolderURL.appendingPathComponent(zipName)
+            try fileManager.zipItem(at: itemURL, to: finalUrl, shouldKeepParent: false)
+            return ("", finalUrl)
+        } catch let local {
+            print("MAU: Error", local.localizedDescription)
+            return (local.localizedDescription, nil)
         }
         
-        if let error = error {
-            return (error.localizedDescription, nil)
-        }
-        if let internalError = internalError {
-            return (internalError.localizedDescription, nil)
-        }
-        
-        return ("", finalUrl)
+//        var error: NSError?
+//        var internalError: NSError?
+//        var finalUrl: URL!
+//        NSFileCoordinator().coordinate(readingItemAt: itemURL, options: [.forUploading], error: &error) { (zipUrl) in
+//            // zipUrl points to the zip file created by the coordinator
+//            // zipUrl is valid only until the end of this block, so we move the file to a temporary folder
+//            finalUrl = destinationFolderURL.appendingPathComponent(zipName)
+//            do {
+//                try FileManager.default.moveItem(at: zipUrl, to: finalUrl)
+//            } catch let localError {
+//                internalError = localError as NSError
+//            }
+//        }
+//
+//        if let error = error {
+//            return (error.localizedDescription, nil)
+//        }
+//        if let internalError = internalError {
+//            return (internalError.localizedDescription, nil)
+//        }
+//
+//        return ("", finalUrl)
     }
     
     private func removeTemp(directoryTemp: URL) {
