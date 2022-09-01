@@ -149,19 +149,7 @@ extension InstructionsFacialViewController: FaceAuthDelegate {
         if let authResult = response.authResult {
             if authResult {
                 animationView.showLoaderView()
-                let isEnrolled = UserDefaults.standard.isUserEnrolled
-                
-                let userInformation = UserDefaults.standard.userInformation
-                var operation = ""
-                let entity = userInformation.cveEntity
-                if entity == EntityKey.afore.rawValue {
-                    operation = !isEnrolled ? CodeEnroll.afore.rawValue : CodeValidationEnroll.afore.rawValue
-                } else if entity == EntityKey.aseguradora.rawValue {
-                    operation = !isEnrolled ? CodeEnroll.aseguradora.rawValue : CodeValidationEnroll.aseguradora.rawValue
-                } else if entity == EntityKey.sofom.rawValue {
-                    operation = !isEnrolled ? CodeEnroll.sofom.rawValue : CodeValidationEnroll.sofom.rawValue
-                }
-                presenter.enrollOrValidation(operation: operation, response: response)
+                presenter.enrollOrValidation(response: response)
             } else {
                 presenter.getFacialAttempts()
             }

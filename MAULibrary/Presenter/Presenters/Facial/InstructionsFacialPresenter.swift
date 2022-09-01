@@ -166,7 +166,7 @@ class InstructionsFacialPresenter {
     /**
      Enroll or Validation
      */
-    func enrollOrValidation(operation: String, response: FaceAuthModel.Response) {
+    func enrollOrValidation(response: FaceAuthModel.Response) {
         //Check internet connection
         let reachability = try! Reachability()
         
@@ -182,9 +182,10 @@ class InstructionsFacialPresenter {
             
             let isEnrolled = UserDefaults.standard.isUserEnrolled
             let token = UserDefaults.standard.tokenOperation
+            let entity = userInformation.cveEntity
             var front: Data?
             var docType: DocumentType?
-            if userInformation.cveEntity != EntityKey.afore.rawValue && !isEnrolled {
+            if entity != EntityKey.afore.rawValue && !isEnrolled {
                 if let doc = response.selphIdResult?.documentScanned {
                     docType = doc
                 }
@@ -203,6 +204,15 @@ class InstructionsFacialPresenter {
                 removeTemp(directoryTemp: urlTemp)
                 self.instructionsFacialDelegate?.showConnectionErrorMessage()
                 return
+            }
+            
+            var operation = ""
+            if entity == EntityKey.afore.rawValue {
+                operation = !isEnrolled ? CodeEnroll.afore.rawValue : CodeValidationEnroll.afore.rawValue
+            } else if entity == EntityKey.aseguradora.rawValue {
+                operation = !isEnrolled ? CodeEnroll.aseguradora.rawValue : CodeValidationEnroll.aseguradora.rawValue
+            } else if entity == EntityKey.sofom.rawValue {
+                operation = !isEnrolled ? CodeEnroll.sofom.rawValue : CodeValidationEnroll.sofom.rawValue
             }
             
             let binnacle: [String: Any] = [
