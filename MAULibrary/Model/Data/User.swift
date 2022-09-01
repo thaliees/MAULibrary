@@ -20,15 +20,14 @@ public class User: Codable {
     public var subProcessID: Int
     public var originID: Int
     public var sessionID: String
+    public var cveEntity: Int
+    public var userType: String
+    
     public var businessLine: String
     public var cveOrigin: String
-    public var cveEntity: String
     public var cveOperation: String
-    public var userType: String
-    public var forceEnroll: Bool
-    public var forceError: Bool
     
-    public init(name: String, lastName: String, mothersLastName: String, client: String, account: String, curp: String, processID: Int, subProcessID: Int, originID: Int, sessionID: String, businessLine: String, cveOrigin: String, cveEntity: String, cveOperation: String, userType: String, forceEnroll: Bool = false, forceError: Bool = false) {
+    public init(name: String, lastName: String, mothersLastName: String, client: String, account: String, curp: String, processID: Int, subProcessID: Int, originID: Int, sessionID: String, cveEntity: Int, userType: String, businessLine: String, cveOrigin: String, cveOperation: String) {
         self.name = name
         self.lastName = lastName
         self.mothersLastName = mothersLastName
@@ -39,13 +38,11 @@ public class User: Codable {
         self.subProcessID = subProcessID
         self.originID = originID
         self.sessionID = sessionID
+        self.cveEntity = cveEntity
+        self.userType = userType
         self.businessLine = businessLine
         self.cveOrigin = cveOrigin
-        self.cveEntity = cveEntity
         self.cveOperation = cveOperation
-        self.userType = userType
-        self.forceEnroll = forceEnroll
-        self.forceError = forceError
     }
     
 }

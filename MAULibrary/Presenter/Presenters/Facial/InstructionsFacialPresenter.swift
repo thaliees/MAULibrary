@@ -166,7 +166,7 @@ class InstructionsFacialPresenter {
     /**
      Enroll or Validation
      */
-    func enrollOrValidation(token: String, operation: String, response: FaceAuthModel.Response) {
+    func enrollOrValidation(operation: String, response: FaceAuthModel.Response) {
         //Check internet connection
         let reachability = try! Reachability()
         
@@ -174,8 +174,6 @@ class InstructionsFacialPresenter {
         if reachability.connection != .unavailable {
             Router.self.token = UserDefaults.standard.token
             let userInformation = UserDefaults.standard.userInformation
-            let forceEnroll = userInformation.forceEnroll
-            let forceError = userInformation.forceError
             
             guard let selfie = response.selphiResult.image.jpegData(compressionQuality: 0.95) else {
                 self.instructionsFacialDelegate?.showConnectionErrorMessage()
@@ -183,24 +181,19 @@ class InstructionsFacialPresenter {
             }
             
             let isEnrolled = UserDefaults.standard.isUserEnrolled
-            let cveAFORE = "534"
+            let token = UserDefaults.standard.tokenOperation
             var front: Data?
-            var back: Data?
-            if userInformation.cveEntity != cveAFORE {
+            var docType: DocumentType?
+            if userInformation.cveEntity != EntityKey.afore.rawValue && !isEnrolled {
+                if let doc = response.selphIdResult?.documentScanned {
+                    docType = doc
+                }
                 if let frontID = response.selphIdResult?.frontImage {
                     front = frontID.jpegData(compressionQuality: 0.95)
                 }
-
-                if let backID = response.selphIdResult?.backImage {
-                    back = backID.jpegData(compressionQuality: 0.95)
-                }
             }
-            let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let dir = documentDirectory.appendingPathComponent("temp")
-            let dir2 = documentDirectory.appendingPathComponent("zip")
-            removeTemp(directoryTemp: dir)
-            removeTemp(directoryTemp: dir2)
-            let (list, urlDir, zip) = createZIP(selfie: selfie, frontID: front, backID: back)
+            
+            let (list, urlDir, zip) = createZIP(selfie: selfie, frontID: front, docType: docType)
             guard let urlTemp = urlDir else {
                 self.instructionsFacialDelegate?.showConnectionErrorMessage()
                 return
@@ -216,7 +209,7 @@ class InstructionsFacialPresenter {
                 "idProceso": userInformation.processID,
                 "idSubProceso": userInformation.subProcessID,
                 "idOrigen": userInformation.originID,
-                "idFactor": "159"
+                "idFactor": TypesFactor.facial.rawValue
             ]
             let parameters: [String : Any] = [
                 "cveOrigen" : userInformation.cveOrigin,
@@ -232,59 +225,28 @@ class InstructionsFacialPresenter {
             Alamofire.request(Router.enrollOrValidation(parameters: parameters))
                 .responseObject { (response: DataResponse<EnrollOrValidationResponse>) in
                     self.removeTemp(directoryTemp: urlTemp)
-                    if let data = response.data {
-                        let encoding = String(data: data, encoding: String.Encoding.utf8)
-                        guard let enc = encoding else { return }
-                        
-                        if enc.contains("<!DOCTYPE html>") || enc.contains("<html>") || enc == "" {
-                            print("MAU: enc", enc)
-                        }
-                        
-                        let datas = enc.data(using: .utf8)
-                        do {
-                            let json  = try JSONSerialization.jsonObject(with: datas!) as! NSDictionary
-                            print("MAU: json", json.debugDescription)
-                        } catch {
-                            
-                        }
-                    }
-                    if forceEnroll {
-                        if forceError {
-                            let list = ["A10"]
-                            self.getMessageResponse(listOper: list)
-                        } else {
-                            let r: [String : Any] = [
-                                "resultadoOperacion" : "01",
-                                "enrolado": "01",
-                                "resultadoValidacion": "MATCH"
-                            ]
-                            let result = EnrollOrValidationResponse(JSON: r)!
-                            self.checkFlow(result: result)
-                        }
-                    } else {
-                        switch response.result {
-                            case .success(let result):
-                                if let httpStatusCode = response.response?.statusCode {
-                                    switch httpStatusCode {
-                                        case 200:
-                                            if let list = result.listOp {
-                                                if list.isEmpty {
-                                                    self.checkFlow(result: result)
-                                                } else {
-                                                    self.getMessageResponse(listOper: list)
-                                                }
-                                            } else {
+                    switch response.result {
+                        case .success(let result):
+                            if let httpStatusCode = response.response?.statusCode {
+                                switch httpStatusCode {
+                                    case 200:
+                                        if let list = result.listOp {
+                                            if list.isEmpty {
                                                 self.checkFlow(result: result)
+                                            } else {
+                                                self.getMessageResponse(listOper: list)
                                             }
-                                        default:
-                                            self.instructionsFacialDelegate?.showConnectionErrorMessage()
-                                    }
-                                } else {
-                                    self.instructionsFacialDelegate?.showConnectionErrorMessage()
+                                        } else {
+                                            self.checkFlow(result: result)
+                                        }
+                                    default:
+                                        self.instructionsFacialDelegate?.showConnectionErrorMessage()
                                 }
-                            case .failure(_):
+                            } else {
                                 self.instructionsFacialDelegate?.showConnectionErrorMessage()
-                        }
+                            }
+                        case .failure(_):
+                            self.instructionsFacialDelegate?.showConnectionErrorMessage()
                     }
             }
         } else {
@@ -292,7 +254,7 @@ class InstructionsFacialPresenter {
         }
     }
     
-    private func createZIP(selfie: Data, frontID: Data?, backID: Data?) -> ([String], URL?, String?) {
+    private func createZIP(selfie: Data, frontID: Data?, docType: DocumentType?) -> ([String], URL?, String?) {
         // Obtaining the Location of the Documents Directory
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let dir = documentDirectory.appendingPathComponent("temp")
@@ -301,21 +263,20 @@ class InstructionsFacialPresenter {
             try FileManager.default.createDirectory(atPath: dir.path, withIntermediateDirectories: true, attributes: nil)
             try FileManager.default.createDirectory(atPath: dir2.path, withIntermediateDirectories: true, attributes: nil)
             // Create URL
-            let urlSelfie = dir.appendingPathComponent("01.jpg")
-            var list = ["01"]
+            let nameSelfie = CodeImageProcesar.selfie.rawValue
+            let urlSelfie = dir.appendingPathComponent("\(nameSelfie).jpg")
+            var list = [nameSelfie]
             do {
                 try selfie.write(to: urlSelfie)
                 
-                if let frontID = frontID {
-                    let urlFront = dir.appendingPathComponent("02.jpg")
-                    try frontID.write(to: urlFront)
-                    list.append("02")
-                }
-                
-                if let backID = backID {
-                    let urlBack = dir.appendingPathComponent("03.jpg")
-                    try backID.write(to: urlBack)
-                    list.append("03")
+                if let doc = docType {
+                    let name = doc == .Card ? CodeImageProcesar.cardId.rawValue : CodeImageProcesar.passport.rawValue
+                    
+                    if let frontID = frontID {
+                        let urlFront = dir.appendingPathComponent("\(name).jpg")
+                        try frontID.write(to: urlFront)
+                        list.append(name)
+                    }
                 }
                 
                 let (result, url) = zip(itemAtURL: dir, in: dir2, zipName: "temp.zip")
@@ -348,32 +309,8 @@ class InstructionsFacialPresenter {
             try fileManager.zipItem(at: itemURL, to: finalUrl, shouldKeepParent: false)
             return ("", finalUrl)
         } catch let local {
-            print("MAU: Error", local.localizedDescription)
             return (local.localizedDescription, nil)
         }
-        
-//        var error: NSError?
-//        var internalError: NSError?
-//        var finalUrl: URL!
-//        NSFileCoordinator().coordinate(readingItemAt: itemURL, options: [.forUploading], error: &error) { (zipUrl) in
-//            // zipUrl points to the zip file created by the coordinator
-//            // zipUrl is valid only until the end of this block, so we move the file to a temporary folder
-//            finalUrl = destinationFolderURL.appendingPathComponent(zipName)
-//            do {
-//                try FileManager.default.moveItem(at: zipUrl, to: finalUrl)
-//            } catch let localError {
-//                internalError = localError as NSError
-//            }
-//        }
-//
-//        if let error = error {
-//            return (error.localizedDescription, nil)
-//        }
-//        if let internalError = internalError {
-//            return (internalError.localizedDescription, nil)
-//        }
-//
-//        return ("", finalUrl)
     }
     
     private func removeTemp(directoryTemp: URL) {
@@ -443,15 +380,13 @@ class InstructionsFacialPresenter {
     private func checkFlow(result: EnrollOrValidationResponse) {
         let isEnrolled = UserDefaults.standard.isUserEnrolled
         if !isEnrolled {
-            if let op = result.resultOp, let enroll = result.enroll,
-               op == "01" && enroll == "01" {
+            if let op = result.resultOp, op == "01" {
                 self.instructionsFacialDelegate?.showAuthenticationSuccesful()
             } else {
                 self.instructionsFacialDelegate?.failedRequest()
             }
         } else {
-            if let validation = result.resultValidation,
-               validation == "MATCH" {
+            if let validation = result.resultValidation, validation == "MATCH" {
                 self.saveValidityAuthentication()
             } else {
                 self.instructionsFacialDelegate?.failedRequest()

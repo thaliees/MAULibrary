@@ -87,3 +87,27 @@ enum HTTPHeaderField: String {
 enum ContentType: String {
     case formEncoded = "application/x-www-form-urlencoded"
 }
+
+enum EntityKey: Int {
+    case afore = 534
+    case aseguradora = 601
+    case sofom = 602
+}
+
+enum CodeEnroll: String {
+    case afore = "PA10"
+    case aseguradora = "PG10"
+    case sofom = "PS10"
+}
+
+enum CodeValidationEnroll: String {
+    case afore = "PA30"
+    case aseguradora = "PG30"
+    case sofom = "PS30"
+}
+
+enum CodeImageProcesar: String {
+    case selfie = "01"
+    case cardId = "02"
+    case passport = "04"
+}

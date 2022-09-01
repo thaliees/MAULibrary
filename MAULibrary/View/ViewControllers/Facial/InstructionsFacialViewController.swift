@@ -148,24 +148,20 @@ extension InstructionsFacialViewController: FaceAuthDelegate {
     func responseHandler(response: FaceAuthModel.Response) {
         if let authResult = response.authResult {
             if authResult {
-                let businessAFORE = 534
-                let businessASEGURADORA = 601
-                let businessSOFOM = 602
-                
                 animationView.showLoaderView()
                 let isEnrolled = UserDefaults.standard.isUserEnrolled
-                let token = UserDefaults.standard.tokenOperation
+                
                 let userInformation = UserDefaults.standard.userInformation
                 var operation = ""
-                let entity = Int(userInformation.cveEntity) ?? 0
-                if entity == businessAFORE {
-                    operation = !isEnrolled ? "PA10" : "PA30"
-                } else if entity == businessASEGURADORA {
-                    operation = !isEnrolled ? "PG10" : "PG30"
-                } else if entity == businessSOFOM {
-                    operation = !isEnrolled ? "PS10" : "PS30"
+                let entity = userInformation.cveEntity
+                if entity == EntityKey.afore.rawValue {
+                    operation = !isEnrolled ? CodeEnroll.afore.rawValue : CodeValidationEnroll.afore.rawValue
+                } else if entity == EntityKey.aseguradora.rawValue {
+                    operation = !isEnrolled ? CodeEnroll.aseguradora.rawValue : CodeValidationEnroll.aseguradora.rawValue
+                } else if entity == EntityKey.sofom.rawValue {
+                    operation = !isEnrolled ? CodeEnroll.sofom.rawValue : CodeValidationEnroll.sofom.rawValue
                 }
-                presenter.enrollOrValidation(token: token, operation: operation, response: response)
+                presenter.enrollOrValidation(operation: operation, response: response)
             } else {
                 presenter.getFacialAttempts()
             }
