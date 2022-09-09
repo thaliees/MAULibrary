@@ -93,6 +93,7 @@
 		7281AC17289B3940007745E8 /* EnrollOrValidationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281AC16289B3940007745E8 /* EnrollOrValidationResponse.swift */; };
 		729D48E32885A29700CD6C90 /* MessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729D48E22885A29700CD6C90 /* MessagesResponse.swift */; };
 		72CEA0F528A5695F00AF3254 /* SaveStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CEA0F428A5695F00AF3254 /* SaveStatusResponse.swift */; };
+		72E6654A28C2668C004326C3 /* Blacklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E6654928C2668C004326C3 /* Blacklist.swift */; };
 		72F3B0802875E9DD00010A3D /* ValidateUserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F3B07F2875E9DD00010A3D /* ValidateUserResponse.swift */; };
 		72F3B0842876454A00010A3D /* RequestFailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F3B0832876454A00010A3D /* RequestFailedViewController.swift */; };
 		85669FC52697B34D00A820B4 /* ValidityAuthenticationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85669FC42697B34D00A820B4 /* ValidityAuthenticationResponse.swift */; };
@@ -190,6 +191,7 @@
 		7281AC16289B3940007745E8 /* EnrollOrValidationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollOrValidationResponse.swift; sourceTree = "<group>"; };
 		729D48E22885A29700CD6C90 /* MessagesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesResponse.swift; sourceTree = "<group>"; };
 		72CEA0F428A5695F00AF3254 /* SaveStatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStatusResponse.swift; sourceTree = "<group>"; };
+		72E6654928C2668C004326C3 /* Blacklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blacklist.swift; sourceTree = "<group>"; };
 		72F3B07F2875E9DD00010A3D /* ValidateUserResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateUserResponse.swift; sourceTree = "<group>"; };
 		72F3B0832876454A00010A3D /* RequestFailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFailedViewController.swift; sourceTree = "<group>"; };
 		85669FC42697B34D00A820B4 /* ValidityAuthenticationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidityAuthenticationResponse.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 			children = (
 				5DA074D725E75D5200122F0D /* User.swift */,
 				85669FC72697B60500A820B4 /* Factor.swift */,
+				72E6654928C2668C004326C3 /* Blacklist.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -753,6 +756,7 @@
 				5DA0753525E75D5300122F0D /* UIViewController.swift in Sources */,
 				72CEA0F528A5695F00AF3254 /* SaveStatusResponse.swift in Sources */,
 				85669FC52697B34D00A820B4 /* ValidityAuthenticationResponse.swift in Sources */,
+				72E6654A28C2668C004326C3 /* Blacklist.swift in Sources */,
 				5DA0751B25E75D5300122F0D /* EnterTokenPresenter.swift in Sources */,
 				5DA074AF25E75D4C00122F0D /* TokenRequests.swift in Sources */,
 				85669FC82697B60500A820B4 /* Factor.swift in Sources */,
