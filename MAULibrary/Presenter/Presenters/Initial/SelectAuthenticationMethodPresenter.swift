@@ -439,7 +439,6 @@ class SelectAuthenticationMethodPresenter {
      Get the validation information for the user
      */
     func getValidationUsersMethods() {
-        print("MAU: getValidationUsersMethods")
         //Check internet connection
         let reachability = try! Reachability()
         
@@ -505,12 +504,9 @@ class SelectAuthenticationMethodPresenter {
      Validate listOperation to continue or stop the flow
      */
     func validateFlow(listOper: [String]) {
-        let specialCases = listOper.contains(where: { code in
-            code == "A12"
-        })
-        
+        let specialCases = Blacklist.checkSpecialCase(list: listOper)
         let userInformation = UserDefaults.standard.userInformation
-        if userInformation.businessLine != "922" && specialCases {
+        if userInformation.cveEntity != EntityKey.afore.rawValue && specialCases {
             self.selectAuthenticationMethodDelegate?.setAuthenticationMethodsFromCriticality()
             self.selectAuthenticationMethodDelegate?.hideLoader()
         } else {

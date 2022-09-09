@@ -370,7 +370,8 @@ class InstructionsFacialPresenter {
                                             
                                             message += "\n"
                                         }
-                                        self.instructionsFacialDelegate?.showErrorMessage(error: message)
+                                        let tryAgain = Blacklist.checkTryAgain(list: listOper)
+                                        self.instructionsFacialDelegate?.showErrorMessage(error: message, showTryAgain: tryAgain)
                                         self.instructionsFacialDelegate?.hideLoader()
                                     }
                                 }
@@ -389,17 +390,18 @@ class InstructionsFacialPresenter {
     
     private func checkFlow(result: EnrollOrValidationResponse) {
         let isEnrolled = UserDefaults.standard.isUserEnrolled
+        let message = "No logramos comprobar tu identidad"
         if !isEnrolled {
             if let op = result.resultOp, op == "01" {
                 self.instructionsFacialDelegate?.showAuthenticationSuccesful()
             } else {
-                self.instructionsFacialDelegate?.failedRequest()
+                self.instructionsFacialDelegate?.showErrorMessage(error: message, showTryAgain: false)
             }
         } else {
             if let validation = result.resultValidation, validation == "MATCH" {
                 self.saveValidityAuthentication()
             } else {
-                self.instructionsFacialDelegate?.failedRequest()
+                self.instructionsFacialDelegate?.showErrorMessage(error: message, showTryAgain: false)
             }
         }
     }
@@ -430,7 +432,7 @@ class InstructionsFacialPresenter {
                         case .success(_):
                             self.instructionsFacialDelegate?.showAuthenticationSuccesful()
                         case .failure(_):
-                            self.instructionsFacialDelegate?.failedRequest()
+                            self.instructionsFacialDelegate?.showAuthenticationSuccesful()
                     }
             }
         } else {

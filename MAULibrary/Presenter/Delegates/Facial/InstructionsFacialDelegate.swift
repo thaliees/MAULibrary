@@ -10,6 +10,5 @@ import Foundation
 protocol InstructionsFacialDelegate: BaseDelegate {
     func showFacialAttempts()
     func showAuthenticationSuccesful()
-    func showErrorMessage(error: String)
-    func failedRequest()
+    func showErrorMessage(error: String, showTryAgain: Bool)
 }

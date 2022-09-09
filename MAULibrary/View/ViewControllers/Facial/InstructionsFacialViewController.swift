@@ -199,9 +199,14 @@ extension InstructionsFacialViewController: InstructionsFacialDelegate {
     }
     
     func showAuthenticationSuccesful() {
+        let isEnrolled = UserDefaults.standard.isUserEnrolled
         let authenticationSuccessfulVC = AuthenticationSuccessfulViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
         authenticationSuccessfulVC.observerToCall = .closeMAUPassedFacial
         authenticationSuccessfulVC.modalPresentationStyle = .overFullScreen
+        if !isEnrolled {
+            authenticationSuccessfulVC.changeText = true
+            authenticationSuccessfulVC.text = "Biometría facial exitosa"
+        }
         animationView.stopAnimation()
         present(authenticationSuccessfulVC, animated: true)
     }
@@ -222,20 +227,15 @@ extension InstructionsFacialViewController: InstructionsFacialDelegate {
         self.present(connectionErrorVC, animated: true)
     }
     
-    func showErrorMessage(error: String) {
+    func showErrorMessage(error: String, showTryAgain: Bool) {
         let authenticationErrorVC = AuthenticationErrorViewController.instantiateFromAppStoryboard(appStoryboard: .dialogs)
         authenticationErrorVC.observerToCall = .tryAgainAuthenticationInFacial
         authenticationErrorVC.observerToCallClose = .closeMAUInstructionsFacial
-        authenticationErrorVC.showTryAgainButton = true
+        authenticationErrorVC.showTryAgainButton = showTryAgain
         authenticationErrorVC.showError = true
         authenticationErrorVC.error = error
         authenticationErrorVC.modalPresentationStyle = .overFullScreen
         animationView.stopAnimation()
         present(authenticationErrorVC, animated: true)
-    }
-    
-    func failedRequest() {
-        let observerToCall: NotificationObserverServices = .closeMAUInstructionsFacial
-        NotificationCenter.default.post(name: Notification.Name(observerToCall.rawValue), object: nil)
     }
 }

@@ -322,6 +322,9 @@ de manera exitosa</string>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="axk-sb-7jS"/>
+                    <connections>
+                        <outlet property="message" destination="u2U-5O-E6d" id="nxN-SY-G6q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lJn-GN-Ns7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
